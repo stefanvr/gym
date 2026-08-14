@@ -5,8 +5,8 @@ country: "NL"
 lat: 52.3764
 lon: 4.9126
 discipline: ["toprope", "lead"]
-visited: true
-checked: false
+visited: false
+checked: true
 rating: 5
 website: "https://klimhal.nl"
 lastVisit: "2026-05-02"

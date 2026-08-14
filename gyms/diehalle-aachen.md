@@ -5,8 +5,8 @@ country: "DE"
 lat: 50.7700
 lon: 6.0950
 discipline: ["boulder", "toprope"]
-visited: true
-checked: true
+visited: false
+checked: false
 rating: 5
 website: "https://www.diehalle-aachen.de"
 lastVisit: "2026-07-11"

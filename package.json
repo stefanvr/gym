@@ -1,0 +1,14 @@
+{
+  "name": "climb-log-map",
+  "version": "1.0.0",
+  "description": "A personal map of climbing & bouldering gyms across NL / BE / DE-Limburg, tracked as markdown files.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "dev": "npm run build && npx http-server . -p 8080 -c-1"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3"
+  }
+}

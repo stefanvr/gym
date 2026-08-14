@@ -1,0 +1,287 @@
+/* ---------------------------------------------------------------
+   Design tokens
+   A climbing-gym palette: basalt dark surfaces, chalk-white text,
+   and three accent colors that map 1:1 to disciplines — so color
+   in this UI always means something, never decoration.
+----------------------------------------------------------------*/
+:root {
+  --basalt: #14171a;       /* app background */
+  --basalt-raised: #1d2226; /* panels */
+  --basalt-line: #333a40;   /* hairlines, borders */
+  --chalk: #edeae2;         /* primary text on dark */
+  --chalk-dim: #9aa0a6;     /* secondary text */
+  --boulder: #e8631c;       /* discipline: boulder */
+  --toprope: #2f7de1;       /* discipline: toprope */
+  --lead: #2e9e5b;          /* discipline: lead */
+  --unvisited: #565c63;     /* not yet climbed */
+
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --radius: 3px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--basalt);
+  color: var(--chalk);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+a { color: var(--toprope); }
+a:hover { color: var(--chalk); }
+
+/* ---------------------------------------------------------------
+   Layout
+----------------------------------------------------------------*/
+.app {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  height: 100vh;
+  height: 100dvh;
+}
+
+@media (max-width: 760px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    height: auto;
+    min-height: 100dvh;
+  }
+  .sidebar { max-height: 40vh; }
+}
+
+/* ---------------------------------------------------------------
+   Sidebar
+----------------------------------------------------------------*/
+.sidebar {
+  background: var(--basalt-raised);
+  border-right: 1px solid var(--basalt-line);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar__header {
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid var(--basalt-line);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--chalk-dim);
+  margin: 0 0 6px;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  color: var(--chalk-dim);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* stat row: sends-per-discipline, styled like a route tick counter */
+.stats {
+  display: flex;
+  gap: 14px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--basalt-line);
+  font-family: var(--font-mono);
+}
+
+.stat { display: flex; align-items: baseline; gap: 6px; }
+.stat__dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  display: inline-block;
+}
+.stat__count { font-size: 17px; font-weight: 600; }
+.stat__label { font-size: 11px; color: var(--chalk-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* filters */
+.filters {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--basalt-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-chip {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--basalt-line);
+  background: transparent;
+  color: var(--chalk-dim);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.filter-chip:hover { color: var(--chalk); }
+.filter-chip:focus-visible { outline: 2px solid var(--toprope); outline-offset: 2px; }
+
+.filter-chip[data-active="true"] { color: var(--chalk); border-color: currentColor; }
+.filter-chip__dot { width: 8px; height: 8px; border-radius: 50%; }
+.filter-chip__dot--check {
+  width: auto; height: auto; border-radius: 0;
+  background: none !important;
+  color: var(--chalk-dim);
+  font-size: 11px;
+  line-height: 1;
+}
+.filter-chip[data-active="true"] .filter-chip__dot--check { color: currentColor; }
+
+/* gym list */
+.gym-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.gym-card {
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.gym-card:hover, .gym-card[data-active="true"] {
+  background: rgba(255,255,255,0.04);
+  border-color: var(--basalt-line);
+}
+
+.gym-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.gym-card__name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.gym-card__place {
+  color: var(--chalk-dim);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.gym-card__pills {
+  display: flex;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+.pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 2px;
+  color: var(--basalt);
+  font-weight: 600;
+}
+
+.gym-card--unvisited .gym-card__name { color: var(--chalk-dim); }
+
+.check-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: var(--toprope);
+  color: var(--basalt);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.empty-state {
+  padding: 30px 20px;
+  color: var(--chalk-dim);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------
+   Map
+----------------------------------------------------------------*/
+#map {
+  height: 100%;
+  width: 100%;
+  background: var(--basalt);
+}
+
+/* Leaflet chrome, restyled to sit inside the dark theme */
+.leaflet-container {
+  font-family: var(--font-body);
+  background: #0e1113;
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--basalt-raised);
+  color: var(--chalk);
+  border-radius: var(--radius);
+  border: 1px solid var(--basalt-line);
+}
+
+.leaflet-popup-tip { background: var(--basalt-raised); }
+.leaflet-popup-content { margin: 14px 16px; min-width: 200px; }
+
+.popup__name { font-family: var(--font-display); font-weight: 600; font-size: 15px; margin: 0 0 2px; }
+.popup__place { color: var(--chalk-dim); font-size: 12px; margin: 0 0 8px; }
+.popup__pills { display: flex; gap: 5px; margin-bottom: 8px; }
+.popup__notes { font-size: 13px; color: var(--chalk); margin: 8px 0 0; }
+.popup__meta { font-family: var(--font-mono); font-size: 11px; color: var(--chalk-dim); margin-top: 8px; }
+.popup__link { font-family: var(--font-mono); font-size: 12px; }
+
+.leaflet-control-zoom a {
+  background: var(--basalt-raised) !important;
+  color: var(--chalk) !important;
+  border-color: var(--basalt-line) !important;
+}
+.leaflet-control-attribution {
+  background: rgba(20,23,26,0.85) !important;
+  color: var(--chalk-dim) !important;
+}
+.leaflet-control-attribution a { color: var(--chalk-dim) !important; }
+
+/* custom hold-shaped marker */
+.hold-marker {
+  display: block;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+}
+.hold-marker--unvisited { opacity: 0.55; }

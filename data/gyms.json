@@ -1,0 +1,107 @@
+[
+  {
+    "slug": "diehalle-aachen",
+    "name": "dieHalle Aachen",
+    "city": "Aachen",
+    "country": "DE",
+    "lat": 50.77,
+    "lon": 6.095,
+    "discipline": [
+      "boulder",
+      "toprope"
+    ],
+    "visited": true,
+    "checked": true,
+    "rating": 5,
+    "website": "https://www.diehalle-aachen.de",
+    "lastVisit": "2026-07-11",
+    "notes": "Just over the German border from Limburg, 1500 m² of boulder walls from\nslab to steep overhang, plus a roped section. Worth the drive from\nMaastricht."
+  },
+  {
+    "slug": "klimhal-centraal-amsterdam",
+    "name": "Klimhal Centraal",
+    "city": "Amsterdam",
+    "country": "NL",
+    "lat": 52.3764,
+    "lon": 4.9126,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "visited": true,
+    "checked": false,
+    "rating": 5,
+    "website": "https://klimhal.nl",
+    "lastVisit": "2026-05-02",
+    "notes": "15m roped wall right by Amsterdam Centraal, roof opens in summer. Great for\nlead practice, terrace by the water is a nice bonus after a session."
+  },
+  {
+    "slug": "monk-amsterdam",
+    "name": "Monk Bouldergym Amsterdam",
+    "city": "Amsterdam",
+    "country": "NL",
+    "lat": 52.3907,
+    "lon": 4.9106,
+    "discipline": [
+      "boulder"
+    ],
+    "visited": true,
+    "checked": false,
+    "rating": 4,
+    "website": "https://www.monk.nl",
+    "lastVisit": "2026-03-14",
+    "notes": "Boulder-only gym on the IJ river in Amsterdam-Noord. Good variety of overhangs\nand slabs, brushes everywhere so the holds stay clean. Circuits refresh\nroughly every month."
+  },
+  {
+    "slug": "monk-hasselt",
+    "name": "Monk Bouldergym Hasselt",
+    "city": "Hasselt",
+    "country": "BE",
+    "lat": 50.931,
+    "lon": 5.335,
+    "discipline": [
+      "boulder"
+    ],
+    "visited": true,
+    "checked": false,
+    "rating": 4,
+    "website": "https://www.monk.nl",
+    "lastVisit": "2026-06-20",
+    "notes": "Monk's Belgian outpost right in the Hasselt city centre. ~200 boulders,\ncafé and shop on site, good for a road-trip stop."
+  },
+  {
+    "slug": "neoliet-eindhoven-zuid",
+    "name": "Klimcentrum Neoliet Eindhoven-Zuid",
+    "city": "Eindhoven",
+    "country": "NL",
+    "lat": 51.418,
+    "lon": 5.468,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://neoliet.nl",
+    "lastVisit": null,
+    "notes": "On the list — lead wall + rock wall + klettersteig at the Fontys Sport\nHogeschool site. Haven't been yet."
+  },
+  {
+    "slug": "the-island-antwerp",
+    "name": "Boulderzaal The Island",
+    "city": "Antwerpen",
+    "country": "BE",
+    "lat": 51.2093,
+    "lon": 4.4034,
+    "discipline": [
+      "boulder"
+    ],
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderzaaltheisland.be",
+    "lastVisit": null,
+    "notes": "One of Belgium's newest, largest bouldering gyms. Relaxed vibe, slackline\nand table tennis in the workout area. Still need to visit."
+  }
+]

@@ -10,8 +10,8 @@
       "boulder",
       "toprope"
     ],
-    "visited": true,
-    "checked": true,
+    "visited": false,
+    "checked": false,
     "rating": 5,
     "website": "https://www.diehalle-aachen.de",
     "lastVisit": "2026-07-11",
@@ -28,8 +28,8 @@
       "toprope",
       "lead"
     ],
-    "visited": true,
-    "checked": false,
+    "visited": false,
+    "checked": true,
     "rating": 5,
     "website": "https://klimhal.nl",
     "lastVisit": "2026-05-02",

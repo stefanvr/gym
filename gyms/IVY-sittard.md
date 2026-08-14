@@ -9,6 +9,6 @@ visited: true
 checked: true
 rating: 5
 website: "https://www.ivyclimbing.nl/"
-lastVisit: "2026-07-11"
+lastVisit: "Weekly"
 ---
 Todo

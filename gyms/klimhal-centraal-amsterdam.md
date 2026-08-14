@@ -9,7 +9,7 @@ visited: false
 checked: true
 rating: 5
 website: "https://klimhal.nl"
-lastVisit: "2026-05-02"
+lastVisit:
 ---
 15m roped wall right by Amsterdam Centraal, roof opens in summer. Great for
 lead practice, terrace by the water is a nice bonus after a session.

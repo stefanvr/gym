@@ -1,5 +1,24 @@
 [
   {
+    "slug": "IVY-sittard",
+    "name": "IVY",
+    "city": "Sittard",
+    "country": "NL",
+    "lat": 50.991944,
+    "lon": 5.840992,
+    "discipline": [
+      "boulder",
+      "toprope",
+      "lead"
+    ],
+    "visited": true,
+    "checked": true,
+    "rating": 5,
+    "website": "https://www.ivyclimbing.nl/",
+    "lastVisit": "Weekly",
+    "notes": "Todo"
+  },
+  {
     "slug": "diehalle-aachen",
     "name": "dieHalle Aachen",
     "city": "Aachen",
@@ -14,7 +33,7 @@
     "checked": false,
     "rating": 5,
     "website": "https://www.diehalle-aachen.de",
-    "lastVisit": "2026-07-11",
+    "lastVisit": null,
     "notes": "Just over the German border from Limburg, 1500 m² of boulder walls from\nslab to steep overhang, plus a roped section. Worth the drive from\nMaastricht."
   },
   {
@@ -32,7 +51,7 @@
     "checked": true,
     "rating": 5,
     "website": "https://klimhal.nl",
-    "lastVisit": "2026-05-02",
+    "lastVisit": null,
     "notes": "15m roped wall right by Amsterdam Centraal, roof opens in summer. Great for\nlead practice, terrace by the water is a nice bonus after a session."
   },
   {
@@ -45,11 +64,11 @@
     "discipline": [
       "boulder"
     ],
-    "visited": true,
+    "visited": false,
     "checked": false,
     "rating": 4,
     "website": "https://www.monk.nl",
-    "lastVisit": "2026-03-14",
+    "lastVisit": null,
     "notes": "Boulder-only gym on the IJ river in Amsterdam-Noord. Good variety of overhangs\nand slabs, brushes everywhere so the holds stay clean. Circuits refresh\nroughly every month."
   },
   {
@@ -62,11 +81,11 @@
     "discipline": [
       "boulder"
     ],
-    "visited": true,
+    "visited": false,
     "checked": false,
     "rating": 4,
     "website": "https://www.monk.nl",
-    "lastVisit": "2026-06-20",
+    "lastVisit": null,
     "notes": "Monk's Belgian outpost right in the Hasselt city centre. ~200 boulders,\ncafé and shop on site, good for a road-trip stop."
   },
   {
@@ -98,7 +117,7 @@
       "boulder"
     ],
     "visited": false,
-    "checked": true,
+    "checked": false,
     "rating": null,
     "website": "https://boulderzaaltheisland.be",
     "lastVisit": null,

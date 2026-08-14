@@ -5,6 +5,7 @@ country: "NL"
 lat: 52.3764
 lon: 4.9126
 discipline: ["toprope", "lead"]
+hasOutdoorWall: true
 visited: false
 checked: true
 rating: 5

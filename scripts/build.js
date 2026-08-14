@@ -13,7 +13,7 @@ import path from "node:path";
 
 const GYMS_DIR = path.resolve("gyms");
 const OUT_FILE = path.resolve("data", "gyms.json");
-const VALID_DISCIPLINES = ["boulder", "toprope", "lead"];
+const VALID_DISCIPLINES = ["boulder", "toprope", "lead", "speed"];
 
 function fail(file, message) {
   console.error(`✖ ${file}: ${message}`);
@@ -87,6 +87,7 @@ function loadGym(file) {
     lat: data.lat,
     lon: data.lon,
     discipline, // e.g. ["boulder", "lead"]
+    hasOutdoorWall: data.hasOutdoorWall === true, // default false
     visited: data.visited !== false, // default true — it's in the file, so you've probably been
     checked: data.checked === true, // default false — set true once you've confirmed details against the gym's own site
     rating: typeof data.rating === "number" ? data.rating : null,

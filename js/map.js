@@ -6,9 +6,11 @@ const DISCIPLINE_COLOR = {
   boulder: "#e8631c",
   toprope: "#2f7de1",
   lead: "#2e9e5b",
+  speed: "#dd0d0d",
 };
 const UNVISITED_COLOR = "#565c63";
-const DISCIPLINE_LABEL = { boulder: "Boulder", toprope: "Toprope", lead: "Lead" };
+const OUTDOOR_WALL_COLOR = "#bd197e";
+const DISCIPLINE_LABEL = { boulder: "Boulder", toprope: "Toprope", lead: "Lead", speed: "Speed" };
 
 // Roughly frames the Netherlands, Belgium, and the sliver of Germany
 // around Limburg (Aachen / Aachen-Maastricht corridor).
@@ -23,6 +25,7 @@ let map;
 let markerLayer;
 let gyms = [];
 let activeDisciplines = new Set(); // empty = all disciplines shown
+let hasOutdoorWall = false;
 let visitedOnly = false;
 let checkedOnly = false;
 let markersBySlug = new Map();
@@ -102,6 +105,8 @@ function popupHtml(gym) {
 }
 
 function passesFilters(gym) {
+  console.log("x",hasOutdoorWall,gym.hasOutdoorWall, hasOutdoorWall && !gym.hasOutdoorWall)
+  if (hasOutdoorWall && !gym.hasOutdoorWall) return false;
   if (visitedOnly && !gym.visited) return false;
   if (checkedOnly && !gym.checked) return false;
   if (activeDisciplines.size === 0) return true;
@@ -122,7 +127,7 @@ function renderMarkers() {
 
 function renderStats() {
   const el = document.getElementById("stats");
-  const counts = { boulder: 0, toprope: 0, lead: 0 };
+  const counts = { boulder: 0, toprope: 0, lead: 0, speed: 0 };
   gyms.forEach((g) => {
     if (!g.visited) return;
     g.discipline.forEach((d) => (counts[d] += 1));
@@ -152,7 +157,10 @@ function renderFilters() {
 
   el.innerHTML =
     disciplineChips +
-    `<button class="filter-chip" data-kind="visited" data-active="false">
+    `<button class="filter-chip" data-kind="hasOutdoorWall" data-active="false">
+       <span class="filter-chip__dot" style="background:${OUTDOOR_WALL_COLOR}"></span>Has outdoor wall
+     </button>
+     <button class="filter-chip" data-kind="visited" data-active="false">
        <span class="filter-chip__dot" style="background:${UNVISITED_COLOR}"></span>Visited only
      </button>
      <button class="filter-chip" data-kind="checked" data-active="false">
@@ -170,6 +178,8 @@ function renderFilters() {
         visitedOnly = !isActive;
       } else if (chip.dataset.kind === "checked") {
         checkedOnly = !isActive;
+      } else if (chip.dataset.kind === "hasOutdoorWall") {
+        hasOutdoorWall = !isActive;
       }
       renderMarkers();
       renderList();

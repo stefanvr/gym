@@ -4,7 +4,7 @@ city: "Sittard"
 country: "NL"
 lat: 50.991944 
 lon: 5.840992
-discipline: ["boulder", "toprope", "lead"]
+discipline: ["boulder", "toprope", "lead", "speed"]
 visited: true
 checked: true
 rating: 5

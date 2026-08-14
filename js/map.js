@@ -128,8 +128,7 @@ function renderMarkers() {
 function renderStats() {
   const el = document.getElementById("stats");
   const counts = { boulder: 0, toprope: 0, lead: 0, speed: 0 };
-  gyms.forEach((g) => {
-    if (!g.visited) return;
+  gyms.filter(passesFilters).forEach((g) => {
     g.discipline.forEach((d) => (counts[d] += 1));
   });
   el.innerHTML = Object.entries(counts)
@@ -181,6 +180,7 @@ function renderFilters() {
       } else if (chip.dataset.kind === "hasOutdoorWall") {
         hasOutdoorWall = !isActive;
       }
+      renderStats();
       renderMarkers();
       renderList();
     });

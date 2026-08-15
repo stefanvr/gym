@@ -1,5 +1,5 @@
 ---
-name: "The Climbing Corner Heerlen"
+name: "The Climbing Corner"
 city: "Heerlen"
 country: "NL"
 lat: 50.895433428317155

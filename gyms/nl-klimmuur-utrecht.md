@@ -9,4 +9,4 @@ visited: true
 checked: true
 website: "https://www.klimmuur-utrecht.nl/"
 ---
-Joined para climb training - august 2025
+Joined para climb training - july 2025

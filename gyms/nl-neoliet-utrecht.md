@@ -10,4 +10,4 @@ visited: true
 checked: true
 website: "https://neoliet.nl"
 ---
-Joined para climbing social - august 2025
+Joined para climbing social - july 2025

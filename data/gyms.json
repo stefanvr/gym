@@ -120,7 +120,7 @@
       "boulder",
       "toprope"
     ],
-    "hasOutdoorWall": false,
+    "hasOutdoorWall": true,
     "visited": false,
     "checked": false,
     "rating": null,
@@ -183,6 +183,146 @@
     "website": "https://www.bjoeks.nl",
     "lastVisit": null,
     "notes": "whish list"
+  },
+  {
+    "slug": "nl-climbing-network-amsterdam",
+    "name": "Climbing Network Amsterdam",
+    "city": "Amsterdam",
+    "country": "NL",
+    "lat": 52.3671,
+    "lon": 4.9088,
+    "discipline": [
+      "boulder",
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": true,
+    "visited": true,
+    "checked": true,
+    "rating": null,
+    "website": "https://www.climbingnetwork.nl/",
+    "lastVisit": null,
+    "notes": "Joined para climbing social - august 2025"
+  },
+  {
+    "slug": "nl-climbing-network-dordrecht",
+    "name": "Climbing Network Dordrecht",
+    "city": "Dordrecht",
+    "country": "NL",
+    "lat": 51.79900707104578,
+    "lon": 4.6789234275303295,
+    "discipline": [
+      "toprope",
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://www.climbingnetwork.nl/",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-climbing-network-heerenveen",
+    "name": "Climbing Network Heerenveen",
+    "city": "Heerenveen",
+    "country": "NL",
+    "lat": 52.95801884418999,
+    "lon": 5.936785610408849,
+    "discipline": [
+      "toprope",
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://www.climbingnetwork.nl/",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-climbing-network-leeuwarden",
+    "name": "Climbing Network Leeuwarden",
+    "city": "Leeuwarden",
+    "country": "NL",
+    "lat": 53.21242074673187,
+    "lon": 5.79134455830504,
+    "discipline": [
+      "toprope",
+      "toprope",
+      "lead",
+      "speed"
+    ],
+    "hasOutdoorWall": true,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://www.climbingnetwork.nl/",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-climbing-network-ncc-nieuwegein",
+    "name": "Climbing Network Nieuwgein - National Climbing centrym (NCC)",
+    "city": "Nieuwgein",
+    "country": "NL",
+    "lat": 52.058458971807575,
+    "lon": 5.097562836848153,
+    "discipline": [
+      "toprope",
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://www.climbingnetwork.nl/",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-climbing-network-olympus-arnhem",
+    "name": "Climbing Network Arnhem Rijnhal",
+    "city": "Arnhem",
+    "country": "NL",
+    "lat": 51.96295620145252,
+    "lon": 5.900756873828111,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://www.climbingnetwork.nl/",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-climbing-network-rijnhal-arnhem",
+    "name": "Climbing Network Arnhem Rijnhal",
+    "city": "Arnhem",
+    "country": "NL",
+    "lat": 51.96295620145252,
+    "lon": 5.900756873828111,
+    "discipline": [
+      "boulder",
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": true,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://www.climbingnetwork.nl/",
+    "lastVisit": null,
+    "notes": ""
   },
   {
     "slug": "nl-de-klimmuur-amsterdam-centraal",
@@ -298,7 +438,7 @@
     "rating": null,
     "website": "https://www.klimmuur-utrecht.nl/",
     "lastVisit": null,
-    "notes": "Joined para climb training - august 2025"
+    "notes": "Joined para climb training - july 2025"
   },
   {
     "slug": "nl-neoliet-boulder-Apeldoorn",
@@ -503,7 +643,7 @@
     "rating": null,
     "website": "https://neoliet.nl",
     "lastVisit": null,
-    "notes": "Joined para climbing social - august 2025"
+    "notes": "Joined para climbing social - july 2025"
   },
   {
     "slug": "nl-radium-boulders-maastricht",

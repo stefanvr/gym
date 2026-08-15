@@ -19,5 +19,41 @@
     "website": "https://www.ivyclimbing.nl/",
     "lastVisit": "Weekly",
     "notes": ""
+  },
+  {
+    "slug": "nl-radium-boulders-maastricht",
+    "name": "Radium Boulders Maastricht",
+    "city": "Maastricht",
+    "country": "NL",
+    "lat": 50.85686436333805,
+    "lon": 5.68217414568363,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": true,
+    "checked": true,
+    "rating": null,
+    "website": "https://radiumboulders.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-the-climbing-corner-heerlen",
+    "name": "The Climbing Corner Heerlen",
+    "city": "Heerlen",
+    "country": "NL",
+    "lat": 50.895433428317155,
+    "lon": 5.956908463576944,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": true,
+    "checked": true,
+    "rating": null,
+    "website": "https://theclimbingcorner.com",
+    "lastVisit": null,
+    "notes": ""
   }
 ]

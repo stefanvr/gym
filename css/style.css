@@ -158,9 +158,18 @@ h1 {
 .gym-list {
   list-style: none;
   margin: 0;
-  padding: 8px;
+  padding: 0px 8px 8px 8px;
   overflow-y: auto;
   flex: 1;
+}
+
+.gym-list-header {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0px;
+  color: var(--chalk-dim);
+  padding: 1px 21px;
+  transition: background 0.12s, border-color 0.12s;
 }
 
 .gym-card {

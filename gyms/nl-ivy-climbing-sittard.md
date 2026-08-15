@@ -1,5 +1,5 @@
 ---
-name: "IVY"
+name: "IVY Climbing"
 city: "Sittard"
 country: "NL"
 lat: 50.991944 
@@ -11,4 +11,3 @@ rating: 5
 website: "https://www.ivyclimbing.nl/"
 lastVisit: "Weekly"
 ---
-Todo

@@ -20,6 +20,171 @@
     "notes": "Lead series 2025 - start"
   },
   {
+    "slug": "be-beest-boulders-antwerpen",
+    "name": "Beest Boulders Antwerpen",
+    "city": "Antwerpen",
+    "country": "BE",
+    "lat": 51.23397713841443,
+    "lon": 4.403318552630137,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://beestboulders.com",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-beest-boulders-amsterdam",
+    "name": "Beest Boulders Amsterdam",
+    "city": "Amsterdam",
+    "country": "NL",
+    "lat": 52.38176548393407,
+    "lon": 4.859423937791344,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": true,
+    "checked": true,
+    "rating": null,
+    "website": "https://beestboulders.com",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-beest-boulders-breda",
+    "name": "Beest Boulders Breda",
+    "city": "Breda",
+    "country": "NL",
+    "lat": 51.595174764810984,
+    "lon": 4.757359698681951,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://beestboulders.com",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-beest-boulders-delft",
+    "name": "Beest Boulders Delft",
+    "city": "Delft",
+    "country": "NL",
+    "lat": 51.999921416536296,
+    "lon": 4.356210929393346,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://beestboulders.com",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-beest-boulders-den-haag-centrum",
+    "name": "Beest Boulders Den Haag Centrum",
+    "city": "Den Haag",
+    "country": "NL",
+    "lat": 52.076295006213634,
+    "lon": 4.3106856852191076,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": true,
+    "checked": true,
+    "rating": null,
+    "website": "https://beestboulders.com",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-beest-boulders-den-haag-hs",
+    "name": "Beest Boulders / De klim muur - Den Haag Holland Spoor (HS)",
+    "city": "Den Haag",
+    "country": "NL",
+    "lat": 52.06946081293944,
+    "lon": 4.323566054532292,
+    "discipline": [
+      "boulder",
+      "toprope"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://beestboulders.com",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-beest-boulders-het-lab-amsterdam",
+    "name": "Beest Boulders Amsterdam Het Lab",
+    "city": "Amsterdam",
+    "country": "NL",
+    "lat": 52.392848421823594,
+    "lon": 4.851189947247325,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://beestboulders.com",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-beest-boulders-rotterdam",
+    "name": "Beest Boulders Rotterdam",
+    "city": "Rotterdam",
+    "country": "NL",
+    "lat": 51.927534144371606,
+    "lon": 4.476247108493925,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://beestboulders.com",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-bjoeks-excalibur-",
+    "name": "Bjoeks Excalibur",
+    "city": "Groningen",
+    "country": "NL",
+    "lat": 53.24095940890341,
+    "lon": 6.6010265027550945,
+    "discipline": [
+      "boulder",
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://www.bjoeks.nl",
+    "lastVisit": null,
+    "notes": "whish list"
+  },
+  {
     "slug": "nl-ivy-climbing-sittard",
     "name": "IVY Climbing",
     "city": "Sittard",
@@ -185,7 +350,7 @@
     "rating": null,
     "website": "https://neoliet.nl",
     "lastVisit": null,
-    "notes": "On the list — lead wall + rock wall + klettersteig at the Fontys Sport\nHogeschool site. Haven't been yet."
+    "notes": "lead wall + rock wall + klettersteig at the Fontys Sport\nHogeschool site. Haven't been yet."
   },
   {
     "slug": "nl-neoliet-heerlen",

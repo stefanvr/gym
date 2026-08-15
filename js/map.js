@@ -45,7 +45,7 @@ function holdMarkerHtml(gym) {
   const stripes = colors
     .map((c, i) => `<rect x="0" y="${i * stripeH}" width="24" height="${stripeH + 0.5}" fill="${c}" />`)
     .join("");
-
+  const checkedColor = !gym.checked ? "#14171a": "#0e7c45";
   return `
     <svg width="24" height="28" viewBox="0 0 24 28" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -55,7 +55,7 @@ function holdMarkerHtml(gym) {
       </defs>
       <g clip-path="url(#clip-${gym.slug})">${stripes}</g>
       <path d="M12 27 C 5 22, 1 16, 1 10 C 1 4.5, 6 1, 12 1 C 18 1, 23 4.5, 23 10 C 23 16, 19 22, 12 27 Z"
-            fill="none" stroke="#14171a" stroke-width="1.5"/>
+            fill="none" stroke="${checkedColor}" stroke-width="1.5"/>
     </svg>`;
 }
 
@@ -163,7 +163,7 @@ function renderFilters() {
        <span class="filter-chip__dot" style="background:${UNVISITED_COLOR}"></span>Visited only
      </button>
      <button class="filter-chip" data-kind="checked" data-active="false">
-       <span class="filter-chip__dot filter-chip__dot--check">✓</span>Verified only
+       <span class="filter-chip__dot filter-chip__dot--check">✓</span>On list
      </button>`;
 
   el.querySelectorAll(".filter-chip").forEach((chip) => {

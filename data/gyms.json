@@ -185,8 +185,27 @@
     "notes": "whish list"
   },
   {
-    "slug": "nl-bok-den-haag",
-    "name": "BOK Den Haag",
+    "slug": "nl-de-klimmuur-amsterdam-centraal",
+    "name": "De Klimmuur Amsterdam Centraal",
+    "city": "Amsterdam",
+    "country": "NL",
+    "lat": 52.3769946733237,
+    "lon": 4.911638369894617,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://deklimmuur.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-de-klimmuur-de-uithof-den-haag-bok",
+    "name": "De Klimmuur Den Haag - BOK",
     "city": "Den Haag",
     "country": "NL",
     "lat": 52.038103144765415,
@@ -199,9 +218,47 @@
     "visited": true,
     "checked": true,
     "rating": null,
-    "website": "https://www.bok-denhaag.nl/",
+    "website": "https://deklimmuur.nl",
     "lastVisit": null,
-    "notes": "Holiday 2025"
+    "notes": "Holiday 2025\n\nhttps://www.bok-denhaag.nl/"
+  },
+  {
+    "slug": "nl-de-klimmuur-haarlem",
+    "name": "De Klimmuur Haarlem",
+    "city": "Haarlem",
+    "country": "NL",
+    "lat": 52.39139167838601,
+    "lon": 4.649396123865957,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://deklimmuur.nl",
+    "lastVisit": null,
+    "notes": "Auto-generated from a public directory of Dutch climbing gyms\n(resole.nl, cross-checked against nkbv.nl's count of ~38 climbing\nhalls and ~53 bouldering gyms). Coordinates are the **city\ncenter**, not the real address — and discipline/status are a\nbest guess from the listing category, not a personal visit.\nUpdate `lat`/`lon`/`discipline`, and flip `checked: true`, once\nyou've confirmed this against deklimmuur.nl."
+  },
+  {
+    "slug": "nl-de-klimmuur-rotterdam",
+    "name": "De Klimmuur Rotterdam",
+    "city": "Rotterdam",
+    "country": "NL",
+    "lat": 51.93663703625413,
+    "lon": 4.53292369685245,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://deklimmuur.nl",
+    "lastVisit": null,
+    "notes": ""
   },
   {
     "slug": "nl-ivy-climbing-sittard",

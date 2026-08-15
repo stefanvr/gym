@@ -21,8 +21,213 @@
     "notes": ""
   },
   {
+    "slug": "nl-neoliet-boulder-Apeldoorn",
+    "name": "Boulder Neoliet Apeldoorn",
+    "city": "Apeldoorn",
+    "country": "NL",
+    "lat": 52.19289695508028,
+    "lon": 5.963543996868387,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://boulderneoliet.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-neoliet-boulder-Veldhoven",
+    "name": "Boulder Neoliet Veldhoven",
+    "city": "",
+    "country": "NL",
+    "lat": 51.425169598842125,
+    "lon": 5.4159418238060715,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://boulderneoliet.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-neoliet-boulder-amsterdam",
+    "name": "Boulder Neoliet Amsterdam",
+    "city": "",
+    "country": "NL",
+    "lat": 52.38754433546344,
+    "lon": 4.8740077598909375,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://boulderneoliet.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-neoliet-boulder-apeldoorn",
+    "name": "Boulder Neoliet Apeldoorn",
+    "city": "",
+    "country": "NL",
+    "lat": 52.19289695508028,
+    "lon": 5.963543996868387,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://boulderneoliet.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-neoliet-boulder-rotterdam",
+    "name": "Boulder Neoliet Rotterdam",
+    "city": "Rotterdam",
+    "country": "NL",
+    "lat": 51.92336998848186,
+    "lon": 4.420385979317014,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://boulderneoliet.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-neoliet-boulder-tilburg",
+    "name": "Boulder Neoliet Tilburg",
+    "city": "",
+    "country": "NL",
+    "lat": 51.565793994711406,
+    "lon": 5.111599196829509,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://boulderneoliet.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-neoliet-eindhoven-noord",
+    "name": "Klimcentrum / Boulder Neoliet Eindhoven Noord",
+    "city": "Eindhoven",
+    "country": "NL",
+    "lat": 51.47514400181492,
+    "lon": 5.4571449219585935,
+    "discipline": [
+      "boulder",
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://neoliet.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-neoliet-eindhoven-zuid",
+    "name": "Klimcentrum Neoliet Eindhoven-Zuid",
+    "city": "Eindhoven",
+    "country": "NL",
+    "lat": 51.41239534722091,
+    "lon": 5.480133710312702,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://neoliet.nl",
+    "lastVisit": null,
+    "notes": "On the list — lead wall + rock wall + klettersteig at the Fontys Sport\nHogeschool site. Haven't been yet."
+  },
+  {
+    "slug": "nl-neoliet-heerlen",
+    "name": "Klimcentrum Neoliet Heerlen",
+    "city": "Heerlen",
+    "country": "NL",
+    "lat": 50.879485612760135,
+    "lon": 6.007491208429456,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": true,
+    "checked": true,
+    "rating": null,
+    "website": "https://neoliet.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-neoliet-tilburg",
+    "name": "Klimcentrum Neoliet Tilburg",
+    "city": "Tilburg",
+    "country": "NL",
+    "lat": 51.54013310450213,
+    "lon": 5.075103469842738,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": false,
+    "rating": null,
+    "website": "https://neoliet.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
+    "slug": "nl-neoliet-utrecht",
+    "name": "Klimcentrum Neoliet Utrecht",
+    "city": "Utrecht",
+    "country": "NL",
+    "lat": 52.11292051323762,
+    "lon": 5.031424468027595,
+    "discipline": [
+      "boulder",
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": true,
+    "visited": true,
+    "checked": true,
+    "rating": null,
+    "website": "https://neoliet.nl",
+    "lastVisit": null,
+    "notes": ""
+  },
+  {
     "slug": "nl-radium-boulders-maastricht",
-    "name": "Radium Boulders Maastricht",
+    "name": "Radium Boulders",
     "city": "Maastricht",
     "country": "NL",
     "lat": 50.85686436333805,
@@ -40,7 +245,7 @@
   },
   {
     "slug": "nl-the-climbing-corner-heerlen",
-    "name": "The Climbing Corner Heerlen",
+    "name": "The Climbing Corner",
     "city": "Heerlen",
     "country": "NL",
     "lat": 50.895433428317155,

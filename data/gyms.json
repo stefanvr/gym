@@ -107,7 +107,7 @@
     "rating": null,
     "website": "https://beestboulders.com",
     "lastVisit": null,
-    "notes": ""
+    "notes": "Holiday 2025"
   },
   {
     "slug": "nl-beest-boulders-den-haag-hs",
@@ -185,6 +185,25 @@
     "notes": "whish list"
   },
   {
+    "slug": "nl-bok-den-haag",
+    "name": "BOK Den Haag",
+    "city": "Den Haag",
+    "country": "NL",
+    "lat": 52.038103144765415,
+    "lon": 4.239997168542053,
+    "discipline": [
+      "boulder",
+      "toprope"
+    ],
+    "hasOutdoorWall": false,
+    "visited": true,
+    "checked": true,
+    "rating": null,
+    "website": "https://www.bok-denhaag.nl/",
+    "lastVisit": null,
+    "notes": "Holiday 2025"
+  },
+  {
     "slug": "nl-ivy-climbing-sittard",
     "name": "IVY Climbing",
     "city": "Sittard",
@@ -204,6 +223,25 @@
     "website": "https://www.ivyclimbing.nl/",
     "lastVisit": "Weekly",
     "notes": ""
+  },
+  {
+    "slug": "nl-klimmuur-utrecht",
+    "name": "Klimmuur Utrecht",
+    "city": "Utrecht",
+    "country": "NL",
+    "lat": 52.10481507935301,
+    "lon": 5.084850283370275,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": true,
+    "checked": true,
+    "rating": null,
+    "website": "https://www.klimmuur-utrecht.nl/",
+    "lastVisit": null,
+    "notes": "Joined para climb training - august 2025"
   },
   {
     "slug": "nl-neoliet-boulder-Apeldoorn",
@@ -408,7 +446,7 @@
     "rating": null,
     "website": "https://neoliet.nl",
     "lastVisit": null,
-    "notes": "Joined para climbing social"
+    "notes": "Joined para climbing social - august 2025"
   },
   {
     "slug": "nl-radium-boulders-maastricht",

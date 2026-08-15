@@ -9,5 +9,5 @@ visited: false
 checked: false
 website: "https://neoliet.nl"
 ---
-On the list — lead wall + rock wall + klettersteig at the Fontys Sport
+lead wall + rock wall + klettersteig at the Fontys Sport
 Hogeschool site. Haven't been yet.

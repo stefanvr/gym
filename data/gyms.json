@@ -1,5 +1,25 @@
 [
   {
+    "slug": "be-alpamayo-beringen",
+    "name": "Klimcentrum Alpamayo",
+    "city": "Beringen",
+    "country": "BE",
+    "lat": 51.068471193894894,
+    "lon": 5.222822866112619,
+    "discipline": [
+      "boulder",
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": true,
+    "checked": true,
+    "rating": null,
+    "website": "https://www.alpamayo.be/",
+    "lastVisit": null,
+    "notes": "Lead series 2025 - start"
+  },
+  {
     "slug": "nl-ivy-climbing-sittard",
     "name": "IVY Climbing",
     "city": "Sittard",
@@ -41,7 +61,7 @@
   {
     "slug": "nl-neoliet-boulder-Veldhoven",
     "name": "Boulder Neoliet Veldhoven",
-    "city": "",
+    "city": "Veldhoven",
     "country": "NL",
     "lat": 51.425169598842125,
     "lon": 5.4159418238060715,
@@ -59,7 +79,7 @@
   {
     "slug": "nl-neoliet-boulder-amsterdam",
     "name": "Boulder Neoliet Amsterdam",
-    "city": "",
+    "city": "Amsterdam",
     "country": "NL",
     "lat": 52.38754433546344,
     "lon": 4.8740077598909375,
@@ -77,7 +97,7 @@
   {
     "slug": "nl-neoliet-boulder-apeldoorn",
     "name": "Boulder Neoliet Apeldoorn",
-    "city": "",
+    "city": "Apeldoorn",
     "country": "NL",
     "lat": 52.19289695508028,
     "lon": 5.963543996868387,
@@ -113,7 +133,7 @@
   {
     "slug": "nl-neoliet-boulder-tilburg",
     "name": "Boulder Neoliet Tilburg",
-    "city": "",
+    "city": "Tilburg",
     "country": "NL",
     "lat": 51.565793994711406,
     "lon": 5.111599196829509,
@@ -223,7 +243,7 @@
     "rating": null,
     "website": "https://neoliet.nl",
     "lastVisit": null,
-    "notes": ""
+    "notes": "Joined para climbing social"
   },
   {
     "slug": "nl-radium-boulders-maastricht",

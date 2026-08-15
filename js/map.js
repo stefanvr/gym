@@ -89,7 +89,7 @@ function popupHtml(gym) {
   const meta = [
     gym.visited ? (gym.lastVisit ? `Last visit ${gym.lastVisit}` : "Visited") : "Not visited yet",
     gym.rating ? `${gym.rating}/5` : null,
-    gym.checked ? "Verified vs. site" : "Unverified",
+    gym.checked ? "" : "Unverified",
   ]
     .filter(Boolean)
     .join(" · ");

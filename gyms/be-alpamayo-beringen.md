@@ -9,4 +9,4 @@ visited: true
 checked: true
 website: "https://www.alpamayo.be/"
 ---
-Lead series 2025 - start
+Lead series 2025 - start level

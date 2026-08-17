@@ -105,10 +105,11 @@ function popupHtml(gym) {
 }
 
 function passesFilters(gym) {
-  console.log("x",hasOutdoorWall,gym.hasOutdoorWall, hasOutdoorWall && !gym.hasOutdoorWall)
+  if (gym.name == "The Climbing Corner")console.log(checkedOnly, !gym.checked,!visitedOnly,gym.visited, gym)
   if (hasOutdoorWall && !gym.hasOutdoorWall) return false;
   if (visitedOnly && !gym.visited) return false;
-  if (checkedOnly && !gym.checked) return false;
+  if (checkedOnly && !gym.checked) { return false }
+  else if (checkedOnly && !visitedOnly && gym.visited) return false;
   if (activeDisciplines.size === 0) return true;
   return gym.discipline.some((d) => activeDisciplines.has(d));
 }

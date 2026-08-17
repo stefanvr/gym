@@ -17,7 +17,7 @@
     "rating": null,
     "website": "https://www.alpamayo.be/",
     "lastVisit": null,
-    "notes": "Lead series 2025 - start"
+    "notes": "Lead series 2025 - start level"
   },
   {
     "slug": "be-beest-boulders-antwerpen",
@@ -176,7 +176,7 @@
       "toprope",
       "lead"
     ],
-    "hasOutdoorWall": false,
+    "hasOutdoorWall": true,
     "visited": false,
     "checked": true,
     "rating": null,
@@ -275,7 +275,8 @@
     "discipline": [
       "toprope",
       "toprope",
-      "lead"
+      "lead",
+      "speed"
     ],
     "hasOutdoorWall": false,
     "visited": false,
@@ -354,7 +355,7 @@
       "boulder",
       "toprope"
     ],
-    "hasOutdoorWall": false,
+    "hasOutdoorWall": true,
     "visited": true,
     "checked": true,
     "rating": null,

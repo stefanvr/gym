@@ -11,3 +11,4 @@ checked: true
 website: "https://neoliet.nl"
 ---
 Joined para climbing social - july 2025
+Holiday 2026

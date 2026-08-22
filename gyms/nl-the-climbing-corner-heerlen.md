@@ -6,7 +6,7 @@ lat: 50.895433428317155
 lon: 5.956908463576944
 discipline: ["boulder"]
 visited: true
-checked: true
+bucketList: true
 website: "https://theclimbingcorner.com"
 ---
 

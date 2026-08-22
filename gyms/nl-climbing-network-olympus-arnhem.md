@@ -6,7 +6,7 @@ lat: 51.96295620145252
 lon: 5.900756873828111
 discipline: ["toprope", "lead"]
 visited: false
-checked: false
+bucketList: false
 website: "https://www.climbingnetwork.nl/"
 ---
 

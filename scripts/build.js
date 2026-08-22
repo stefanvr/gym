@@ -89,7 +89,7 @@ function loadGym(file) {
     discipline, // e.g. ["boulder", "lead"]
     hasOutdoorWall: data.hasOutdoorWall === true, // default false
     visited: data.visited !== false, // default true — it's in the file, so you've probably been
-    checked: data.checked === true, // default false — set true once you've confirmed details against the gym's own site
+    bucketList: data.bucketList === true, // default false — set true for gyms on your want-to-go-next list
     rating: typeof data.rating === "number" ? data.rating : null,
     website: data.website || null,
     lastVisit: data.lastVisit || null,

@@ -7,7 +7,7 @@ lon: 6.6010265027550945
 discipline: ["boulder", "toprope", "lead"]
 hasOutdoorWall: true
 visited: false
-checked: true
+bucketList: true
 website: "https://www.bjoeks.nl"
 ---
 whish list

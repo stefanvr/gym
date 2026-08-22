@@ -6,7 +6,7 @@ lat: 52.076295006213634
 lon: 4.3106856852191076
 discipline: ["boulder"]
 visited: true
-checked: true
+bucketList: true
 website: "https://beestboulders.com"
 ---
 Holiday 2025

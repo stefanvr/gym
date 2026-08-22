@@ -6,7 +6,7 @@ lat: 52.383476
 lon: 4.929407
 discipline: ["boulder"]
 visited: false
-checked: false
+bucketList: false
 website: "https://monk.nl/amsterdam/"
 ---
 Aambeeldstraat 26, Amsterdam-Noord. From the NL gym backlog sweep.

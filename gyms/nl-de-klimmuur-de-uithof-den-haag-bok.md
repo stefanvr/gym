@@ -7,7 +7,7 @@ lon: 4.239997168542053
 discipline: ["boulder", "toprope"]
 hasOutdoorWall: true
 visited: true
-checked: true
+bucketList: true
 website: "https://deklimmuur.nl"
 ---
 Holiday 2025

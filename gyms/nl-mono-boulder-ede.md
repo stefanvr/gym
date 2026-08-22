@@ -6,7 +6,7 @@ lat: 52.020782
 lon: 5.667360
 discipline: ["boulder"]
 visited: false
-checked: false
+bucketList: false
 website: "https://monoboulder.nl/"
 ---
 Geerweg 17. From the NL gym backlog sweep.

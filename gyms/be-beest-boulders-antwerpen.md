@@ -6,7 +6,7 @@ lat: 51.23397713841443
 lon: 4.403318552630137
 discipline: ["boulder"]
 visited: false
-checked: false
+bucketList: false
 website: "https://beestboulders.com"
 ---
 

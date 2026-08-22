@@ -37,7 +37,7 @@ lat: 50.8514
 lon: 5.6910
 discipline: ["boulder", "toprope"]   # any of: boulder, toprope, lead
 visited: true
-checked: true       # you've confirmed name/address/coords against the gym's own website
+bucketList: true    # this one's high on your want-to-go-next list
 rating: 4          # optional, 1-5
 website: "https://example.com"       # optional
 lastVisit: "2026-08-01"              # optional, used for the trail line & sorting
@@ -49,13 +49,12 @@ with, that one green boulder you finally sent.
 - **`discipline`** — list every style you've climbed there. This drives
   both the marker colour and the sidebar filter chips.
 - **`visited: false`** — use this for gyms you know about but haven't been
-  to yet; they still show on the map, greyed out, as a bucket list.
-- **`checked`** — independent of `visited`. Set to `true` once you've
-  confirmed the name, address, and coordinates against the gym's own
-  website (as opposed to a directory listing that might be stale or
-  slightly off). Checked gyms get a small ✓ badge in the list and popup,
-  and there's a "Verified only" filter chip to spot the ones you still
-  need to double-check. Defaults to `false` if omitted.
+  to yet; they still show on the map, greyed out, as a still-to-visit list.
+- **`bucketList`** — independent of `visited`. Set to `true` for the gyms
+  you especially want to get to next — a personal priority marker, not a
+  data-quality flag. Bucket-list gyms get a small ✓ badge in the list and
+  popup, and there's a "Bucket list" filter chip to jump straight to them.
+  Defaults to `false` if omitted.
 - Coordinates: right-click a spot on [Google Maps](https://maps.google.com)
   or [OpenStreetMap](https://www.openstreetmap.org) and copy the lat/lon.
 - The **markdown body** becomes your notes — shown in the popup on the map.
@@ -110,7 +109,6 @@ to end — a couple in Amsterdam, one in Eindhoven, two in Belgium (Hasselt,
 Antwerp), and one in Aachen, Germany. Coordinates are approximate — nudge
 them if you spot a gym in the wrong spot, then delete or replace these
 entries with your own logbook. Two (`the-island-antwerp`, `diehalle-aachen`)
-are marked `checked: true` since their address came straight from the gym's
-own site; the rest are `checked: false` so you can see the "Verified only"
-filter actually filtering something — re-verify all of them before trusting
-the pins.
+are marked `bucketList: true`; the rest are `bucketList: false` so you can
+see the "Bucket list" filter actually filtering something — replace these
+placeholder entries with your own logbook.

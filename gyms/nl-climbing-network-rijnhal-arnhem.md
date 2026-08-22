@@ -7,7 +7,7 @@ lon: 5.900756873828111
 discipline: ["boulder", "toprope", "lead"]
 hasOutdoorWall: true
 visited: false
-checked: false
+bucketList: false
 website: "https://www.climbingnetwork.nl/"
 ---
 

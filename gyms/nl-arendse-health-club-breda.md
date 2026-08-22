@@ -7,7 +7,7 @@ lon: 4.775443
 discipline: ["boulder", "toprope", "lead"]
 hasOutdoorWall: true
 visited: false
-checked: false
+bucketList: false
 website: "https://arendse.nl/"
 ---
 Terheijdenseweg 504. 250m² indoor wall (12m), plus a boulder wall and an

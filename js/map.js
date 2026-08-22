@@ -27,7 +27,7 @@ let gyms = [];
 let activeDisciplines = new Set(); // empty = all disciplines shown
 let hasOutdoorWall = false;
 let visitedOnly = false;
-let checkedOnly = false;
+let bucketListOnly = false;
 let markersBySlug = new Map();
 
 async function loadGyms() {
@@ -45,7 +45,7 @@ function holdMarkerHtml(gym) {
   const stripes = colors
     .map((c, i) => `<rect x="0" y="${i * stripeH}" width="24" height="${stripeH + 0.5}" fill="${c}" />`)
     .join("");
-  const checkedColor = !gym.checked ? "#14171a": "#0e7c45";
+  const bucketListColor = !gym.bucketList ? "#14171a": "#0e7c45";
   return `
     <svg width="24" height="28" viewBox="0 0 24 28" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -55,7 +55,7 @@ function holdMarkerHtml(gym) {
       </defs>
       <g clip-path="url(#clip-${gym.slug})">${stripes}</g>
       <path d="M12 27 C 5 22, 1 16, 1 10 C 1 4.5, 6 1, 12 1 C 18 1, 23 4.5, 23 10 C 23 16, 19 22, 12 27 Z"
-            fill="none" stroke="${checkedColor}" stroke-width="1.5"/>
+            fill="none" stroke="${bucketListColor}" stroke-width="1.5"/>
     </svg>`;
 }
 
@@ -79,9 +79,9 @@ function pillsHtml(gym) {
     .join("");
 }
 
-function checkBadgeHtml(gym) {
-  if (!gym.checked) return "";
-  return `<span class="check-badge" title="Confirmed against the gym's own website">✓</span>`;
+function bucketListBadgeHtml(gym) {
+  if (!gym.bucketList) return "";
+  return `<span class="bucket-list-badge" title="On the bucket list">✓</span>`;
 }
 
 function popupHtml(gym) {
@@ -89,13 +89,12 @@ function popupHtml(gym) {
   const meta = [
     gym.visited ? (gym.lastVisit ? `Last visit ${gym.lastVisit}` : "Visited") : "Not visited yet",
     gym.rating ? `${gym.rating}/5` : null,
-    gym.checked ? "" : "Unverified",
   ]
     .filter(Boolean)
     .join(" · ");
 
   return `
-    <p class="popup__name">${gym.name}${checkBadgeHtml(gym)}</p>
+    <p class="popup__name">${gym.name}${bucketListBadgeHtml(gym)}</p>
     <p class="popup__place">${place}</p>
     <div class="popup__pills">${pillsHtml(gym)}</div>
     ${gym.notes ? `<p class="popup__notes">${gym.notes.replace(/\n/g, "<br>")}</p>` : ""}
@@ -105,11 +104,11 @@ function popupHtml(gym) {
 }
 
 function passesFilters(gym) {
-  if (gym.name == "The Climbing Corner")console.log(checkedOnly, !gym.checked,!visitedOnly,gym.visited, gym)
+  if (gym.name == "The Climbing Corner")console.log(bucketListOnly, !gym.bucketList,!visitedOnly,gym.visited, gym)
   if (hasOutdoorWall && !gym.hasOutdoorWall) return false;
   if (visitedOnly && !gym.visited) return false;
-  if (checkedOnly && !gym.checked) { return false }
-  else if (checkedOnly && !visitedOnly && gym.visited) return false;
+  if (bucketListOnly && !gym.bucketList) { return false }
+  else if (bucketListOnly && !visitedOnly && gym.visited) return false;
   if (activeDisciplines.size === 0) return true;
   return gym.discipline.some((d) => activeDisciplines.has(d));
 }
@@ -163,8 +162,8 @@ function renderFilters() {
      <button class="filter-chip" data-kind="visited" data-active="false">
        <span class="filter-chip__dot" style="background:${UNVISITED_COLOR}"></span>Visited only
      </button>
-     <button class="filter-chip" data-kind="checked" data-active="false">
-       <span class="filter-chip__dot filter-chip__dot--check">✓</span>On list
+     <button class="filter-chip" data-kind="bucketList" data-active="false">
+       <span class="filter-chip__dot filter-chip__dot--bucket-list">✓</span>Bucket list
      </button>`;
 
   el.querySelectorAll(".filter-chip").forEach((chip) => {
@@ -176,8 +175,8 @@ function renderFilters() {
         isActive ? activeDisciplines.delete(v) : activeDisciplines.add(v);
       } else if (chip.dataset.kind === "visited") {
         visitedOnly = !isActive;
-      } else if (chip.dataset.kind === "checked") {
-        checkedOnly = !isActive;
+      } else if (chip.dataset.kind === "bucketList") {
+        bucketListOnly = !isActive;
       } else if (chip.dataset.kind === "hasOutdoorWall") {
         hasOutdoorWall = !isActive;
       }
@@ -218,7 +217,7 @@ function renderList() {
       (gym) => `
       <li class="gym-card${gym.visited ? "" : " gym-card--unvisited"}" data-slug="${gym.slug}" tabindex="0" role="button">
         <div class="gym-card__top">
-          <span class="gym-card__name">${gym.name}${checkBadgeHtml(gym)}</span>
+          <span class="gym-card__name">${gym.name}${bucketListBadgeHtml(gym)}</span>
         </div>
         <div class="gym-card__place">${[gym.city, gym.country].filter(Boolean).join(", ")}</div>
         <div class="gym-card__pills">${pillsHtml(gym)}</div>

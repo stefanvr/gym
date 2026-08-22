@@ -145,14 +145,14 @@ h1 {
 
 .filter-chip[data-active="true"] { color: var(--chalk); border-color: currentColor; }
 .filter-chip__dot { width: 8px; height: 8px; border-radius: 50%; }
-.filter-chip__dot--check {
+.filter-chip__dot--bucket-list {
   width: auto; height: auto; border-radius: 0;
   background: none !important;
   color: var(--chalk-dim);
   font-size: 11px;
   line-height: 1;
 }
-.filter-chip[data-active="true"] .filter-chip__dot--check { color: currentColor; }
+.filter-chip[data-active="true"] .filter-chip__dot--bucket-list { color: currentColor; }
 
 /* gym list */
 .gym-list {
@@ -222,7 +222,7 @@ h1 {
 
 .gym-card--unvisited .gym-card__name { color: var(--chalk-dim); }
 
-.check-badge {
+.bucket-list-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;

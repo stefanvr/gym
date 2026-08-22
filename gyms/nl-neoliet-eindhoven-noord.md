@@ -6,7 +6,7 @@ lat: 51.47514400181492
 lon: 5.4571449219585935
 discipline: ["boulder", "toprope", "lead"]
 visited: false
-checked: false
+bucketList: false
 website: "https://neoliet.nl"
 ---
 

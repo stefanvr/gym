@@ -7,7 +7,7 @@ lon: 4.323566054532292
 discipline: ["boulder", "toprope"]
 hasOutdoorWall: true
 visited: false
-checked: false
+bucketList: false
 website: "https://beestboulders.com"
 ---
 

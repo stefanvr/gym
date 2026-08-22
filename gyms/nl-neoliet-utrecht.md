@@ -7,7 +7,7 @@ lon: 5.031424468027595
 discipline: ["boulder", "toprope", "lead"]
 hasOutdoorWall: true
 visited: true
-checked: true
+bucketList: true
 website: "https://neoliet.nl"
 ---
 Joined para climbing social - july 2025

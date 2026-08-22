@@ -6,7 +6,7 @@ lat: 52.207305
 lon: 6.900020
 discipline: ["toprope", "lead"]
 visited: false
-checked: false
+bucketList: false
 website: "https://arque.nl/"
 ---
 J.J. van Deinselaan 20. From the NL gym backlog sweep.

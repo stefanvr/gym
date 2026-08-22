@@ -7,7 +7,7 @@ lon: 4.9088
 discipline: ["boulder", "toprope", "lead"]
 hasOutdoorWall: true
 visited: true
-checked: true
+bucketList: true
 website: "https://www.climbingnetwork.nl/"
 ---
 Joined para climbing social - august 2025

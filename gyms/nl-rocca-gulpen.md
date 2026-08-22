@@ -6,7 +6,7 @@ lat: 50.809294
 lon: 5.888395
 discipline: ["toprope", "lead"]
 visited: false
-checked: false
+bucketList: false
 website: "https://rocca.nl/"
 ---
 Landsraderweg 13. From the NL gym backlog sweep.

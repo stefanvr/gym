@@ -38,6 +38,81 @@
     "notes": ""
   },
   {
+    "slug": "nl-apex-boulders-groningen",
+    "name": "Apex Boulders",
+    "city": "Groningen",
+    "country": "NL",
+    "lat": 53.216076,
+    "lon": 6.539211,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://apexboulders.nl/",
+    "lastVisit": null,
+    "notes": "Atoomweg 19a. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-arendse-health-club-breda",
+    "name": "Arendse Health Club",
+    "city": "Breda",
+    "country": "NL",
+    "lat": 51.615142,
+    "lon": 4.775443,
+    "discipline": [
+      "boulder",
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": true,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://arendse.nl/",
+    "lastVisit": null,
+    "notes": "Terheijdenseweg 504. 250m² indoor wall (12m), plus a boulder wall and an\noutdoor wall. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-arque-klimcentrum-enschede",
+    "name": "Arque Klimcentrum",
+    "city": "Enschede",
+    "country": "NL",
+    "lat": 52.207305,
+    "lon": 6.90002,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://arque.nl/",
+    "lastVisit": null,
+    "notes": "J.J. van Deinselaan 20. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-baz-bouldergym-zaandam",
+    "name": "Baz Bouldergym",
+    "city": "Zaandam",
+    "country": "NL",
+    "lat": 52.460568,
+    "lon": 4.81391,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://www.bazbouldergym.nl/",
+    "lastVisit": null,
+    "notes": "Oostzijde 381C. From the NL gym backlog sweep."
+  },
+  {
     "slug": "nl-beest-boulders-amsterdam",
     "name": "Beest Boulders Amsterdam",
     "city": "Amsterdam",
@@ -165,6 +240,24 @@
     "notes": ""
   },
   {
+    "slug": "nl-beta-boulders-amsterdam",
+    "name": "Beta Boulders",
+    "city": "Amsterdam",
+    "country": "NL",
+    "lat": 52.344124,
+    "lon": 4.855954,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://betaboulders.nl/",
+    "lastVisit": null,
+    "notes": "Stadionplein 18. From the NL gym backlog sweep."
+  },
+  {
     "slug": "nl-bjoeks-excalibur-",
     "name": "Bjoeks Excalibur",
     "city": "Groningen",
@@ -203,6 +296,60 @@
     "notes": ""
   },
   {
+    "slug": "nl-bouldercentrum-delfts-bleau-delft",
+    "name": "Bouldercentrum Delfts Bleau",
+    "city": "Delft",
+    "country": "NL",
+    "lat": 51.994357,
+    "lon": 4.364422,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://delftsbleau.nl/",
+    "lastVisit": null,
+    "notes": "Schieweg 15L, entrance Oost 2. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderhal-bruut-breda",
+    "name": "Boulderhal Bruut",
+    "city": "Breda",
+    "country": "NL",
+    "lat": 51.598555,
+    "lon": 4.755553,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderhalbruut.nl/",
+    "lastVisit": null,
+    "notes": "Spinveld 66A1. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderhal-de-campus-den-haag",
+    "name": "Boulderhal de Campus",
+    "city": "Den Haag",
+    "country": "NL",
+    "lat": 52.049778,
+    "lon": 4.254626,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderhaldecampus.nl/",
+    "lastVisit": null,
+    "notes": "Kerketuinenweg 55. From the NL gym backlog sweep."
+  },
+  {
     "slug": "nl-boulderhal-de-fabriek-haarlem",
     "name": "Boulderhal de Fabriek Haarlem",
     "city": "Haarlem",
@@ -239,6 +386,132 @@
     "notes": "Graftermeerstraat 40. From the NL gym backlog sweep."
   },
   {
+    "slug": "nl-boulderhal-energiehaven-utrecht",
+    "name": "Boulderhal Energiehaven",
+    "city": "Utrecht",
+    "country": "NL",
+    "lat": 52.099411,
+    "lon": 5.070681,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://www.boulderhalenergiehaven.nl/",
+    "lastVisit": null,
+    "notes": "Elektronweg 10A. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderhal-krachtstof-leiden",
+    "name": "Boulderhal Krachtstof",
+    "city": "Leiden",
+    "country": "NL",
+    "lat": 52.158549,
+    "lon": 4.511957,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderhalkrachtstof.nl/",
+    "lastVisit": null,
+    "notes": "Admiraal Banckertweg 2. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderhal-kunststof-leiden",
+    "name": "Boulderhal Kunststof",
+    "city": "Leiden",
+    "country": "NL",
+    "lat": 52.144307,
+    "lon": 4.481227,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderhalkunststof.nl/",
+    "lastVisit": null,
+    "notes": "Rooseveltstraat 49. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderhal-luchthaven-amsterdam",
+    "name": "Boulderhal Luchthaven",
+    "city": "Amsterdam",
+    "country": "NL",
+    "lat": 52.339894,
+    "lon": 4.842452,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://www.boulderhalluchthaven.nl/",
+    "lastVisit": null,
+    "notes": "Anthony Fokkerweg 75. Formerly Be Boulder, same premises under new ownership. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderhal-nirvana-den-haag",
+    "name": "Boulderhal Nirvana",
+    "city": "Den Haag",
+    "country": "NL",
+    "lat": 52.110197,
+    "lon": 4.283571,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderhalnirvana.nl/",
+    "lastVisit": null,
+    "notes": "Berkenbosch Blokstraat 9a, Scheveningen. Bouldering gym in a former church. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderhal-roest-zwolle",
+    "name": "Boulderhal Roest",
+    "city": "Zwolle",
+    "country": "NL",
+    "lat": 52.498889,
+    "lon": 6.119615,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderhalroest.nl/",
+    "lastVisit": null,
+    "notes": "Marsweg 10. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderhal-sendmast-alkmaar",
+    "name": "Boulderhal Sendmast",
+    "city": "Alkmaar",
+    "country": "NL",
+    "lat": 52.61778,
+    "lon": 4.767016,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://www.boulderhalsendmast.nl/",
+    "lastVisit": null,
+    "notes": "Koelmalaan 354. From the NL gym backlog sweep."
+  },
+  {
     "slug": "nl-boulderhal-sterk-spoor-utrecht",
     "name": "Boulderhal Sterk Spoor",
     "city": "Utrecht",
@@ -273,6 +546,114 @@
     "website": "https://www.boulderhalsterk.nl/sterk",
     "lastVisit": null,
     "notes": "Koningin Wilhelminalaan 4. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderhal-vrijhaven-deventer",
+    "name": "Boulderhal Vrijhaven",
+    "city": "Deventer",
+    "country": "NL",
+    "lat": 52.247579,
+    "lon": 6.172608,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderhalvrijhaven.nl/",
+    "lastVisit": null,
+    "notes": "Sint Olafstraat 5. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderhal-walhalla-den-haag",
+    "name": "Boulderhal Walhalla",
+    "city": "Den Haag",
+    "country": "NL",
+    "lat": 52.061708,
+    "lon": 4.313718,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderhalwalhalla.nl/",
+    "lastVisit": null,
+    "notes": "Johan van Veenplein 12. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderhal-zuidhaven-utrecht",
+    "name": "Boulderhal Zuidhaven",
+    "city": "Utrecht",
+    "country": "NL",
+    "lat": 52.064597,
+    "lon": 5.104425,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://www.boulderhalzuidhaven.nl/",
+    "lastVisit": null,
+    "notes": "Vrieslantlaan 2. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderkerk-venlo",
+    "name": "Boulderkerk Venlo",
+    "city": "Venlo",
+    "country": "NL",
+    "lat": 51.356734,
+    "lon": 6.183434,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderkerkvenlo.nl/",
+    "lastVisit": null,
+    "notes": "Johannes Boscostraat 2. Bouldering gym in a former church. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderstation-enschede",
+    "name": "Boulderstation Enschede",
+    "city": "Enschede",
+    "country": "NL",
+    "lat": 52.224141,
+    "lon": 6.872101,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderstationenschede.nl/",
+    "lastVisit": null,
+    "notes": "Goolkatenweg 65. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-boulderwijk-beverwijk",
+    "name": "Boulderwijk",
+    "city": "Beverwijk",
+    "country": "NL",
+    "lat": 52.480209,
+    "lon": 4.664482,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://boulderwijk.nl/",
+    "lastVisit": null,
+    "notes": "Parallelweg 120b. From the NL gym backlog sweep."
   },
   {
     "slug": "nl-climbing-network-amsterdam",
@@ -416,6 +797,43 @@
     "notes": ""
   },
   {
+    "slug": "nl-cube-bouldergym-enschede",
+    "name": "Cube Bouldergym",
+    "city": "Enschede",
+    "country": "NL",
+    "lat": 52.223212,
+    "lon": 6.90392,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://cubebouldergym.nl/",
+    "lastVisit": null,
+    "notes": "Hoge Bothofstraat 49. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-de-broekerberg-broek-op-langedijk",
+    "name": "De Broekerberg",
+    "city": "Broek op Langedijk",
+    "country": "NL",
+    "lat": 52.675407,
+    "lon": 4.792109,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://debroekerberg.nl/",
+    "lastVisit": null,
+    "notes": "Bijlestaal 64. From the NL gym backlog sweep."
+  },
+  {
     "slug": "nl-de-klimmuur-amsterdam-centraal",
     "name": "De Klimmuur Amsterdam Centraal",
     "city": "Amsterdam",
@@ -490,6 +908,79 @@
     "website": "https://deklimmuur.nl",
     "lastVisit": null,
     "notes": ""
+  },
+  {
+    "slug": "nl-fliegerhorst-venlo",
+    "name": "Fliegerhorst",
+    "city": "Venlo",
+    "country": "NL",
+    "lat": 51.367579,
+    "lon": 6.20094,
+    "discipline": [
+      "boulder",
+      "lead"
+    ],
+    "hasOutdoorWall": true,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://fliegerhorst.nl/",
+    "lastVisit": null,
+    "notes": "Postweg 15. Outdoor climbing garden on a former WWII airfield site — also\nvia ferrata, abseiling, dry tooling. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-grip-boulderhal-nijmegen",
+    "name": "GRIP Boulderhal",
+    "city": "Nijmegen",
+    "country": "NL",
+    "lat": 51.813171,
+    "lon": 5.838446,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://gripnijmegen.nl/",
+    "lastVisit": null,
+    "notes": "Kamerlingh Onnesstraat 35. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-gropo-bouldergym-groningen",
+    "name": "Gropo Bouldergym",
+    "city": "Groningen",
+    "country": "NL",
+    "lat": 53.230625,
+    "lon": 6.589805,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://gropo.nl/",
+    "lastVisit": null,
+    "notes": "Ulgersmaweg 8. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-impact-boulderhal-almere",
+    "name": "Impact Boulderhal",
+    "city": "Almere",
+    "country": "NL",
+    "lat": 52.37603,
+    "lon": 5.238137,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://impactboulderhal.nl/",
+    "lastVisit": null,
+    "notes": "Bongerdstraat 6. From the NL gym backlog sweep."
   },
   {
     "slug": "nl-ivy-climbing-sittard",
@@ -567,6 +1058,121 @@
     "notes": "Soesterweg 314. From the NL gym backlog sweep."
   },
   {
+    "slug": "nl-klimcentrum-alkmaar",
+    "name": "Klimcentrum Alkmaar",
+    "city": "Alkmaar",
+    "country": "NL",
+    "lat": 52.626005,
+    "lon": 4.766523,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://klimcentrumalkmaar.nl/",
+    "lastVisit": null,
+    "notes": "Marconistraat 5. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-klimcentrum-monte-cervino-bergschenhoek",
+    "name": "Klimcentrum Monte Cervino",
+    "city": "Bergschenhoek",
+    "country": "NL",
+    "lat": 51.977239,
+    "lon": 4.536085,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://montecervino.nl/",
+    "lastVisit": null,
+    "notes": "Hoeksekade 141. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-klimcentrum-noardwand-leeuwarden",
+    "name": "Klimcentrum Noardwand",
+    "city": "Leeuwarden",
+    "country": "NL",
+    "lat": 53.2123,
+    "lon": 5.791175,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://noardwand.nl/",
+    "lastVisit": null,
+    "notes": "Fiswerderweg 3. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-klimcentrum-yellow-stone-roosendaal",
+    "name": "Klimcentrum Yellow Stone",
+    "city": "Roosendaal",
+    "country": "NL",
+    "lat": 51.550611,
+    "lon": 4.478967,
+    "discipline": [
+      "boulder",
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://yellowstoneklimmen.nl/",
+    "lastVisit": null,
+    "notes": "Buijenstraat 16. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-klimhal-stadsmuur-nijmegen",
+    "name": "Klimhal Stadsmuur",
+    "city": "Nijmegen",
+    "country": "NL",
+    "lat": 51.821838,
+    "lon": 5.787994,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://stadsmuur.com/",
+    "lastVisit": null,
+    "notes": "Van Rosenburgweg 52. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-klimmuur-kalymnos-utrecht",
+    "name": "Klimmuur Kalymnos (Olympos)",
+    "city": "Utrecht",
+    "country": "NL",
+    "lat": 52.088765,
+    "lon": 5.176592,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": true,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://olympos.nl/",
+    "lastVisit": null,
+    "notes": "Uppsalalaan, Utrecht Science Park. Outdoor concrete wall (30.8m at its\nhighest), part of Sportcentrum Olympos. From the NL gym backlog sweep."
+  },
+  {
     "slug": "nl-klimmuur-utrecht",
     "name": "Klimmuur Utrecht",
     "city": "Utrecht",
@@ -584,6 +1190,25 @@
     "website": "https://www.klimmuur-utrecht.nl/",
     "lastVisit": null,
     "notes": "Joined para climb training - july 2025"
+  },
+  {
+    "slug": "nl-krachtwereld-dordrecht",
+    "name": "Krachtwereld",
+    "city": "Dordrecht",
+    "country": "NL",
+    "lat": 51.796758,
+    "lon": 4.717876,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://krachtwereld.nl/",
+    "lastVisit": null,
+    "notes": "Sikkelstraat 3. From the NL gym backlog sweep."
   },
   {
     "slug": "nl-monk-amsterdam",
@@ -656,6 +1281,43 @@
     "website": "https://monk.nl/rotterdam/",
     "lastVisit": null,
     "notes": "Ceintuurbaan 183, Rotterdam-Noord. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-mono-boulder-ede",
+    "name": "MONO Boulder Ede",
+    "city": "Ede",
+    "country": "NL",
+    "lat": 52.020782,
+    "lon": 5.66736,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://monoboulder.nl/",
+    "lastVisit": null,
+    "notes": "Geerweg 17. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-multisportpark-berg-en-bal-castricum",
+    "name": "Multisportpark Berg en Bal",
+    "city": "Castricum",
+    "country": "NL",
+    "lat": 52.551256,
+    "lon": 4.68605,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://bergenbal.nl/",
+    "lastVisit": null,
+    "notes": "De Bloemen 69. Climbing wall inside a multisport centre (also squash, tennis, skiing). From the NL gym backlog sweep."
   },
   {
     "slug": "nl-neoliet-boulder-Apeldoorn",
@@ -881,6 +1543,80 @@
     "notes": ""
   },
   {
+    "slug": "nl-revolt-climbing-delft",
+    "name": "Revolt Climbing",
+    "city": "Delft",
+    "country": "NL",
+    "lat": 52.025527,
+    "lon": 4.364376,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://revoltclimbing.com/",
+    "lastVisit": null,
+    "notes": "Kleveringweg 35. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-rocca-gulpen",
+    "name": "Rocca sport & adventure",
+    "city": "Gulpen",
+    "country": "NL",
+    "lat": 50.809294,
+    "lon": 5.888395,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://rocca.nl/",
+    "lastVisit": null,
+    "notes": "Landsraderweg 13. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-rock-steady-bussum",
+    "name": "Rock Steady",
+    "city": "Bussum",
+    "country": "NL",
+    "lat": 52.259744,
+    "lon": 5.168192,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://rocksteady.nl/",
+    "lastVisit": null,
+    "notes": "Zanderijweg 12-14. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-silk-bouldergym-ede",
+    "name": "Silk Bouldergym",
+    "city": "Ede",
+    "country": "NL",
+    "lat": 52.025054,
+    "lon": 5.67642,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://silkbouldergym.nl/",
+    "lastVisit": null,
+    "notes": "Akulaan 2. Still listed as \"coming soon\" as of the backlog sweep — worth\nconfirming it's actually open before trusting this entry."
+  },
+  {
     "slug": "nl-the-climbing-corner-heerlen",
     "name": "The Climbing Corner",
     "city": "Heerlen",
@@ -897,5 +1633,80 @@
     "website": "https://theclimbingcorner.com",
     "lastVisit": null,
     "notes": ""
+  },
+  {
+    "slug": "nl-usc-sportcentrum-universum-amsterdam",
+    "name": "USC (Sportcentrum Universum)",
+    "city": "Amsterdam",
+    "country": "NL",
+    "lat": 52.355769,
+    "lon": 4.956684,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://uscsport.nl/",
+    "lastVisit": null,
+    "notes": "Science Park 306. University sports centre climbing wall, 18 rope lines. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-wellnesselande-barendrecht",
+    "name": "Wellnesselande",
+    "city": "Barendrecht",
+    "country": "NL",
+    "lat": 51.85981,
+    "lon": 4.518149,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://wellnesselande.nl/",
+    "lastVisit": null,
+    "notes": "Bijdorp-Zuid 1. Climbing wall inside a wellness/fitness club. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-wildflower-climbing-gym-leiden",
+    "name": "WildFlower Climbing Gym",
+    "city": "Leiden",
+    "country": "NL",
+    "lat": 52.159334,
+    "lon": 4.513675,
+    "discipline": [
+      "boulder"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://wildflowerclimbinggym.org/",
+    "lastVisit": null,
+    "notes": "Dorus Rijkersweg 15. From the NL gym backlog sweep."
+  },
+  {
+    "slug": "nl-yosemite-zwolle",
+    "name": "Klim- en Outdoorcentrum Yosemite",
+    "city": "Zwolle",
+    "country": "NL",
+    "lat": 52.483622,
+    "lon": 6.108196,
+    "discipline": [
+      "toprope",
+      "lead"
+    ],
+    "hasOutdoorWall": false,
+    "visited": false,
+    "checked": true,
+    "rating": null,
+    "website": "https://yosemite.nl/",
+    "lastVisit": null,
+    "notes": "Van der Heydenstraat 8. 1200m², ~120 routes. From the NL gym backlog sweep."
   }
 ]

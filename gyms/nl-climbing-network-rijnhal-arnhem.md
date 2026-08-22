@@ -1,5 +1,5 @@
 ---
-name: "Climbing Network Arnhem Rijnhal"
+name: "Climbing Network Arnhem Rijnhal - RijnBoulder"
 city: "Arnhem"
 country: "NL"
 lat: 51.96295620145252 

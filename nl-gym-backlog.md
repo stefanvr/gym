@@ -40,7 +40,7 @@ Sources: [NKBV](https://nkbv.nl/kenniscentrum/klimmen-in-nederland.html) ·
 - ~~Amsterdam~~
 - ~~Arnhem — Olympus~~
 - ~~Arnhem — Rijnhal~~
-- Arnhem — RijnBoulder (bouldering-only venue)
+- ~~Arnhem — RijnBoulder (bouldering-only venue)~~
 - ~~Dordrecht~~
 - ~~Heerenveen~~
 - ~~Leeuwarden~~
@@ -49,7 +49,7 @@ Sources: [NKBV](https://nkbv.nl/kenniscentrum/klimmen-in-nederland.html) ·
 ### Neoliet — https://neoliet.nl/ / https://boulderneoliet.nl/
 - ~~Amsterdam (boulder)~~
 - ~~Apeldoorn (boulder)~~
-- Eindhoven (boulder-only venue, separate from the two toprope/lead halls below)
+- ~~Eindhoven (boulder-only venue, but same location as noord)~~
 - ~~Eindhoven Noord (toprope/lead)~~
 - ~~Eindhoven Zuid (toprope/lead)~~
 - ~~Heerlen~~
@@ -62,34 +62,35 @@ Sources: [NKBV](https://nkbv.nl/kenniscentrum/klimmen-in-nederland.html) ·
 ### De Klimmuur — https://deklimmuur.nl/
 - ~~Amsterdam Centraal~~
 - ~~Den Haag — De Uithof (BOK)~~
-- Den Haag — Hollands Spoor
+- ~~Den Haag — Hollands Spoor (same ase beest boulders HS)~~
 - ~~Haarlem~~
 - ~~Rotterdam~~
 
-### Monk Bouldergym — https://monk.nl/
-- Amsterdam
-- Eindhoven
-- Hilversum
-- Rotterdam
+### ~~Monk Bouldergym~~ — https://monk.nl/
+- ~~Amsterdam — Aambeeldstraat 26 — 52.383476, 4.929407~~
+- ~~Eindhoven — Berkenstraat 1A — 51.443469, 5.458708~~
+- ~~Hilversum — Vreelandseweg 5 — 52.219897, 5.149230~~
+- ~~Rotterdam — Ceintuurbaan 183 — 51.941656, 4.473403~~
 
-### Kei Boulderhal — https://keiboulderhal.nl/
-- Amersfoort — Wagenwerkplaats
-- Amersfoort — De Hoef
-- Apeldoorn
+### ~~Kei Boulderhal~~ — https://keiboulderhal.nl/
+- ~~Amersfoort — Wagenwerkplaats — Soesterweg 314 — 52.156721, 5.364763~~
+- ~~Amersfoort — De Hoef — Databankweg 12K — 52.180635, 5.415210~~
+- ~~Apeldoorn — Vlijtseweg 106 — 52.224364, 5.971935~~
 
-### Boulderhal de Fabriek — https://boulderhalfabriek.nl/
-- Haarlem
-- Hoofddorp
+### ~~Boulderhal de Fabriek~~ — https://boulderhalfabriek.nl/
+- ~~Haarlem — Ben Viljoenstraat 1 — 52.392310, 4.647881~~
+- ~~Hoofddorp — Graftermeerstraat 40 — 52.313488, 4.691553~~
 
-### Boulderhal Sterk — https://boulderhalsterk.nl/
-- Utrecht — Sterk
-- Utrecht — Sterk Spoor
+### ~~Boulderhal Sterk~~ — https://boulderhalsterk.nl/
+- ~~Utrecht — Sterk — Koningin Wilhelminalaan 4 — 52.076244, 5.108385~~
+- ~~Utrecht — Sterk Spoor — Schaverijstraat 52 — 52.105189, 5.082756~~
 
 ---
 
 ## Independent / single-location gyms
 
-- Klimcentrum Alkmaar (a.k.a. Boulderhal Sendmast) — Alkmaar — https://klimcentrumalkmaar.nl/
+- Klimcentrum Alkmaar — Alkmaar — https://klimcentrumalkmaar.nl/
+-  Boulderhal Sendmast — Alkmaar — https://www.boulderhalsendmast.nl/
 - Arque Klimcentrum — Enschede — https://arque.nl/
 - Boulderstation Enschede — Enschede — https://boulderstationenschede.nl/
 - Cube Bouldergym — Enschede — https://cubebouldergym.nl/
@@ -146,10 +147,4 @@ Sources: [NKBV](https://nkbv.nl/kenniscentrum/klimmen-in-nederland.html) ·
 
 - Zeeland currently has no indoor climbing/bouldering gym (KlimAvontuur
   Middelburg closed; Fox Bouldergym never opened) — nothing to add there yet.
-- Drenthe's first boulder gym, Huneboulder in Assen, is very recent — worth
-  double-checking it's actually open before logging it as `visited`/`checked`.
-- A few names above are genuinely uncertain and worth verifying before
-  writing a `gyms/*.md` entry: whether "Klimcentrum Alkmaar" and "Boulderhal
-  Sendmast" are the same venue, and whether Arnhem's "RijnBoulder" is a
-  distinct building from the existing Mountain Network Arnhem entries or the
-  same one under another name.
+- Opennig 2027: Drenthe's first boulder gym, Huneboulder in Assen, is very recent.

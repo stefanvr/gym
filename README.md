@@ -49,7 +49,7 @@ with, that one green boulder you finally sent.
 - **`discipline`** — list every style you've climbed there. This drives
   both the marker colour and the sidebar filter chips.
 - **`visited: false`** — use this for gyms you know about but haven't been
-  to yet; they still show on the map, greyed out, as a to-do list.
+  to yet; they still show on the map, greyed out, as a bucket list.
 - **`checked`** — independent of `visited`. Set to `true` once you've
   confirmed the name, address, and coordinates against the gym's own
   website (as opposed to a directory listing that might be stale or

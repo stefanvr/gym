@@ -774,7 +774,7 @@
     "rating": null,
     "website": "https://www.climbingnetwork.nl/",
     "lastVisit": null,
-    "notes": "Olympus 27, next to swimming pool De Grote Koppel. Rope climbing up to 17m\nover three floors. Separate venue from RijnBoulder, which is further down\nthe same street at Olympus 3."
+    "notes": "Olympus 27, next to swimming pool De Grote Koppel. Rope climbing up to 17m\nover three floors. Separate venue from RijnBoulder, which is further down\nthe same street at Olympus 3.\n\nAdventure Towers,??"
   },
   {
     "slug": "nl-climbing-network-rijnhal-arnhem",
@@ -784,15 +784,13 @@
     "lat": 51.96295620145252,
     "lon": 5.900756873828111,
     "discipline": [
-      "boulder",
-      "toprope",
-      "lead"
+      "boulder"
     ],
     "hasOutdoorWall": true,
     "visited": false,
     "bucketList": false,
     "rating": null,
-    "website": "https://www.climbingnetwork.nl/",
+    "website": "https://www.climbingnetwork.nl/indoor/locatie/bouldergym-arnhem",
     "lastVisit": null,
     "notes": ""
   },

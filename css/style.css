@@ -117,13 +117,83 @@ h1 {
 .stat__label { font-size: 11px; color: var(--chalk-dim); text-transform: uppercase; letter-spacing: 0.06em; }
 
 /* filters */
+.filters-section {
+  border-bottom: 1px solid var(--basalt-line);
+}
+
 .filters {
   padding: 14px 20px 20px 14px;
-  border-bottom: 1px solid var(--basalt-line);
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
+
+/* Folding toggle: hidden on desktop, where there's room to always show the
+   full filter row. On narrow screens it replaces that row with a slim
+   header — tap to expand, active filters stay visible as badges while
+   collapsed so the gym list underneath gets the vertical space back. */
+.filters-toggle { display: none; }
+
+@media (max-width: 760px) {
+  .filters-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 20px 12px 14px;
+    background: transparent;
+    border: none;
+    color: var(--chalk);
+    font-family: var(--font-mono);
+    cursor: pointer;
+    text-align: left;
+  }
+  .filters-toggle:focus-visible { outline: 2px solid var(--toprope); outline-offset: -2px; }
+
+  .filters-toggle__label {
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--chalk-dim);
+    flex-shrink: 0;
+  }
+
+  .filters-toggle__badges {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 6px;
+    flex: 1;
+    scrollbar-width: none;
+  }
+  .filters-toggle__badges::-webkit-scrollbar { display: none; }
+
+  .filters-toggle__chevron {
+    flex-shrink: 0;
+    font-size: 12px;
+    color: var(--chalk-dim);
+    transition: transform 0.15s;
+  }
+  .filters-section[data-expanded="true"] .filters-toggle__chevron { transform: rotate(180deg); }
+
+  .filters-section[data-expanded="false"] .filters { display: none; }
+  .filters-section[data-expanded="true"] .filters-toggle__badges { display: none; }
+}
+
+.filter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--radius);
+  border: 1px solid var(--basalt-line);
+  font-size: 11px;
+  white-space: nowrap;
+  color: var(--chalk-dim);
+}
+.filter-badge__dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.filter-badge--bucket-list { color: #0e7c45; border-color: #0e7c45; }
 
 .filter-chip {
   font-family: var(--font-mono);

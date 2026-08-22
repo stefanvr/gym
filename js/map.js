@@ -28,6 +28,7 @@ let activeDisciplines = new Set(); // empty = all disciplines shown
 let hasOutdoorWall = false;
 let visitedOnly = false;
 let bucketListOnly = false;
+let filtersExpanded = false; // mobile only — desktop always shows the full row
 let markersBySlug = new Map();
 
 async function loadGyms() {
@@ -183,7 +184,50 @@ function renderFilters() {
       renderStats();
       renderMarkers();
       renderList();
+      renderFilterToggle();
     });
+  });
+}
+
+// Small non-interactive summary of whichever filters are currently active —
+// shown inside the collapsed toggle header on mobile so folding the filter
+// panel doesn't hide the fact that something's being filtered.
+function activeFilterBadgesHtml() {
+  const badges = [];
+  activeDisciplines.forEach((d) => {
+    badges.push(
+      `<span class="filter-badge"><span class="filter-badge__dot" style="background:${DISCIPLINE_COLOR[d]}"></span>${DISCIPLINE_LABEL[d]}</span>`
+    );
+  });
+  if (hasOutdoorWall) {
+    badges.push(
+      `<span class="filter-badge"><span class="filter-badge__dot" style="background:${OUTDOOR_WALL_COLOR}"></span>Outdoor wall</span>`
+    );
+  }
+  if (visitedOnly) {
+    badges.push(
+      `<span class="filter-badge"><span class="filter-badge__dot" style="background:${UNVISITED_COLOR}"></span>Visited only</span>`
+    );
+  }
+  if (bucketListOnly) {
+    badges.push(`<span class="filter-badge filter-badge--bucket-list">✓ Bucket list</span>`);
+  }
+  return badges.join("");
+}
+
+function renderFilterToggle() {
+  const section = document.getElementById("filters-section");
+  const toggle = document.getElementById("filters-toggle");
+  const badges = document.getElementById("filters-toggle-badges");
+  section.setAttribute("data-expanded", String(filtersExpanded));
+  toggle.setAttribute("aria-expanded", String(filtersExpanded));
+  badges.innerHTML = filtersExpanded ? "" : activeFilterBadgesHtml();
+}
+
+function initFiltersToggle() {
+  document.getElementById("filters-toggle").addEventListener("click", () => {
+    filtersExpanded = !filtersExpanded;
+    renderFilterToggle();
   });
 }
 
@@ -279,6 +323,8 @@ async function init() {
 
   renderStats();
   renderFilters();
+  initFiltersToggle();
+  renderFilterToggle();
   renderMarkers();
   renderList();
   renderTrail();

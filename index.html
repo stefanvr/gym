@@ -26,7 +26,14 @@
 
     <div class="stats" id="stats"></div>
 
-    <div class="filters" id="filters"></div>
+    <div class="filters-section" id="filters-section" data-expanded="false">
+      <button class="filters-toggle" id="filters-toggle" type="button" aria-expanded="false" aria-controls="filters">
+        <span class="filters-toggle__label">Filters</span>
+        <span class="filters-toggle__badges" id="filters-toggle-badges"></span>
+        <span class="filters-toggle__chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="filters" id="filters"></div>
+    </div>
     <ul class="gym-list-header">Gyms</ul>
     <ul class="gym-list" id="gym-list"></ul>
   </aside>

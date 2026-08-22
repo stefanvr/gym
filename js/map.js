@@ -105,7 +105,6 @@ function popupHtml(gym) {
 }
 
 function passesFilters(gym) {
-  if (gym.name == "The Climbing Corner")console.log(bucketListOnly, !gym.bucketList,!visitedOnly,gym.visited, gym)
   if (hasOutdoorWall && !gym.hasOutdoorWall) return false;
   if (visitedOnly && !gym.visited) return false;
   if (bucketListOnly && !gym.bucketList) { return false }

@@ -8,7 +8,7 @@ Each gym is a markdown file with a bit of frontmatter. A small build script
 compiles all of them into one JSON file that a [Leaflet](https://leafletjs.com/)
 map reads. No database, no backend — just markdown, committed to git.
 
-**[Live demo →](#)** *(update this link once GitHub Pages is enabled — see below)*
+**[Live map →](https://stefanvr.github.io/gym/)**
 
 ## How it works
 
@@ -35,9 +35,10 @@ city: "Maastricht"
 country: "NL"
 lat: 50.8514
 lon: 5.6910
-discipline: ["boulder", "toprope"]   # any of: boulder, toprope, lead
+discipline: ["boulder", "toprope"]   # any of: boulder, toprope, lead, speed
 visited: true
 bucketList: true    # this one's high on your want-to-go-next list
+hasOutdoorWall: true                 # optional, adds it to the "Has outdoor wall" filter
 rating: 4          # optional, 1-5
 website: "https://example.com"       # optional
 lastVisit: "2026-08-01"              # optional, used for the trail line & sorting
@@ -55,6 +56,8 @@ with, that one green boulder you finally sent.
   data-quality flag. Bucket-list gyms get a small ✓ badge in the list and
   popup, and there's a "Bucket list" filter chip to jump straight to them.
   Defaults to `false` if omitted.
+- **`hasOutdoorWall`** — set to `true` for gyms with an outdoor wall; drives
+  the "Has outdoor wall" filter chip. Defaults to `false` if omitted.
 - Coordinates: right-click a spot on [Google Maps](https://maps.google.com)
   or [OpenStreetMap](https://www.openstreetmap.org) and copy the lat/lon.
 - The **markdown body** becomes your notes — shown in the popup on the map.
@@ -62,7 +65,7 @@ with, that one green boulder you finally sent.
 Then rebuild locally to check it:
 
 ```bash
-node scripts/build.js
+npm run build      # or: node scripts/build.js
 ```
 
 It will tell you exactly which file has a problem, if any (missing name,
@@ -71,13 +74,15 @@ bad coordinates, unknown discipline, etc).
 ## Running locally
 
 No install needed for the build step. To preview the site itself, serve the
-folder with anything that can serve static files, e.g.:
+folder with anything that can serve static files:
 
 ```bash
-node scripts/build.js
-npx http-server . -p 8080
-# open http://localhost:8080
+npm run dev        # build, then serve on http://localhost:8080
 ```
+
+`npm run live` is also wired up, but it expects `live-server` to be
+available (globally installed or via `npx`) — it isn't a project
+dependency.
 
 (Opening `index.html` directly via `file://` won't work — `fetch()` needs an
 actual HTTP server.)
@@ -92,23 +97,16 @@ actual HTTP server.)
    `data/gyms.json` from your markdown files and deploys automatically —
    you never need to commit the generated JSON yourself, though it's fine
    if it's in the repo too.
-4. Your site will be live at `https://<your-username>.github.io/<repo-name>/`.
+4. The site is live at <https://stefanvr.github.io/gym/>.
 
 ## Customizing
 
 - **Map area** — `MAP_CENTER`, `MAP_ZOOM`, and `MAP_BOUNDS` near the top of
   `js/map.js` control the initial view and the max-pan bounds.
-- **Colors / fonts** — all in the `:root` block at the top of `css/style.css`.
+- **Colors / fonts** — design tokens live in the `:root` block at the top of
+  `css/style.css`. Note that the discipline colours are also hard-coded in
+  `DISCIPLINE_COLOR` / `UNVISITED_COLOR` / `OUTDOOR_WALL_COLOR` at the top of
+  `js/map.js` (the markers are inline SVG, so they can't read CSS variables) —
+  change a discipline colour in both places or the map and sidebar drift apart.
 - **The dashed trail line** connects visited gyms in order of `lastVisit` —
   drop that field from a gym's frontmatter to leave it out of the trail.
-
-## Seed data
-
-The `gyms/` folder ships with six real gyms to show the format working end
-to end — a couple in Amsterdam, one in Eindhoven, two in Belgium (Hasselt,
-Antwerp), and one in Aachen, Germany. Coordinates are approximate — nudge
-them if you spot a gym in the wrong spot, then delete or replace these
-entries with your own logbook. Two (`the-island-antwerp`, `diehalle-aachen`)
-are marked `bucketList: true`; the rest are `bucketList: false` so you can
-see the "Bucket list" filter actually filtering something — replace these
-placeholder entries with your own logbook.

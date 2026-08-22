@@ -1,7 +1,7 @@
 /* ---------------------------------------------------------------
    Design tokens
    A climbing-gym palette: basalt dark surfaces, chalk-white text,
-   and three accent colors that map 1:1 to disciplines — so color
+   and accent colors that map 1:1 to disciplines — so color
    in this UI always means something, never decoration.
 ----------------------------------------------------------------*/
 :root {

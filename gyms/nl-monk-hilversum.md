@@ -6,7 +6,7 @@ lat: 52.219897
 lon: 5.149230
 discipline: ["boulder"]
 visited: false
-checked: true
+checked: false
 website: "https://monk.nl/hilversum/"
 ---
 Vreelandseweg 5. From the NL gym backlog sweep.

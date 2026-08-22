@@ -6,7 +6,7 @@ lat: 52.025527
 lon: 4.364376
 discipline: ["boulder"]
 visited: false
-checked: true
+checked: false
 website: "https://revoltclimbing.com/"
 ---
 Kleveringweg 35. From the NL gym backlog sweep.

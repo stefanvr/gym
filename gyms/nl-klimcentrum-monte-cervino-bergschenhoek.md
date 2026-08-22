@@ -6,7 +6,7 @@ lat: 51.977239
 lon: 4.536085
 discipline: ["toprope", "lead"]
 visited: false
-checked: true
+checked: false
 website: "https://montecervino.nl/"
 ---
 Hoeksekade 141. From the NL gym backlog sweep.

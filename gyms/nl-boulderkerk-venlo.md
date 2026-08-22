@@ -6,7 +6,7 @@ lat: 51.356734
 lon: 6.183434
 discipline: ["boulder"]
 visited: false
-checked: true
+checked: false
 website: "https://boulderkerkvenlo.nl/"
 ---
 Johannes Boscostraat 2. Bouldering gym in a former church. From the NL gym backlog sweep.

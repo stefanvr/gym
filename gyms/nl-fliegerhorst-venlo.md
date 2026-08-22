@@ -7,7 +7,7 @@ lon: 6.200940
 discipline: ["boulder", "lead"]
 hasOutdoorWall: true
 visited: false
-checked: true
+checked: false
 website: "https://fliegerhorst.nl/"
 ---
 Postweg 15. Outdoor climbing garden on a former WWII airfield site — also

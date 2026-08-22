@@ -759,11 +759,11 @@
   },
   {
     "slug": "nl-climbing-network-olympus-arnhem",
-    "name": "Climbing Network Arnhem Rijnhal",
+    "name": "Climbing Network Arnhem Olympus",
     "city": "Arnhem",
     "country": "NL",
-    "lat": 51.96295620145252,
-    "lon": 5.900756873828111,
+    "lat": 51.9622951,
+    "lon": 5.9039911,
     "discipline": [
       "toprope",
       "lead"
@@ -774,7 +774,7 @@
     "rating": null,
     "website": "https://www.climbingnetwork.nl/",
     "lastVisit": null,
-    "notes": ""
+    "notes": "Olympus 27, next to swimming pool De Grote Koppel. Rope climbing up to 17m\nover three floors. Separate venue from RijnBoulder, which is further down\nthe same street at Olympus 3."
   },
   {
     "slug": "nl-climbing-network-rijnhal-arnhem",
@@ -1318,24 +1318,6 @@
     "website": "https://bergenbal.nl/",
     "lastVisit": null,
     "notes": "De Bloemen 69. Climbing wall inside a multisport centre (also squash, tennis, skiing). From the NL gym backlog sweep."
-  },
-  {
-    "slug": "nl-neoliet-boulder-Apeldoorn",
-    "name": "Boulder Neoliet Apeldoorn",
-    "city": "Apeldoorn",
-    "country": "NL",
-    "lat": 52.19289695508028,
-    "lon": 5.963543996868387,
-    "discipline": [
-      "boulder"
-    ],
-    "hasOutdoorWall": false,
-    "visited": false,
-    "bucketList": false,
-    "rating": null,
-    "website": "https://boulderneoliet.nl",
-    "lastVisit": null,
-    "notes": ""
   },
   {
     "slug": "nl-neoliet-boulder-Veldhoven",

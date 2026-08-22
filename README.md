@@ -51,10 +51,13 @@ with, that one green boulder you finally sent.
   both the marker colour and the sidebar filter chips.
 - **`visited: false`** — use this for gyms you know about but haven't been
   to yet; they still show on the map, greyed out, as a still-to-visit list.
-- **`bucketList`** — independent of `visited`. Set to `true` for the gyms
-  you especially want to get to next — a personal priority marker, not a
-  data-quality flag. Bucket-list gyms get a small ✓ badge in the list and
-  popup, and there's a "Bucket list" filter chip to jump straight to them.
+- **`bucketList`** — set to `true` for the gyms you especially want to get
+  to next; a personal priority marker, not a data-quality flag. You set it
+  independently of `visited`, and bucket-list gyms get a small ✓ badge in
+  the list and popup. The **"Bucket list" filter chip is deliberately
+  narrower than the field**: on its own it shows the bucket-list gyms you
+  *haven't* visited yet — the ones still to tick off. Combine it with
+  "Visited only" to see the bucket-list gyms you've already done.
   Defaults to `false` if omitted.
 - **`hasOutdoorWall`** — set to `true` for gyms with an outdoor wall; drives
   the "Has outdoor wall" filter chip. Defaults to `false` if omitted.

@@ -3,9 +3,9 @@
 // and compiles the result into data/gyms.json for the map to fetch.
 //
 // doc/tech-spec.md's "Architecture" — this is the only writer of data/gyms.json;
-// js/map.js never reads gyms/*.md directly. Per-file validation only (doc/domain-spec.md §1) —
-// it does not compare gyms to each other, so duplicate coordinates currently pass silently
-// (doc/tech-spec.md's Future direction).
+// js/map.js never reads gyms/*.md directly. Per-file validation (doc/domain-spec.md §1) plus a
+// whole-list duplicate-coordinate/slug check (doc/tech-spec.md's "Build-time duplicate-coordinate
+// / duplicate-slug detection").
 //
 // No dependencies needed — the frontmatter format is intentionally simple
 // (flat key: value pairs, string arrays, numbers, booleans, quoted strings)
@@ -112,6 +112,32 @@ function buildGymRecord(file, data, content) {
   };
 }
 
+/**
+ * Finds gyms in the compiled list that collide on coordinates or on slug — doc/domain-spec.md
+ * §3's "every gym's coordinates should be unique" rule, checked across the whole list rather than
+ * per-file (loadGym/validateGym only ever see one file at a time, so they can't catch this).
+ * Pure — no I/O — so it's unit-testable without touching the filesystem.
+ * @returns {{type: "coordinates"|"slug", key: string, slugs: string[]}[]} one entry per colliding group
+ */
+function findDuplicates(gyms) {
+  const groupings = [
+    { type: "coordinates", key: (g) => `${g.lat},${g.lon}` },
+    { type: "slug", key: (g) => g.slug },
+  ];
+
+  return groupings.flatMap(({ type, key }) => {
+    const bySlugs = new Map();
+    for (const gym of gyms) {
+      const k = key(gym);
+      if (!bySlugs.has(k)) bySlugs.set(k, []);
+      bySlugs.get(k).push(gym.slug);
+    }
+    return [...bySlugs.entries()]
+      .filter(([, slugs]) => slugs.length > 1)
+      .map(([key, slugs]) => ({ type, key, slugs }));
+  });
+}
+
 /** Reads and compiles one gym file. The only function here that touches the filesystem. */
 function loadGym(file, gymsDir = GYMS_DIR) {
   const raw = fs.readFileSync(path.join(gymsDir, file), "utf8");
@@ -135,6 +161,14 @@ function main() {
   const files = fs.readdirSync(GYMS_DIR).filter((f) => f.endsWith(".md"));
   const gyms = files.map((f) => loadGym(f)).filter(Boolean);
 
+  for (const dup of findDuplicates(gyms)) {
+    const what = dup.type === "coordinates" ? `coordinates (${dup.key})` : "slug";
+    for (const slug of dup.slugs) {
+      const others = dup.slugs.filter((s) => s !== slug).map((s) => `${s}.md`);
+      fail(`${slug}.md`, `duplicate ${what} — also used by ${others.join(", ")}`);
+    }
+  }
+
   fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });
   fs.writeFileSync(OUT_FILE, JSON.stringify(gyms, null, 2));
 
@@ -144,7 +178,15 @@ function main() {
   }
 }
 
-export { parseValue, parseFrontmatter, validateGym, buildGymRecord, loadGym, VALID_DISCIPLINES };
+export {
+  parseValue,
+  parseFrontmatter,
+  validateGym,
+  buildGymRecord,
+  findDuplicates,
+  loadGym,
+  VALID_DISCIPLINES,
+};
 
 // Only run the CLI build when invoked directly (`node scripts/build.js`), not when imported for
 // tests — see test/build.test.js.

@@ -15,6 +15,7 @@ import {
   parseFrontmatter,
   validateGym,
   buildGymRecord,
+  findDuplicates,
   loadGym,
 } from "../scripts/build.js";
 
@@ -191,6 +192,44 @@ describe("buildGymRecord", () => {
     assert.equal(gym.rating, null);
     assert.equal(gym.city, "");
     assert.equal(gym.country, "");
+  });
+});
+
+describe("findDuplicates", () => {
+  test("no duplicates among gyms with distinct coordinates and slugs", () => {
+    const gyms = [
+      { slug: "a", lat: 52.1, lon: 5.1 },
+      { slug: "b", lat: 52.2, lon: 5.2 },
+    ];
+    assert.deepEqual(findDuplicates(gyms), []);
+  });
+
+  test("flags two gyms sharing coordinates, naming both slugs", () => {
+    // doc/domain-spec.md §3's "copy-pasted-and-half-edited file" incident: a new gym file kept
+    // an existing one's exact lat/lon.
+    const gyms = [
+      { slug: "nl-olympus", lat: 51.98, lon: 5.9 },
+      { slug: "nl-rijnboulder", lat: 51.98, lon: 5.9 },
+    ];
+    const dups = findDuplicates(gyms);
+    assert.equal(dups.length, 1);
+    assert.equal(dups[0].type, "coordinates");
+    assert.deepEqual(dups[0].slugs, ["nl-olympus", "nl-rijnboulder"]);
+  });
+
+  test("flags two gyms sharing a slug, independently of coordinates", () => {
+    const gyms = [
+      { slug: "nl-example-gym", lat: 52.1, lon: 5.1 },
+      { slug: "nl-example-gym", lat: 52.9, lon: 5.9 },
+    ];
+    const dups = findDuplicates(gyms);
+    assert.equal(dups.length, 1);
+    assert.equal(dups[0].type, "slug");
+    assert.deepEqual(dups[0].slugs, ["nl-example-gym", "nl-example-gym"]);
+  });
+
+  test("an empty list has no duplicates", () => {
+    assert.deepEqual(findDuplicates([]), []);
   });
 });
 

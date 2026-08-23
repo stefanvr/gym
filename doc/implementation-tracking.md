@@ -109,11 +109,12 @@ when pointed at two fixture gyms sharing coordinates — proven, not just claime
       Valkenhuizen (<https://www.sportbedrijfarnhem.nl/sportcentrum-valkenhuizen/buitensport-valkenhuizen/>)
       no longer lists a climbing wall among its facilities at all — no current public access to
       confirm. Not adding a gym entry for a wall that isn't operating.
-- [ ] **Build-time duplicate-coordinate / duplicate-slug detection** in `scripts/build.js` — a
-      pass over the full compiled gym list (not per-file, like today's validation) that fails the
-      build if two gyms share a `(lat, lon)` pair or a slug, naming both files. Add a unit test
-      (`test/build.test.js`) with two fixture gyms at identical coordinates to prove it actually
-      fires, mirroring how the two real incidents this would have caught were found by hand.
+- [x] **Build-time duplicate-coordinate / duplicate-slug detection** in `scripts/build.js` — done
+      as specced: `findDuplicates()` groups the compiled list by `(lat, lon)` and by slug, `main()`
+      fails naming every colliding file. Unit-tested directly (fixtures for both the coordinate
+      and the slug case) plus verified by hand with a real third fixture file — `node
+      scripts/build.js` genuinely exits nonzero and names both files. `npm test` (32/32) and `npm
+      run test:e2e` (7 passed, 1 correctly skipped) both still pass.
 
 ---
 

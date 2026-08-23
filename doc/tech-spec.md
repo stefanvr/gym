@@ -95,6 +95,29 @@ project's marker count (currently under 100) justifies.
 **Accepted risk:** the two lists drift if only one is edited. Currently mitigated only by a note
 in the README and this doc — not by any automated check.
 
+### Build-time duplicate-coordinate / duplicate-slug detection
+
+**Chosen (Stage 2):** after `loadGym` compiles every file, `main()` runs a second pass over the
+full in-memory list — not per-file, since a single file has nothing to collide with — grouping by
+`(lat, lon)` and by `slug`. Any group with more than one member is a build error: `fail()` for
+each offending file, naming the other file(s) it collides with, same as an existing per-file
+validation error. `process.exitCode` ends up `1`, so `npm run gyms:generate` and CI both fail
+loudly instead of silently emitting a `gyms.json` with a stacked/invisible pin.
+
+**Why:** domain-spec.md §3 documents two real incidents where this exact mistake (a copy-pasted
+file keeping the source's coordinates) shipped unnoticed until someone diffed the JSON by hand.
+The check is pure, synchronous, and has no new dependency — same shape as the existing per-file
+`validateGym`, just run once over the whole list instead of once per file.
+
+**Rejected:** warning instead of failing the build. A duplicate coordinate is never intentional
+(see domain-spec.md §1 — "a gym's identity is its coordinates, in practice") and always hides a
+real venue, so there's no legitimate case to merely warn about.
+
+**Test plan:** `test/build.test.js` gets two fixture gyms sharing coordinates (proving the
+lat/lon check fires) and, separately, two sharing a slug (proving the slug check fires
+independently) — mirroring how both real incidents were shaped differently (one a same-name
+duplicate file, one a copy-paste that kept the source's coordinates but not its name).
+
 ---
 
 ## Testing strategy

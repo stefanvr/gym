@@ -86,10 +86,10 @@ chip is "what's next," and a bucket-list gym you've already been to isn't next.
 
 ### Two gyms can end up with identical coordinates
 
-Nothing in the data model or the build step currently prevents two different gym files from
-carrying the same `(lat, lon)` — see tech-spec.md's Future direction for why that's deliberately
-deferred rather than fixed silently. It has happened twice for two different reasons, both worth
-knowing before adding gyms in bulk:
+Nothing in the data model prevents two different gym files from carrying the same `(lat, lon)` —
+the build step catches it (see tech-spec.md's "Build-time duplicate-coordinate / duplicate-slug
+detection"), but nothing stops someone from writing the collision in the first place. It has
+happened twice for two different reasons, both worth knowing before adding gyms in bulk:
 
 - **A literal duplicate file.** Two files for the same gym, same coordinates, differing only in
   filename (a stray capital letter in one). Caught by manually diffing the built JSON for
@@ -102,9 +102,8 @@ knowing before adding gyms in bulk:
   coordinates. The mistake was only found by noticing two different gym slugs resolved to the
   identical lat/lon pair.
 
-The rule this leaves standing: **every gym's coordinates should be unique**, verified by hand for
-now (`grep`/`node -e` over the built JSON works fine at this dataset's size), with automated
-detection tracked as deferred work rather than assumed to be "obviously fine."
+The rule this leaves standing: **every gym's coordinates should be unique**, enforced by the build
+step failing loudly rather than assumed to be "obviously fine" or checked by hand.
 
 ---
 

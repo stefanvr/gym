@@ -1,0 +1,4 @@
+# Pin line endings so a Windows editor saving one file doesn't turn a
+# five-line edit into a whole-file diff. Verified against every currently
+# committed file before adding this — none needed renormalizing.
+* text=auto eol=lf

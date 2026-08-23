@@ -1,6 +1,11 @@
 // js/map.js
 // Loads data/gyms.json (compiled from gyms/*.md by scripts/build.js) and
 // renders it as a Leaflet map + synced sidebar list.
+//
+// Behavior specified in doc/implementation-spec.md §1-7. Discipline colors below
+// (DISCIPLINE_COLOR / UNVISITED_COLOR / OUTDOOR_WALL_COLOR) are doc/tech-spec.md's
+// "Discipline colors live in two files" decision — keep them byte-identical to
+// css/style.css's :root tokens; nothing checks that automatically.
 
 const DISCIPLINE_COLOR = {
   boulder: "#e8631c",
@@ -107,6 +112,9 @@ function popupHtml(gym) {
 function passesFilters(gym) {
   if (hasOutdoorWall && !gym.hasOutdoorWall) return false;
   if (visitedOnly && !gym.visited) return false;
+  // Deliberate asymmetry (doc/domain-spec.md §3): the Bucket list chip is narrower than the
+  // bucketList field itself. Alone, it answers "what's still to do" — bucketList && !visited.
+  // Only shows an already-visited bucket-list gym when Visited only is active too.
   if (bucketListOnly && !gym.bucketList) { return false }
   else if (bucketListOnly && !visitedOnly && gym.visited) return false;
   if (activeDisciplines.size === 0) return true;

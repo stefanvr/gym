@@ -2,11 +2,17 @@
 // Reads every markdown file in /gyms, parses its YAML-ish frontmatter + body,
 // and compiles the result into data/gyms.json for the map to fetch.
 //
+// doc/tech-spec.md's "Architecture" — this is the only writer of data/gyms.json;
+// js/map.js never reads gyms/*.md directly. Per-file validation only (doc/domain-spec.md §1) —
+// it does not compare gyms to each other, so duplicate coordinates currently pass silently
+// (doc/tech-spec.md's Future direction).
+//
 // No dependencies needed — the frontmatter format is intentionally simple
 // (flat key: value pairs, string arrays, numbers, booleans, quoted strings)
-// so a tiny hand-rolled parser is enough and there's nothing to `npm install`.
+// so a tiny hand-rolled parser is enough and there's nothing to `npm install`
+// (doc/tech-spec.md's "Hand-rolled frontmatter parser, no dependency" decision).
 //
-// Run with: npm run build  (or: node scripts/build.js)
+// Run with: npm run gyms:generate  (or: node scripts/build.js)
 
 import fs from "node:fs";
 import path from "node:path";

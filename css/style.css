@@ -13,7 +13,9 @@
   --boulder: #e8631c;       /* discipline: boulder */
   --toprope: #2f7de1;       /* discipline: toprope */
   --lead: #2e9e5b;          /* discipline: lead */
+  --speed: #dd0d0d;         /* discipline: speed */
   --unvisited: #565c63;     /* not yet climbed */
+  --outdoor-wall: #bd197e;  /* has an outdoor wall */
 
   --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;

@@ -80,14 +80,17 @@ files exist and each accurately describes the shipped code, not an aspiration.
 
 ## Stage 2 — Resolve open gym-backlog entries
 
-*Two gym-data loose ends surfaced during Stage 1's retrofit but were parked in the Backlog below
-rather than resolved inline, since neither is a code change — both need real-world research
-first. Huneboulder (Assen) deliberately stays in the Backlog rather than being pulled in here:
-unlike these two, there's nothing to act on yet since no address has been published for it.*
+*Three loose ends surfaced during Stage 1's retrofit but were parked in the Backlog below rather
+than resolved inline. Two are gym-data questions that need real-world research; the third is the
+build-safety gap that let both of this project's real duplicate-coordinate incidents through
+unnoticed. Huneboulder (Assen) deliberately stays in the Backlog rather than being pulled in
+here: unlike these three, there's nothing to act on yet since no address has been published for
+it. Touch-target sizing also stays in the Backlog — left there on purpose, not an oversight.*
 
-**Try it:** both items below end this stage either resolved with a sourced answer (a gym file
-added, updated, or removed, backed by what was checked) or explicitly re-deferred with a named
-reason — nothing left as a silent unknown.
+**Try it:** the two gym-data items below end this stage either resolved with a sourced answer (a
+gym file added, updated, or removed, backed by what was checked) or explicitly re-deferred with a
+named reason. The duplicate-detection item ends with `node scripts/build.js` actually failing
+when pointed at two fixture gyms sharing coordinates — proven, not just claimed.
 
 - [ ] Spec
 - [ ] **Confirm whether Silk Bouldergym (Ede) has actually opened.** It was logged during the
@@ -97,6 +100,11 @@ reason — nothing left as a silent unknown.
 - [ ] **Investigate Arnhem's Valkenhuizen outdoor wall** (Arnhem-Noord — a different sports
       complex from the already-logged Olympus/RijnBoulder venues) as a possible gym entry:
       confirm it exists, whether it's public or club-only, and its address if so.
+- [ ] **Build-time duplicate-coordinate / duplicate-slug detection** in `scripts/build.js` — a
+      pass over the full compiled gym list (not per-file, like today's validation) that fails the
+      build if two gyms share a `(lat, lon)` pair or a slug, naming both files. Add a unit test
+      (`test/build.test.js`) with two fixture gyms at identical coordinates to prove it actually
+      fires, mirroring how the two real incidents this would have caught were found by hand.
 
 ---
 
@@ -114,10 +122,6 @@ found during Stage 0/1 and parked here rather than either fixed on the spot or s
 
 # Backlog — features to plan later
 
-- [ ] **Build-time duplicate-coordinate / duplicate-slug detection** in `scripts/build.js` —
-      scoped out in tech-spec.md's Future direction. Two real occurrences in this project's
-      history (a case-only-duplicate file; a copy-pasted file that kept another gym's
-      coordinates) were both caught by hand, not by the build.
 - [ ] **Touch-target sizing pass** on filter chips/badges — flagged, not measured, in
       style-guide.md's Open items.
 - [ ] **Huneboulder (Assen)** was deliberately left out of the backlog sweep entirely — no address

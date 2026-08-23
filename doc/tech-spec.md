@@ -40,7 +40,8 @@ is why it lives in [environment.md](environment.md) instead.
   `DISCIPLINE_COLOR` / `UNVISITED_COLOR` / `OUTDOOR_WALL_COLOR` at the top of `js/map.js`. This
   isn't an oversight — the hold-shaped markers are inline SVG built as template strings, which
   can't read CSS custom properties. Changing a discipline's color in only one of the two places is
-  a real, easy-to-make mistake with no build-time check to catch it (see Future direction).
+  a real, easy-to-make mistake with no build-time check to catch it — mitigated only by
+  code-conventions.md's module-header-comment convention, not by anything automated.
 
 ## Tooling
 
@@ -117,14 +118,6 @@ in the README and this doc — not by any automated check.
 Things deliberately out of scope now, where a decision is being made *today* to keep them
 possible later.
 
-- **Build-time duplicate/collision detection.** `scripts/build.js` validates each gym file in
-  isolation (name present, coordinates numeric, discipline list non-empty and valid) but never
-  compares gyms *to each other*. Two files with identical coordinates, or a copy-pasted file that
-  kept another gym's name, currently pass the build silently — both have happened in this repo's
-  real history. A cross-gym pass (duplicate `lat`/`lon` pairs, duplicate slugs) is a natural
-  addition to `build.js`'s validation step and is being deliberately deferred rather than added
-  ad hoc, so it can be designed as one pass over the full gym list rather than bolted onto
-  `loadGym`'s per-file loop.
 - **No JSON schema / TypeScript for the frontmatter shape.** The hand-rolled parser (see
   Decisions) is accepted as "enough" for a single-author dataset; a schema would catch more, at
   the cost of the dependency-free build this project deliberately keeps.

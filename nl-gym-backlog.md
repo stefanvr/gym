@@ -8,10 +8,8 @@ candidate for a new `gyms/*.md` file.
 
 Scope: real indoor climbing/bouldering gyms only. Outdoor high-ropes/tree
 courses (Klimbos, Fun Forest, Adventure Valley-style parks) are left out —
-different category from a route-set wall. Known-closed or cancelled projects
-(Monk Club Amsterdam, Nomad Boulders Amsterdam, Graviton Sittard, Beest
-Boulders Leiden, Boulderwerk Gouda, Fox Bouldergym Zeeland, KlimAvontuur
-Middelburg) are omitted entirely.
+different category from a route-set wall. See Exclusions below for
+known-closed/cancelled projects and other candidates ruled out on inspection.
 
 Sources: [NKBV](https://nkbv.nl/kenniscentrum/klimmen-in-nederland.html) ·
 [Resole – alle hallen 2025](https://resole.nl/en/blogs/news/alle-boulderhallen-en-klimhallen-in-nederland-2025) ·
@@ -114,7 +112,6 @@ Sources: [NKBV](https://nkbv.nl/kenniscentrum/klimmen-in-nederland.html) ·
 - ~~Boulderkerk Venlo — Venlo — Johannes Boscostraat 2 — 51.356734, 6.183434 — https://boulderkerkvenlo.nl/~~
 - ~~Apex Boulders — Groningen — Atoomweg 19a — 53.216076, 6.539211 — https://apexboulders.nl/~~
 - ~~Gropo Bouldergym — Groningen — Ulgersmaweg 8 — 53.230625, 6.589805 — https://gropo.nl/~~
-- Huneboulder — Assen — https://huneboulder.nl/ *(new — first boulder gym in Drenthe; no address published yet, so skipped — not logged)*
 - ~~Impact Boulderhal — Almere — Bongerdstraat 6 — 52.376030, 5.238137 — https://impactboulderhal.nl/~~
 - ~~Bouldercentrum Delfts Bleau — Delft — Schieweg 15L — 51.994357, 4.364422 — https://delftsbleau.nl/~~
 - ~~Revolt Climbing — Delft — Kleveringweg 35 — 52.025527, 4.364376 — https://revoltclimbing.com/~~
@@ -143,8 +140,29 @@ Sources: [NKBV](https://nkbv.nl/kenniscentrum/klimmen-in-nederland.html) ·
 
 ---
 
-## Notes for filling these in
+## Coming soon
 
+Real, not-yet-open gyms — worth re-checking periodically rather than treated
+as either logged or excluded.
+
+- Silk Bouldergym — Ede — https://silkbouldergym.nl/ — confirmed not open yet;
+  gemeente Ede's Westhal announcement puts the opening at March 2027
+  (<https://www.ede.nl/nieuws/nieuwe-toekomst-voor-de-westhal-in-de-maak>).
+  Already logged in `gyms/` as `visited: false` — revisit once actually open.
+- Huneboulder — Assen — https://huneboulder.nl/ — Drenthe's first boulder gym,
+  expected 2027; no address published yet, so not logged.
+
+## Exclusions
+
+Candidates deliberately left out, with why.
+
+- Known-closed or cancelled projects, never opened: Monk Club Amsterdam, Nomad
+  Boulders Amsterdam, Graviton Sittard, Beest Boulders Leiden, Boulderwerk
+  Gouda, Fox Bouldergym Zeeland, KlimAvontuur Middelburg.
 - Zeeland currently has no indoor climbing/bouldering gym (KlimAvontuur
   Middelburg closed; Fox Bouldergym never opened) — nothing to add there yet.
-- Opennig 2027: Drenthe's first boulder gym, Huneboulder in Assen, is very recent.
+- Sportcomplex Valkenhuizen — Arnhem-Noord — Beukenlaan 15 — a general sports
+  complex, not a dedicated climbing gym; its outdoor climbing wall is no
+  longer operating (Sportbedrijf Arnhem's current facilities page for it
+  doesn't list a climbing wall at all — see doc/implementation-tracking.md
+  Stage 2) — not a candidate entry.

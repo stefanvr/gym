@@ -58,14 +58,23 @@ files exist and each accurately describes the shipped code, not an aspiration.
       `doc/implementation-spec.md`, `doc/workflow.md`, `doc/code-conventions.md`
 - [x] Module header comments on `scripts/build.js` and `js/map.js`, per code-conventions.md's
       "every module says what it implements"
-- [ ] `npm test` — `node --test` unit coverage for `scripts/build.js`'s parser/validation
-- [ ] `npm run test:e2e` — Playwright, desktop + mobile smoke pass
-- [ ] `package.json`: `build` → `gyms:generate`, add `test`/`test:e2e`
-- [ ] README rewritten to the template's shape (short pointer + doc links + dev commands +
-      dev-only surfaces), with the detailed frontmatter-schema content that used to live there
-      moved into domain-spec.md/implementation-spec.md where it actually belongs
-- [ ] Full audit pass: read every doc against the actual current code, fix anything that drifted
-      while this stage was in progress
+- [x] `npm test` — `node --test` unit coverage for `scripts/build.js`'s parser/validation.
+      Required splitting `loadGym` into pure `validateGym`/`buildGymRecord` functions first so
+      the logic was testable without filesystem fixtures for most cases; 28 tests, all passing.
+- [x] `npm run test:e2e` — Playwright, desktop + mobile smoke pass. *Ad hoc:* Node 18 (WSL's
+      system default) is below Playwright's `>=20` floor — installed Node 20 via `nvm`
+      (doc/environment.md) rather than touching the system Node. Chromium installed without
+      `--with-deps`, since `sudo` needs a password in this environment and the browser launched
+      fine without the extra system packages that flag would have apt-installed.
+- [x] `package.json`: `build` → `gyms:generate`, added `test`/`test:e2e` and `@playwright/test`
+- [x] README rewritten to the template's shape (short pointer + doc links + dev commands +
+      dev-only surfaces); the detailed frontmatter field reference moved to domain-spec.md §1
+- [x] Full audit pass: grepped for stale references to renamed scripts/fields left over from
+      *this* stage's own changes (`npm run build`, `gray-matter`, `checked` field, "Verified
+      only" label) — none found beyond intentional historical mentions in this doc set itself.
+      Note this does *not* claim the docs are permanently drift-free — see
+      code-conventions.md's "every module says what it implements" for the ongoing mechanism
+      that's supposed to prevent the next drift, not just this retrofit's one-time check.
 
 ---
 

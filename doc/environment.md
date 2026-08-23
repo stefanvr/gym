@@ -22,8 +22,6 @@ document exists for.
 What must be true regardless of whose machine it is. These stay true when someone else joins, and
 each one is a property a setup either satisfies or doesn't.
 
-- Commits must be authored as **StefanVR** / `stefan.van.raaphorst@gmail.com`, matching the
-  repository owner and `origin` (`git@github.com:stefanvr/gym.git`).
 - **Node 20** or compatible (pinned in `.nvmrc`). CI (`deploy.yml`) already uses `actions/setup-node@v4`
   with `node-version: 20`; local dev must match it, not the OS package.
 - `git commit` output must actually be signed/attributable correctly — a shell that produces a
@@ -44,10 +42,9 @@ directory — a Windows-side Git Bash (MINGW64) pointed at the UNC path, and rea
 **`git commit` / `git push` must run inside real WSL, never Windows Git Bash, for two independent
 reasons — either one alone would be enough to require it:**
 
-1. **Wrong author, silently.** Windows-side git's global identity is a work email
-   (`stefan.van.raaphorst@groupm.com`); WSL's is the personal identity matching this repo's owner.
-   Committing through the Windows shell doesn't error — it just attributes the commit to the wrong
-   person.
+1. **Wrong author, silently.** Windows-side git's global identity is the work account; WSL's is
+   the private account that owns this repo. Committing through the Windows shell doesn't error —
+   it just attributes the commit to the wrong person.
 2. **Commit signing fails outright.** This repo signs commits over SSH via 1Password's
    `op-ssh-sign` helper (`gpg.format = ssh`). From the Windows-side shell that reliably fails with
    `1Password: failed to fill whole buffer` / `fatal: failed to write commit object` — it can't

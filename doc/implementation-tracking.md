@@ -101,9 +101,14 @@ when pointed at two fixture gyms sharing coordinates — proven, not just claime
       (<https://www.ede.nl/nieuws/nieuwe-toekomst-voor-de-westhal-in-de-maak>). Kept the entry as
       `visited: false`, updated its note with the confirmed date and source instead of "worth
       confirming."
-- [ ] **Investigate Arnhem's Valkenhuizen outdoor wall** (Arnhem-Noord — a different sports
-      complex from the already-logged Olympus/RijnBoulder venues) as a possible gym entry:
-      confirm it exists, whether it's public or club-only, and its address if so.
+- [x] **Investigate Arnhem's Valkenhuizen outdoor wall.** Confirmed it exists (Sportcentrum
+      Valkenhuizen, Beukenlaan 15, Arnhem-Noord) but decided **not** to add it: Mountain Network
+      reopened it recreationally in 2020 during COVID, gated to subscription holders with a
+      climbing-skill certificate, but demand dropped once their indoor hall (already logged as
+      Olympus/RijnBoulder) reopened. Sportbedrijf Arnhem's current outdoor-sports page for
+      Valkenhuizen (<https://www.sportbedrijfarnhem.nl/sportcentrum-valkenhuizen/buitensport-valkenhuizen/>)
+      no longer lists a climbing wall among its facilities at all — no current public access to
+      confirm. Not adding a gym entry for a wall that isn't operating.
 - [ ] **Build-time duplicate-coordinate / duplicate-slug detection** in `scripts/build.js` — a
       pass over the full compiled gym list (not per-file, like today's validation) that fails the
       build if two gyms share a `(lat, lon)` pair or a slug, naming both files. Add a unit test

@@ -62,9 +62,12 @@ function parseFrontmatter(raw) {
   return { data, content: body.trim() };
 }
 
-function loadGym(file) {
-  const raw = fs.readFileSync(path.join(GYMS_DIR, file), "utf8");
-  const { data, content } = parseFrontmatter(raw);
+/**
+ * Validates a parsed frontmatter object against doc/domain-spec.md §1's required fields.
+ * Pure — no I/O — so it's unit-testable without touching the filesystem.
+ * @returns {string[]} error messages; empty means valid.
+ */
+function validateGym(data) {
   const errors = [];
 
   if (!data.name) errors.push("missing `name`");
@@ -80,11 +83,17 @@ function loadGym(file) {
     errors.push("`discipline` is empty — add at least one of boulder / toprope / lead");
   }
 
-  if (errors.length) {
-    fail(file, errors.join("; "));
-    return null;
-  }
+  return errors;
+}
 
+/**
+ * Turns already-parsed frontmatter + body into the normalized gym record the frontend consumes.
+ * Pure — assumes `data` already passed validateGym. Field defaults are doc/domain-spec.md §1's
+ * table; visited defaulting to true (not false) when omitted is deliberate, not a bug — see the
+ * callout there.
+ */
+function buildGymRecord(file, data, content) {
+  const discipline = Array.isArray(data.discipline) ? data.discipline : [];
   return {
     slug: file.replace(/\.md$/, ""),
     name: data.name,
@@ -103,6 +112,20 @@ function loadGym(file) {
   };
 }
 
+/** Reads and compiles one gym file. The only function here that touches the filesystem. */
+function loadGym(file, gymsDir = GYMS_DIR) {
+  const raw = fs.readFileSync(path.join(gymsDir, file), "utf8");
+  const { data, content } = parseFrontmatter(raw);
+  const errors = validateGym(data);
+
+  if (errors.length) {
+    fail(file, errors.join("; "));
+    return null;
+  }
+
+  return buildGymRecord(file, data, content);
+}
+
 function main() {
   if (!fs.existsSync(GYMS_DIR)) {
     console.error(`No gyms/ directory found at ${GYMS_DIR}`);
@@ -110,7 +133,7 @@ function main() {
   }
 
   const files = fs.readdirSync(GYMS_DIR).filter((f) => f.endsWith(".md"));
-  const gyms = files.map(loadGym).filter(Boolean);
+  const gyms = files.map((f) => loadGym(f)).filter(Boolean);
 
   fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });
   fs.writeFileSync(OUT_FILE, JSON.stringify(gyms, null, 2));
@@ -121,4 +144,10 @@ function main() {
   }
 }
 
-main();
+export { parseValue, parseFrontmatter, validateGym, buildGymRecord, loadGym, VALID_DISCIPLINES };
+
+// Only run the CLI build when invoked directly (`node scripts/build.js`), not when imported for
+// tests — see test/build.test.js.
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main();
+}

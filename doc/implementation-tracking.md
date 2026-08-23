@@ -78,7 +78,29 @@ files exist and each accurately describes the shipped code, not an aspiration.
 
 ---
 
-## Stage 2 — Polishing
+## Stage 2 — Resolve open gym-backlog entries
+
+*Two gym-data loose ends surfaced during Stage 1's retrofit but were parked in the Backlog below
+rather than resolved inline, since neither is a code change — both need real-world research
+first. Huneboulder (Assen) deliberately stays in the Backlog rather than being pulled in here:
+unlike these two, there's nothing to act on yet since no address has been published for it.*
+
+**Try it:** both items below end this stage either resolved with a sourced answer (a gym file
+added, updated, or removed, backed by what was checked) or explicitly re-deferred with a named
+reason — nothing left as a silent unknown.
+
+- [ ] Spec
+- [ ] **Confirm whether Silk Bouldergym (Ede) has actually opened.** It was logged during the
+      backlog sweep while still listed "coming soon." If open, verify/update its details
+      (address, disciplines) against its own site; if not, decide whether to keep it logged as
+      `visited: false` or pull the entry until it's real.
+- [ ] **Investigate Arnhem's Valkenhuizen outdoor wall** (Arnhem-Noord — a different sports
+      complex from the already-logged Olympus/RijnBoulder venues) as a possible gym entry:
+      confirm it exists, whether it's public or club-only, and its address if so.
+
+---
+
+## Stage 3 — Polishing
 
 *Deferred items land here as they're found. Not started as its own pass yet — items below were
 found during Stage 0/1 and parked here rather than either fixed on the spot or silently dropped.*
@@ -98,13 +120,8 @@ found during Stage 0/1 and parked here rather than either fixed on the spot or s
       coordinates) were both caught by hand, not by the build.
 - [ ] **Touch-target sizing pass** on filter chips/badges — flagged, not measured, in
       style-guide.md's Open items.
-- [ ] **Silk Bouldergym (Ede)** was still listed "coming soon" as of the backlog sweep that added
-      it — worth confirming it's actually open before trusting that entry.
 - [ ] **Huneboulder (Assen)** was deliberately left out of the backlog sweep entirely — no address
       had been published yet for Drenthe's first boulder gym. Revisit once one exists.
-- [ ] **Arnhem's Valkenhuizen outdoor wall** (Arnhem-Noord, a different sports complex from the
-      Olympus/RijnBoulder venues already logged) came up while researching one of those entries
-      but was never itself investigated as a possible gym entry.
 
 ---
 

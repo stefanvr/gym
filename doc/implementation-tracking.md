@@ -92,11 +92,15 @@ gym file added, updated, or removed, backed by what was checked) or explicitly r
 named reason. The duplicate-detection item ends with `node scripts/build.js` actually failing
 when pointed at two fixture gyms sharing coordinates — proven, not just claimed.
 
-- [ ] Spec
-- [ ] **Confirm whether Silk Bouldergym (Ede) has actually opened.** It was logged during the
-      backlog sweep while still listed "coming soon." If open, verify/update its details
-      (address, disciplines) against its own site; if not, decide whether to keep it logged as
-      `visited: false` or pull the entry until it's real.
+- [x] Spec — the duplicate-coordinate/slug design in tech-spec.md's new "Build-time
+      duplicate-coordinate / duplicate-slug detection" Decision, and domain-spec.md §3 updated to
+      point at it instead of calling detection deferred work. **Stopping here for sign-off before
+      writing the `scripts/build.js`/`test/build.test.js` code**, per workflow.md step 3.
+- [x] **Confirm whether Silk Bouldergym (Ede) has actually opened.** Still not open: the
+      gemeente's own Westhal announcement puts the opening at March 2027
+      (<https://www.ede.nl/nieuws/nieuwe-toekomst-voor-de-westhal-in-de-maak>). Kept the entry as
+      `visited: false`, updated its note with the confirmed date and source instead of "worth
+      confirming."
 - [ ] **Investigate Arnhem's Valkenhuizen outdoor wall** (Arnhem-Noord — a different sports
       complex from the already-logged Olympus/RijnBoulder venues) as a possible gym entry:
       confirm it exists, whether it's public or club-only, and its address if so.

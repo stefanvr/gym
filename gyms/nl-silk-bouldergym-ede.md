@@ -9,5 +9,7 @@ visited: false
 bucketList: false
 website: "https://silkbouldergym.nl/"
 ---
-Akulaan 2. Still listed as "coming soon" as of the backlog sweep — worth
-confirming it's actually open before trusting this entry.
+Akulaan 2, in the Westhal on the former ENKA site. Confirmed still not open as of
+this check (Stage 2): the gemeente's own announcement puts the ~1,700 m² hall's
+opening at March 2027 (<https://www.ede.nl/nieuws/nieuwe-toekomst-voor-de-westhal-in-de-maak>).
+`visited: false` stays correct; revisit once it's actually open.

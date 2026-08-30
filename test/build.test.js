@@ -16,6 +16,7 @@ import {
   validateGym,
   buildGymRecord,
   findDuplicates,
+  loadConfig,
   loadGym,
 } from "../scripts/build.js";
 
@@ -230,6 +231,35 @@ describe("findDuplicates", () => {
 
   test("an empty list has no duplicates", () => {
     assert.deepEqual(findDuplicates([]), []);
+  });
+});
+
+describe("loadConfig (file I/O)", () => {
+  test("no .gymrc falls back to the default gyms directory", () => {
+    const missing = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "climb-log-test-")), ".gymrc");
+    assert.deepEqual(loadConfig(missing), { gymsDir: "gyms" });
+  });
+
+  test("reads a custom gymsDir from .gymrc", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "climb-log-test-"));
+    try {
+      const configFile = path.join(dir, ".gymrc");
+      fs.writeFileSync(configFile, 'gymsDir: "my-gyms"\n');
+      assert.deepEqual(loadConfig(configFile), { gymsDir: "my-gyms" });
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  test("a .gymrc present but missing gymsDir still falls back to the default", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "climb-log-test-"));
+    try {
+      const configFile = path.join(dir, ".gymrc");
+      fs.writeFileSync(configFile, "# no gymsDir here\n");
+      assert.deepEqual(loadConfig(configFile), { gymsDir: "gyms" });
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
   });
 });
 

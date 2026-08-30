@@ -1,6 +1,7 @@
 // scripts/build.js
-// Reads every markdown file in /gyms, parses its YAML-ish frontmatter + body,
-// and compiles the result into data/gyms.json for the map to fetch.
+// Reads every markdown file in the gyms directory (default ./gyms, overridable via the root-level
+// .gymrc's `gymsDir`), parses its YAML-ish frontmatter + body, and compiles the result into
+// data/gyms.json for the map to fetch.
 //
 // doc/tech-spec.md's "Architecture" — this is the only writer of data/gyms.json;
 // js/map.js never reads gyms/*.md directly. Per-file validation (doc/domain-spec.md §1) plus a
@@ -17,7 +18,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const GYMS_DIR = path.resolve("gyms");
+const CONFIG_FILE = path.resolve(".gymrc");
+const DEFAULT_GYMS_DIR = "gyms";
 const OUT_FILE = path.resolve("data", "gyms.json");
 const VALID_DISCIPLINES = ["boulder", "toprope", "lead", "speed"];
 
@@ -138,8 +140,32 @@ function findDuplicates(gyms) {
   });
 }
 
+/**
+ * Reads the root-level `.gymrc` config file, if present, and returns the resolved gyms directory.
+ * `.gymrc` uses the same flat `key: value` line format as gym frontmatter (parsed with
+ * `parseValue`) rather than a new format, per doc/tech-spec.md's "no dependency, keep it simple"
+ * stance. A missing `.gymrc` — or one with no `gymsDir` key — falls back to `./gyms`, so existing
+ * checkouts keep working without needing to add the file.
+ */
+function loadConfig(configFile = CONFIG_FILE) {
+  if (!fs.existsSync(configFile)) return { gymsDir: DEFAULT_GYMS_DIR };
+
+  const raw = fs.readFileSync(configFile, "utf8");
+  const config = {};
+  for (const line of raw.split(/\r?\n/)) {
+    if (!line.trim() || line.trim().startsWith("#")) continue;
+    const idx = line.indexOf(":");
+    if (idx === -1) continue;
+    const key = line.slice(0, idx).trim();
+    const value = line.slice(idx + 1).trim();
+    config[key] = parseValue(value);
+  }
+
+  return { gymsDir: config.gymsDir || DEFAULT_GYMS_DIR };
+}
+
 /** Reads and compiles one gym file. The only function here that touches the filesystem. */
-function loadGym(file, gymsDir = GYMS_DIR) {
+function loadGym(file, gymsDir = path.resolve(loadConfig().gymsDir)) {
   const raw = fs.readFileSync(path.join(gymsDir, file), "utf8");
   const { data, content } = parseFrontmatter(raw);
   const errors = validateGym(data);
@@ -153,13 +179,16 @@ function loadGym(file, gymsDir = GYMS_DIR) {
 }
 
 function main() {
+  const { gymsDir } = loadConfig();
+  const GYMS_DIR = path.resolve(gymsDir);
+
   if (!fs.existsSync(GYMS_DIR)) {
-    console.error(`No gyms/ directory found at ${GYMS_DIR}`);
+    console.error(`No gyms directory found at ${GYMS_DIR} (configured via .gymrc's \`gymsDir\`)`);
     process.exit(1);
   }
 
   const files = fs.readdirSync(GYMS_DIR).filter((f) => f.endsWith(".md"));
-  const gyms = files.map((f) => loadGym(f)).filter(Boolean);
+  const gyms = files.map((f) => loadGym(f, GYMS_DIR)).filter(Boolean);
 
   for (const dup of findDuplicates(gyms)) {
     const what = dup.type === "coordinates" ? `coordinates (${dup.key})` : "slug";
@@ -184,6 +213,7 @@ export {
   validateGym,
   buildGymRecord,
   findDuplicates,
+  loadConfig,
   loadGym,
   VALID_DISCIPLINES,
 };

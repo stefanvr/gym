@@ -310,11 +310,15 @@ async function init() {
     .setView(MAP_CENTER, MAP_ZOOM)
     .fitBounds(MAP_BOUNDS);
 
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+  // CARTO's free dark basemap now requires an API key for unauthenticated use (started showing
+  // an "API required" watermark) — switched to Esri's World Dark Gray Canvas, which stays free
+  // with no key/signup ever needed. Its native tiles only go to zoom 16; maxNativeZoom has
+  // Leaflet upscale those for zooms 17-18 rather than requesting tiles that don't exist.
+  L.tileLayer("https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
     attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: "abcd",
+      "Esri, HERE, Garmin, &copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors, and the GIS user community",
     maxZoom: 19,
+    maxNativeZoom: 16,
   }).addTo(map);
 
   markerLayer = L.layerGroup().addTo(map);

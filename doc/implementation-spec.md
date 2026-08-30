@@ -19,7 +19,9 @@ corresponds directly to one of its sections.
 
 ## 1. Map & markers
 
-- Leaflet map, dark CARTO tile layer, initial view fit to `MAP_BOUNDS` (NL/BE/DE-Limburg), pan
+- Leaflet map, dark Esri "World Dark Gray Canvas" tile layer (no API key required, unlike CARTO's
+  free tier since it started gating unauthenticated tile requests), initial view fit to
+  `MAP_BOUNDS` (NL/BE/DE-Limburg), pan
   clamped to those bounds, zoom clamped 6–18 (`MAP_CENTER`/`MAP_ZOOM`/`MAP_BOUNDS` in `js/map.js`).
 - One marker per gym that passes the active filters (domain-spec §2) — markers are entirely
   rebuilt on every filter change (`renderMarkers`), not incrementally diffed.

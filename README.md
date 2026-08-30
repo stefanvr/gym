@@ -10,6 +10,10 @@ New here? [doc/workflow.md](doc/workflow.md) is how work actually gets done.
 
 **[Live map →](https://stefanvr.github.io/gym/)**
 
+## Your own copy
+
+Read the [getting started guide](getting-started.md) to have your own version.
+
 ## How it works
 
 ```

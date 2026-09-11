@@ -8,7 +8,7 @@ As required by Harness Change, read the diagrams before concluding that none of 
 
 # Workflow
 
-The lifecycle runs under whatever `project_model` + `collaboration_model` `.harness/composition/active.json` selects (the distribution's default selection is `spec` + `cooperative-multi-user`); active method packs assist authority work but do not change Project authority. The collaboration layer adds an immutable handoff/integration boundary rather than forking Goal or landing semantics.
+The lifecycle runs under whatever `project_model` + `collaboration_model` `.harness/composition/active.json` selects (this project currently selects `spec` + `single-user`); active method packs assist authority work but do not change Project authority. Under `single-user` the owning workspace proceeds through landing directly; the diagram below shows the `cooperative-multi-user` handoff/integration boundary that applies only when that Collaboration model is selected instead.
 
 ## Cooperative multi-user handoff
 

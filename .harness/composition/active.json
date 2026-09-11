@@ -3,11 +3,9 @@
   "release": "17",
   "selection": {
     "project_model": "spec",
-    "collaboration_model": "cooperative-multi-user",
+    "collaboration_model": "single-user",
     "method_packs": [
       "interview-me",
-      "event-storming",
-      "story-mapping",
       "design"
     ]
   },

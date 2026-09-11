@@ -63,6 +63,16 @@ function parseFrontmatter(raw) {
   return { data, content: body.trim() };
 }
 
+/** True when `value` is a syntactically valid URL (what `new URL(value)` needs not to throw). */
+function isValidUrl(value) {
+  try {
+    new URL(value);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Validates a parsed frontmatter object against domain.gym's Data table required fields.
  * Pure — no I/O — so it's unit-testable without touching the filesystem.
@@ -82,6 +92,15 @@ function validateGym(data) {
   }
   if (discipline.length === 0) {
     errors.push("`discipline` is empty — add at least one of boulder / toprope / lead");
+  }
+
+  // js/map.js's popupHtml() calls `new URL(gym.website)` unconditionally for every gym at
+  // marker-render time; catching a malformed value here, by name, at the build boundary is the
+  // same fail-loudly treatment every other required/checkable field already gets, and the only
+  // way to keep one bad `website:` line from crashing rendering for every gym instead of just this
+  // file's build.
+  if (data.website && !isValidUrl(data.website)) {
+    errors.push(`invalid \`website\` (must be a valid URL): ${data.website}`);
   }
 
   return errors;

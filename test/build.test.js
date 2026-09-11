@@ -155,14 +155,12 @@ describe("validateGym", () => {
     assert.deepEqual(validateGym({ ...validData, discipline: ["speed"] }), []);
   });
 
-  // CURRENT-BEHAVIOR CHARACTERIZATION — documents a real gap, not a desired property. js/map.js's
-  // popupHtml() calls `new URL(gym.website)` unconditionally for every gym at marker-render time;
-  // a scheme-less/malformed value here reaches that call uncaught and crashes rendering for every
-  // gym, not just this one (confirmed: `new URL("climbingnetwork.nl")` throws). This test proves
-  // today's gap explicitly, to be flipped to `assert.ok(errors...)` once validateGym rejects it —
-  // see the Goal fixing this.
-  test("CURRENTLY accepts a malformed website with no error (gap — see Goal)", () => {
-    assert.deepEqual(validateGym({ ...validData, website: "not a valid url" }), []);
+  test("rejects a malformed website", () => {
+    // Was previously accepted with no error — js/map.js's popupHtml() calls
+    // `new URL(gym.website)` unconditionally for every gym at marker-render time, so a malformed
+    // value reaching it uncaught crashed rendering for every gym, not just this one.
+    const errors = validateGym({ ...validData, website: "not a valid url" });
+    assert.ok(errors.some((e) => e.includes("website")));
   });
 });
 

@@ -3,15 +3,14 @@
 // .gymrc's `gymsDir`), parses its YAML-ish frontmatter + body, and compiles the result into
 // data/gyms.json for the map to fetch.
 //
-// doc/tech-spec.md's "Architecture" — this is the only writer of data/gyms.json;
-// js/map.js never reads gyms/*.md directly. Per-file validation (doc/domain-spec.md §1) plus a
-// whole-list duplicate-coordinate/slug check (doc/tech-spec.md's "Build-time duplicate-coordinate
-// / duplicate-slug detection").
+// tech.architecture's A-1 — this is the only writer of data/gyms.json; js/map.js never reads
+// gyms/*.md directly. Per-file validation (domain.gym's Data table) plus a whole-list
+// duplicate-coordinate/slug check (tech.architecture's A-5, domain.gym:R-2).
 //
 // No dependencies needed — the frontmatter format is intentionally simple
 // (flat key: value pairs, string arrays, numbers, booleans, quoted strings)
 // so a tiny hand-rolled parser is enough and there's nothing to `npm install`
-// (doc/tech-spec.md's "Hand-rolled frontmatter parser, no dependency" decision).
+// (tech.architecture's "Hand-rolled frontmatter parser, no dependency" decision).
 //
 // Run with: npm run gyms:generate  (or: node scripts/build.js)
 
@@ -65,7 +64,7 @@ function parseFrontmatter(raw) {
 }
 
 /**
- * Validates a parsed frontmatter object against doc/domain-spec.md §1's required fields.
+ * Validates a parsed frontmatter object against domain.gym's Data table required fields.
  * Pure — no I/O — so it's unit-testable without touching the filesystem.
  * @returns {string[]} error messages; empty means valid.
  */
@@ -90,9 +89,8 @@ function validateGym(data) {
 
 /**
  * Turns already-parsed frontmatter + body into the normalized gym record the frontend consumes.
- * Pure — assumes `data` already passed validateGym. Field defaults are doc/domain-spec.md §1's
- * table; visited defaulting to true (not false) when omitted is deliberate, not a bug — see the
- * callout there.
+ * Pure — assumes `data` already passed validateGym. Field defaults are domain.gym's Data table;
+ * visited defaulting to true (not false) when omitted is deliberate, not a bug — see R-1.
  */
 function buildGymRecord(file, data, content) {
   const discipline = Array.isArray(data.discipline) ? data.discipline : [];
@@ -115,8 +113,8 @@ function buildGymRecord(file, data, content) {
 }
 
 /**
- * Finds gyms in the compiled list that collide on coordinates or on slug — doc/domain-spec.md
- * §3's "every gym's coordinates should be unique" rule, checked across the whole list rather than
+ * Finds gyms in the compiled list that collide on coordinates or on slug — domain.gym:R-2's
+ * "every gym's coordinates must be unique" rule, checked across the whole list rather than
  * per-file (loadGym/validateGym only ever see one file at a time, so they can't catch this).
  * Pure — no I/O — so it's unit-testable without touching the filesystem.
  * @returns {{type: "coordinates"|"slug", key: string, slugs: string[]}[]} one entry per colliding group
@@ -143,7 +141,7 @@ function findDuplicates(gyms) {
 /**
  * Reads the root-level `.gymrc` config file, if present, and returns the resolved gyms directory.
  * `.gymrc` uses the same flat `key: value` line format as gym frontmatter (parsed with
- * `parseValue`) rather than a new format, per doc/tech-spec.md's "no dependency, keep it simple"
+ * `parseValue`) rather than a new format, per tech.architecture's "no dependency, keep it simple"
  * stance. A missing `.gymrc` — or one with no `gymsDir` key — falls back to `./gyms`, so existing
  * checkouts keep working without needing to add the file.
  */

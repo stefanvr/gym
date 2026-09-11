@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "project_model": "spec",
+  "scopes": [
+    {
+      "id": "domain.gym",
+      "authority": "domain",
+      "path": "doc/spec/domain/gym.md",
+      "depends_on": []
+    },
+    {
+      "id": "app.gym-map",
+      "authority": "app",
+      "path": "doc/spec/app/gym-map.md",
+      "depends_on": ["domain.gym"]
+    },
+    {
+      "id": "style.foundation",
+      "authority": "style",
+      "path": "doc/spec/style/foundation.md",
+      "depends_on": ["app.gym-map"]
+    },
+    {
+      "id": "tech.architecture",
+      "authority": "tech",
+      "path": "doc/spec/tech/architecture.md",
+      "depends_on": ["domain.gym", "style.foundation"]
+    }
+  ]
+}

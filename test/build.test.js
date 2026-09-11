@@ -1,7 +1,7 @@
 // test/build.test.js
-// Mirrors scripts/build.js — doc/code-conventions.md's "tests mirror the source layout".
+// Mirrors scripts/build.js — tech.architecture's A-2 file-organization rule.
 //
-// Covers the pure parsing/validation/normalization logic directly, per doc/tech-spec.md's
+// Covers the pure parsing/validation/normalization logic directly, per tech.architecture's
 // testing strategy: this layer has no DOM or network dependency, so unit-testing it in isolation
 // is cheap and is where a frontmatter-format regression should get caught.
 
@@ -62,7 +62,7 @@ describe("parseValue", () => {
   test("a bare word that looks like neither boolean nor number nor array stays a string", () => {
     // Real footgun this documents: `bucketList: yes` is not a boolean — it parses as the
     // *string* "yes", which every `=== true` check downstream then reads as false. No parse
-    // error, no warning. See doc/tech-spec.md's "Hand-rolled frontmatter parser" accepted risk.
+    // error, no warning. See tech.architecture's "Hand-rolled frontmatter parser" accepted risk.
     assert.equal(parseValue("yes"), "yes");
   });
 });
@@ -160,7 +160,7 @@ describe("buildGymRecord", () => {
   const minimal = { name: "Test Gym", lat: 52.1, lon: 5.1, discipline: ["boulder"] };
 
   test("visited defaults to true when the field is entirely omitted", () => {
-    // doc/domain-spec.md §1's explicitly-flagged surprising default.
+    // domain.gym:R-1's explicitly-flagged surprising default.
     const gym = buildGymRecord("test-gym.md", minimal, "");
     assert.equal(gym.visited, true);
   });
@@ -206,7 +206,7 @@ describe("findDuplicates", () => {
   });
 
   test("flags two gyms sharing coordinates, naming both slugs", () => {
-    // doc/domain-spec.md §3's "copy-pasted-and-half-edited file" incident: a new gym file kept
+    // domain.gym:R-2's "copy-pasted-and-half-edited file" incident: a new gym file kept
     // an existing one's exact lat/lon.
     const gyms = [
       { slug: "nl-olympus", lat: 51.98, lon: 5.9 },

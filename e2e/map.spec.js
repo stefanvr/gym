@@ -1,6 +1,7 @@
 // e2e/map.spec.js
-// doc/implementation-spec.md §1-3. Runs on both configured projects (Desktop Chrome, Mobile
-// Chrome — playwright.config.js) unless a test explicitly checks the viewport and skips.
+// doc/spec/app/gym-map.md's Map & markers / Filters sections. Runs on both configured projects
+// (Desktop Chrome, Mobile Chrome — playwright.config.js) unless a test explicitly checks the
+// viewport and skips.
 
 import { test, expect } from "@playwright/test";
 
@@ -8,7 +9,8 @@ test("the map loads real gym data", async ({ page }) => {
   await page.goto("/");
 
   // At least one discipline stat should be non-zero once data/gyms.json actually loads —
-  // proof this isn't just the empty shell doc/implementation-spec.md §7 describes on failure.
+  // proof this isn't just the empty shell doc/spec/app/gym-map.md's "Data loading & error
+  // state" describes on failure.
   const firstStatCount = page.locator(".stat__count").first();
   await expect(firstStatCount).toBeVisible();
   const count = Number(await firstStatCount.textContent());
@@ -21,8 +23,8 @@ test("a discipline filter chip narrows the gym list", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".gym-card").first()).toBeVisible();
 
-  // On mobile the filter row starts folded (implementation-spec.md §3) — expand it first so the
-  // chip is actually clickable, matching what a real visitor would have to do.
+  // On mobile the filter row starts folded (doc/spec/app/gym-map.md's mobile fold) — expand it
+  // first so the chip is actually clickable, matching what a real visitor would have to do.
   const toggle = page.locator("#filters-toggle");
   if (await toggle.isVisible()) {
     await toggle.click();
@@ -42,7 +44,7 @@ test("a discipline filter chip narrows the gym list", async ({ page }) => {
   await expect(page.locator(".gym-card")).toHaveCount(before);
 });
 
-test.describe("mobile collapsible filters (doc/implementation-spec.md §3)", () => {
+test.describe("mobile collapsible filters (doc/spec/app/gym-map.md's mobile fold)", () => {
   test("folded by default below the 760px breakpoint, full row shown above it", async ({ page }) => {
     await page.goto("/");
     const viewportWidth = page.viewportSize().width;

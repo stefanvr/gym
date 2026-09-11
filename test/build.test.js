@@ -154,6 +154,27 @@ describe("validateGym", () => {
     // out of VALID_DISCIPLINES the way it briefly dropped out of css/style.css's :root block.
     assert.deepEqual(validateGym({ ...validData, discipline: ["speed"] }), []);
   });
+
+  test("rejects a malformed website", () => {
+    // Was previously accepted with no error — js/map.js's popupHtml() calls
+    // `new URL(gym.website)` unconditionally for every gym at marker-render time, so a malformed
+    // value reaching it uncaught crashed rendering for every gym, not just this one.
+    const errors = validateGym({ ...validData, website: "not a valid url" });
+    assert.ok(errors.some((e) => e.includes("website")));
+  });
+
+  test("rejects a scheme-less website (an easy real typo — bare domain, no https://)", () => {
+    const errors = validateGym({ ...validData, website: "climbingnetwork.nl" });
+    assert.ok(errors.some((e) => e.includes("website")));
+  });
+
+  test("accepts a well-formed website", () => {
+    assert.deepEqual(validateGym({ ...validData, website: "https://www.climbingnetwork.nl/" }), []);
+  });
+
+  test("omitting website entirely is not an error (it's optional)", () => {
+    assert.deepEqual(validateGym({ ...validData, website: undefined }), []);
+  });
 });
 
 describe("buildGymRecord", () => {

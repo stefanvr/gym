@@ -108,7 +108,14 @@ function popupHtml(gym) {
   `;
 }
 
-function passesFilters(gym) {
+/**
+ * domain.gym R-3/R-4/R-5/R-6/R-7's filter-combination rules. Pure — takes filter state as an
+ * explicit argument instead of reading module globals — so it's importable and unit-testable
+ * without a DOM; see test/map-filters.test.js. Call sites in this file read current UI state
+ * through currentFilters() below.
+ */
+function passesFilters(gym, filters) {
+  const { hasOutdoorWall, visitedOnly, bucketListOnly, activeDisciplines } = filters;
   if (hasOutdoorWall && !gym.hasOutdoorWall) return false;
   if (visitedOnly && !gym.visited) return false;
   // Deliberate asymmetry (domain.gym:R-7): the Bucket list chip is narrower than the
@@ -120,10 +127,15 @@ function passesFilters(gym) {
   return gym.discipline.some((d) => activeDisciplines.has(d));
 }
 
+/** Snapshots the module's current filter-toggle state into the plain object passesFilters takes. */
+function currentFilters() {
+  return { hasOutdoorWall, visitedOnly, bucketListOnly, activeDisciplines };
+}
+
 function renderMarkers() {
   markerLayer.clearLayers();
   markersBySlug.clear();
-  gyms.filter(passesFilters).forEach((gym) => {
+  gyms.filter((g) => passesFilters(g, currentFilters())).forEach((gym) => {
     const marker = L.marker([gym.lat, gym.lon], { icon: makeIcon(gym) })
       .bindPopup(popupHtml(gym))
       .addTo(markerLayer);
@@ -135,7 +147,7 @@ function renderMarkers() {
 function renderStats() {
   const el = document.getElementById("stats");
   const counts = { boulder: 0, toprope: 0, lead: 0, speed: 0 };
-  gyms.filter(passesFilters).forEach((g) => {
+  gyms.filter((g) => passesFilters(g, currentFilters())).forEach((g) => {
     g.discipline.forEach((d) => (counts[d] += 1));
   });
   el.innerHTML = Object.entries(counts)
@@ -255,7 +267,7 @@ function focusGym(gym) {
 
 function renderList() {
   const el = document.getElementById("gym-list");
-  const visible = gyms.filter(passesFilters).sort((a, b) => a.name.localeCompare(b.name));
+  const visible = gyms.filter((g) => passesFilters(g, currentFilters())).sort((a, b) => a.name.localeCompare(b.name));
 
   if (visible.length === 0) {
     el.innerHTML = `<li class="empty-state">No gyms match these filters.</li>`;
@@ -340,4 +352,12 @@ async function init() {
   renderTrail();
 }
 
-init();
+export { passesFilters };
+
+// Only auto-run when actually loaded as a page script — node --test imports this module to reach
+// passesFilters (a pure function with no DOM/network dependency) without triggering the rest of
+// init(), which assumes a browser. Mirrors scripts/build.js's
+// `if (import.meta.url === ...) main()` guard for the same reason.
+if (typeof document !== "undefined") {
+  init();
+}

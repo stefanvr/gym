@@ -1,0 +1,10 @@
+---
+name: style-visual
+description: Define visual rules and values.
+---
+
+Read `.harness/workflow/WORKFLOW.md` and `.harness/skills/style/visual.md`.
+
+Use `.harness/workflow/routing.md` and `.harness/workflow/context-manifest.yaml` to load only the additional context that skill requires.
+
+The `.harness` skill is authoritative. This file is only the Claude Code invocation adapter.

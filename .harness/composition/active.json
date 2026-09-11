@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release": "17",
+  "selection": {
+    "project_model": "spec",
+    "collaboration_model": "cooperative-multi-user",
+    "method_packs": [
+      "interview-me",
+      "event-storming",
+      "story-mapping",
+      "design"
+    ]
+  },
+  "supported": {
+    "project_models": [
+      "spec"
+    ],
+    "collaboration_models": [
+      "single-user",
+      "cooperative-multi-user"
+    ],
+    "method_packs": [
+      "interview-me",
+      "event-storming",
+      "story-mapping",
+      "design"
+    ]
+  },
+  "sources": {
+    "project_models": {
+      "spec": ".harness/project-models/spec.md"
+    },
+    "collaboration_models": {
+      "single-user": ".harness/collaboration-models/single-user.md",
+      "cooperative-multi-user": ".harness/collaboration-models/cooperative-multi-user.md"
+    },
+    "method_packs": {
+      "interview-me": ".harness/methods/interview-me.md",
+      "event-storming": ".harness/methods/event-storming.md",
+      "story-mapping": ".harness/methods/story-mapping.md",
+      "design": ".harness/methods/design.md"
+    }
+  }
+}

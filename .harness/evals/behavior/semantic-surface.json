@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "include_globs": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    ".claude/skills/*/SKILL.md",
+    ".harness/workflow/**/*.md",
+    ".harness/guides/*.md",
+    ".harness/mechanisms/*.md",
+    ".harness/contracts/*.md",
+    ".harness/methods/*.md",
+    ".harness/capabilities/*.md",
+    ".harness/skills/**/*.md",
+    ".harness/lifecycle/*.md",
+    ".harness/harness/*.md",
+    ".harness/learning/definition.md",
+    ".harness/harness-limitations.md",
+    ".harness/harness-assurance.md",
+    ".harness/README-vocabulary.md",
+    ".harness/harness-extended-vocabulary.md",
+    ".harness/README-workflows.md",
+    ".harness/workflow/context-manifest.yaml",
+    ".harness/runtime/README.md",
+    ".harness/knowledge/definition.md",
+    ".harness/continuity/*.md",
+    ".harness/composition/*",
+    ".harness/project-models/*.md",
+    ".harness/collaboration-models/*.md"
+  ]
+}

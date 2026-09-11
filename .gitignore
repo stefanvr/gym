@@ -1,5 +1,11 @@
 node_modules/
 .DS_Store
+__pycache__/
+*.pyc
+
+# Harness local recovery state (never Project history)
+doc/goals/
+doc/session.md
 
 # Playwright artifacts
 test-results/

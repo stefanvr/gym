@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "mainline": "auto",
+  "bootstrap_mainline": "main",
+  "remote": "origin"
+}

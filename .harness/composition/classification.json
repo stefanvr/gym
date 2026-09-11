@@ -1,0 +1,919 @@
+{
+  "schema_version": 1,
+  "release": "17",
+  "purpose": "Current-state architectural inventory for the standalone Harness 17 distribution: modular runtime ownership, explicit model boundaries, reduced startup context, and profile-qualified Assurance.",
+  "entries": [
+    {
+      "path": ".harness/README-vocabulary.md",
+      "layer": "kernel",
+      "kind": "working-vocabulary",
+      "authority": "Harness kernel",
+      "couplings": [],
+      "owner": "Harness Change"
+    },
+    {
+      "path": ".harness/README-workflows.md",
+      "layer": "kernel",
+      "kind": "orientation",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec",
+        "collaboration/cooperative-multi-user"
+      ]
+    },
+    {
+      "path": ".harness/README.md",
+      "layer": "kernel",
+      "kind": "orientation",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/capabilities/app.md",
+      "layer": "project-model/spec",
+      "kind": "capability",
+      "authority": "Spec/App",
+      "couplings": []
+    },
+    {
+      "path": ".harness/capabilities/brainstorm.md",
+      "layer": "exploration",
+      "kind": "capability",
+      "authority": "Legacy method surface",
+      "couplings": []
+    },
+    {
+      "path": ".harness/capabilities/build.md",
+      "layer": "kernel",
+      "kind": "capability",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/capabilities/domain.md",
+      "layer": "project-model/spec",
+      "kind": "capability",
+      "authority": "Spec/Domain",
+      "couplings": []
+    },
+    {
+      "path": ".harness/capabilities/sanity.md",
+      "layer": "kernel",
+      "kind": "capability",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/capabilities/setup.md",
+      "layer": "kernel",
+      "kind": "capability",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/capabilities/style.md",
+      "layer": "project-model/spec",
+      "kind": "capability",
+      "authority": "Spec/Style",
+      "couplings": []
+    },
+    {
+      "path": ".harness/capabilities/tech.md",
+      "layer": "project-model/spec",
+      "kind": "capability",
+      "authority": "Spec/Tech",
+      "couplings": []
+    },
+    {
+      "path": ".harness/collaboration-models/cooperative-multi-user.md",
+      "layer": "collaboration/cooperative-multi-user",
+      "kind": "collaboration-model",
+      "authority": "Cooperative Multi-user Collaboration model",
+      "couplings": []
+    },
+    {
+      "path": ".harness/collaboration-models/single-user.md",
+      "layer": "collaboration/single-user",
+      "kind": "collaboration-model",
+      "authority": "Single-user Collaboration model",
+      "couplings": []
+    },
+    {
+      "path": ".harness/composition/active.json",
+      "layer": "kernel",
+      "kind": "composition",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/composition/classification.json",
+      "layer": "kernel",
+      "kind": "composition",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/composition/definition.md",
+      "layer": "kernel",
+      "kind": "composition",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/continuity/definition.md",
+      "layer": "kernel",
+      "kind": "continuity",
+      "authority": "Harness kernel",
+      "couplings": [
+        "collaboration/single-user"
+      ]
+    },
+    {
+      "path": ".harness/continuity/session-template.md",
+      "layer": "kernel",
+      "kind": "continuity",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/continuity/token-guidelines.md",
+      "layer": "kernel",
+      "kind": "continuity",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/contracts/authority-orchestrator-contract.md",
+      "layer": "kernel",
+      "kind": "contract",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/contracts/method-pack-contract.md",
+      "layer": "kernel",
+      "kind": "contract",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/contracts/task-capability-skill-contract.md",
+      "layer": "kernel",
+      "kind": "contract",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/evals/behavior/README.md",
+      "layer": "kernel",
+      "kind": "assurance-evaluator",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/evals/behavior/run.py",
+      "layer": "kernel",
+      "kind": "assurance-evaluator",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec",
+        "collaboration/cooperative-multi-user"
+      ]
+    },
+    {
+      "path": ".harness/evals/behavior/scenarios.json",
+      "layer": "kernel",
+      "kind": "assurance-evaluator",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec",
+        "collaboration/cooperative-multi-user"
+      ]
+    },
+    {
+      "path": ".harness/evals/behavior/semantic-surface.json",
+      "layer": "kernel",
+      "kind": "assurance-evaluator",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/evals/behavior/tests/test_behavior.py",
+      "layer": "kernel",
+      "kind": "test",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/guides/collaboration.md",
+      "layer": "kernel",
+      "kind": "guide",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/guides/definition.md",
+      "layer": "kernel",
+      "kind": "guide",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/guides/general.md",
+      "layer": "kernel",
+      "kind": "guide",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/guides/git-history.md",
+      "layer": "kernel",
+      "kind": "guide",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/guides/goals-and-decisions.md",
+      "layer": "kernel",
+      "kind": "guide",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/guides/software-design.md",
+      "layer": "kernel",
+      "kind": "guide",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/harness-assurance.md",
+      "layer": "kernel",
+      "kind": "harness-governance",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/harness-extended-vocabulary.md",
+      "layer": "kernel",
+      "kind": "extended-vocabulary",
+      "authority": "Harness kernel",
+      "couplings": [],
+      "owner": "Harness Change"
+    },
+    {
+      "path": ".harness/harness-limitations.md",
+      "layer": "kernel",
+      "kind": "harness-governance",
+      "authority": "Harness kernel",
+      "couplings": [
+        "collaboration/cooperative-multi-user"
+      ]
+    },
+    {
+      "path": ".harness/harness/definition.md",
+      "layer": "kernel",
+      "kind": "harness-governance",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/harness/invariants.json",
+      "layer": "kernel",
+      "kind": "harness-governance",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/knowledge/definition.md",
+      "layer": "kernel",
+      "kind": "knowledge",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/knowledge/firebase.md",
+      "layer": "kernel",
+      "kind": "knowledge",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/knowledge/github-actions.md",
+      "layer": "kernel",
+      "kind": "knowledge",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/knowledge/github-pages.md",
+      "layer": "kernel",
+      "kind": "knowledge",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/knowledge/node.md",
+      "layer": "kernel",
+      "kind": "knowledge",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/knowledge/playwright.md",
+      "layer": "kernel",
+      "kind": "knowledge",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/knowledge/sveltekit.md",
+      "layer": "kernel",
+      "kind": "knowledge",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/learning/definition.md",
+      "layer": "kernel",
+      "kind": "learning",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/lifecycle/definition.md",
+      "layer": "kernel",
+      "kind": "lifecycle",
+      "authority": "Harness kernel",
+      "couplings": [
+        "collaboration/cooperative-multi-user"
+      ]
+    },
+    {
+      "path": ".harness/mechanisms/authorship-stance.md",
+      "layer": "kernel",
+      "kind": "mechanism",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/mechanisms/change-impact.md",
+      "layer": "kernel",
+      "kind": "mechanism",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/mechanisms/grill.md",
+      "layer": "kernel",
+      "kind": "mechanism",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/mechanisms/ideation.md",
+      "layer": "kernel",
+      "kind": "mechanism",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/mechanisms/provenance.md",
+      "layer": "kernel",
+      "kind": "mechanism",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/mechanisms/shared.md",
+      "layer": "kernel",
+      "kind": "mechanism",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/methods/design.md",
+      "layer": "method",
+      "kind": "method-pack",
+      "authority": "Design method (non-authoritative)",
+      "couplings": []
+    },
+    {
+      "path": ".harness/methods/event-storming.md",
+      "layer": "method",
+      "kind": "method-pack",
+      "authority": "Event Storming method (non-authoritative)",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/methods/interview-me.md",
+      "layer": "method",
+      "kind": "method-pack",
+      "authority": "Interview Me method (non-authoritative)",
+      "couplings": []
+    },
+    {
+      "path": ".harness/methods/story-mapping.md",
+      "layer": "method",
+      "kind": "method-pack",
+      "authority": "Story Mapping method (non-authoritative)",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/project-models/spec-topology.md",
+      "layer": "project-model/spec",
+      "kind": "project-model-contract",
+      "authority": "Spec Project model",
+      "couplings": []
+    },
+    {
+      "path": ".harness/project-models/spec.md",
+      "layer": "project-model/spec",
+      "kind": "project-model",
+      "authority": "Spec Project model",
+      "couplings": []
+    },
+    {
+      "path": ".harness/releases/17.md",
+      "layer": "kernel",
+      "kind": "release-note",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/roadmap/v17.md",
+      "layer": "kernel",
+      "kind": "development-map",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/runtime/README.md",
+      "layer": "kernel",
+      "kind": "runtime-support",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec",
+        "collaboration/cooperative-multi-user"
+      ]
+    },
+    {
+      "path": ".harness/runtime/VERSION",
+      "layer": "kernel",
+      "kind": "runtime-support",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/runtime/checker.py",
+      "layer": "kernel",
+      "kind": "runtime-checker",
+      "authority": "Harness Assurance",
+      "couplings": [
+        "project-model/spec",
+        "collaboration/cooperative-multi-user",
+        "collaboration/single-user"
+      ]
+    },
+    {
+      "path": ".harness/runtime/collaboration_model.py",
+      "layer": "collaboration/cooperative-multi-user",
+      "kind": "runtime-module",
+      "authority": "Collaboration model",
+      "couplings": [
+        "collaboration/single-user"
+      ]
+    },
+    {
+      "path": ".harness/runtime/config.json",
+      "layer": "kernel",
+      "kind": "runtime-support",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/runtime/harness.py",
+      "layer": "kernel",
+      "kind": "runtime-entrypoint",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/runtime/kernel.py",
+      "layer": "kernel",
+      "kind": "runtime-module",
+      "authority": "Harness kernel",
+      "couplings": [
+        "collaboration/cooperative-multi-user"
+      ]
+    },
+    {
+      "path": ".harness/runtime/project_model.py",
+      "layer": "project-model/spec",
+      "kind": "runtime-module",
+      "authority": "Spec Project model",
+      "couplings": []
+    },
+    {
+      "path": ".harness/runtime/tests/test_harness.py",
+      "layer": "kernel",
+      "kind": "test",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/skills/app/check.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/App",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/app/interaction.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/App",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/app/story-map.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/App",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/app/surfaces.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/App",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/brainstorm/analyze.md",
+      "layer": "exploration",
+      "kind": "skill",
+      "authority": "Legacy method surface",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/brainstorm/interview.md",
+      "layer": "exploration",
+      "kind": "skill",
+      "authority": "Legacy method surface",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/build/check.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/skills/build/implement.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/skills/build/proof.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/skills/build/repair.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/skills/continuity/resume.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "collaboration/single-user"
+      ]
+    },
+    {
+      "path": ".harness/skills/continuity/session-checkpoint.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/domain/check.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Domain",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/domain/data.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Domain",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/domain/events.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Domain",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/domain/language.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Domain",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/domain/rules.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Domain",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/harness/change.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/knowledge/capture.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/knowledge/check.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/knowledge/lookup.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/learning/dream.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/lifecycle/branch-land.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "collaboration/cooperative-multi-user"
+      ]
+    },
+    {
+      "path": ".harness/skills/lifecycle/branch-start.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "collaboration/single-user"
+      ]
+    },
+    {
+      "path": ".harness/skills/lifecycle/goal.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "collaboration/single-user"
+      ]
+    },
+    {
+      "path": ".harness/skills/sanity/harness-check.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/sanity/repository-check.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/skills/sanity/run.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/skills/sanity/spec-check.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Sanity integration",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/sanity/trace-check.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Sanity integration",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/setup/app.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/skills/setup/dev.md",
+      "layer": "kernel",
+      "kind": "skill",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec"
+      ]
+    },
+    {
+      "path": ".harness/skills/style/audio.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Style",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/style/check.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Style",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/style/preview.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Style",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/style/reference.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Style",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/style/visual.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Style",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/tech/architecture-rule.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Tech",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/tech/check.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Tech",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/tech/decide.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Tech",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/tech/repair.md",
+      "layer": "project-model/spec",
+      "kind": "skill",
+      "authority": "Spec/Tech",
+      "couplings": []
+    },
+    {
+      "path": ".harness/workflow/WORKFLOW.md",
+      "layer": "kernel",
+      "kind": "workflow",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec",
+        "collaboration/single-user"
+      ]
+    },
+    {
+      "path": ".harness/workflow/agent/chatgpt.md",
+      "layer": "kernel",
+      "kind": "agent-adapter",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/workflow/agent/claude-code.md",
+      "layer": "kernel",
+      "kind": "agent-adapter",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/workflow/agent/gemini.md",
+      "layer": "kernel",
+      "kind": "agent-adapter",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/workflow/context-manifest.yaml",
+      "layer": "kernel",
+      "kind": "workflow",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec",
+        "collaboration/cooperative-multi-user"
+      ]
+    },
+    {
+      "path": ".harness/workflow/routing.md",
+      "layer": "kernel",
+      "kind": "workflow",
+      "authority": "Harness kernel",
+      "couplings": [
+        "project-model/spec",
+        "collaboration/cooperative-multi-user"
+      ]
+    }
+  ],
+  "dynamic_rules": [
+    {
+      "glob": ".harness/evals/behavior/evidence/*.json",
+      "layer": "kernel",
+      "kind": "assurance-evidence",
+      "authority": "Harness Assurance"
+    },
+    {
+      "glob": ".harness/knowledge/*.md",
+      "layer": "kernel",
+      "kind": "knowledge",
+      "authority": "Knowledge"
+    }
+  ]
+}

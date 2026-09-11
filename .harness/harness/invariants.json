@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "invariants": [
+    {
+      "id": "BOUNDARY-01",
+      "category": "harness-project-boundary",
+      "source": ".harness/harness/definition.md",
+      "behavior_required": true
+    },
+    {
+      "id": "BOUNDARY-02",
+      "category": "harness-project-boundary",
+      "source": ".harness/harness/definition.md",
+      "behavior_required": true
+    },
+    {
+      "id": "COMPOSE-01",
+      "category": "composition",
+      "source": ".harness/composition/definition.md",
+      "behavior_required": true
+    },
+    {
+      "id": "TOPOLOGY-01",
+      "category": "spec-topology",
+      "source": ".harness/project-models/spec-topology.md",
+      "behavior_required": true
+    },
+    {
+      "id": "COLLAB-01",
+      "category": "cooperative-collaboration",
+      "source": ".harness/collaboration-models/cooperative-multi-user.md",
+      "behavior_required": true
+    },
+    {
+      "id": "ORCH-01",
+      "category": "authority-orchestration",
+      "source": ".harness/contracts/authority-orchestrator-contract.md",
+      "behavior_required": true
+    },
+    {
+      "id": "METHOD-01",
+      "category": "method-authority-boundary",
+      "source": ".harness/contracts/method-pack-contract.md",
+      "behavior_required": true
+    },
+    {
+      "id": "GUIDE-01",
+      "category": "universal-guides",
+      "source": ".harness/guides/definition.md",
+      "behavior_required": true
+    },
+    {
+      "id": "GUIDE-02",
+      "category": "universal-guides",
+      "source": ".harness/guides/definition.md",
+      "behavior_required": true
+    },
+    {
+      "id": "AUTH-01",
+      "category": "authority",
+      "source": ".harness/workflow/WORKFLOW.md",
+      "behavior_required": true
+    },
+    {
+      "id": "AUTH-02",
+      "category": "authority",
+      "source": ".harness/workflow/WORKFLOW.md",
+      "behavior_required": true
+    },
+    {
+      "id": "AUTH-03",
+      "category": "authority",
+      "source": ".harness/workflow/WORKFLOW.md",
+      "behavior_required": true
+    },
+    {
+      "id": "PROP-01",
+      "category": "change-propagation",
+      "source": ".harness/mechanisms/change-impact.md",
+      "behavior_required": true
+    },
+    {
+      "id": "PROP-02",
+      "category": "change-propagation",
+      "source": ".harness/mechanisms/change-impact.md",
+      "behavior_required": true
+    },
+    {
+      "id": "SEM-01",
+      "category": "semantic-regression",
+      "source": ".harness/harness-assurance.md",
+      "behavior_required": true
+    }
+  ]
+}

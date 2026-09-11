@@ -1,0 +1,168 @@
+version: 1
+# Startup context is deliberately small. Load everything else by active composition
+# and current concern through the inventories below.
+always:
+- .harness/workflow/WORKFLOW.md
+- .harness/composition/active.json
+- .harness/workflow/routing.md
+always_state:
+  repository_git: inspect
+  goal_for_current_branch: derive doc/goals/<branch>.md
+  dreams_if_present: doc/dreams/
+# Selection rule: the active Project model, Collaboration model, and method packs are
+# resolved only from active.json `selection` + `sources`. The model and method entries
+# below are an inventory of loadable definitions, not a selection; load only the ones
+# active.json selects.
+composition:
+  definition: .harness/composition/definition.md
+  active: .harness/composition/active.json
+  classification: .harness/composition/classification.json
+  project_models:
+    spec: .harness/project-models/spec.md
+  project_model_bindings:
+    spec_topology: .harness/project-models/spec-topology.md
+  collaboration_models:
+    single-user: .harness/collaboration-models/single-user.md
+    cooperative-multi-user: .harness/collaboration-models/cooperative-multi-user.md
+  roadmap: .harness/roadmap/v17.md
+  release_note: .harness/releases/17.md
+
+methods:
+  interview_me: .harness/methods/interview-me.md
+  event_storming: .harness/methods/event-storming.md
+  story_mapping: .harness/methods/story-mapping.md
+  design: .harness/methods/design.md
+orientation:
+  working_vocabulary: .harness/README-vocabulary.md
+  harness_extended_vocabulary: .harness/harness-extended-vocabulary.md
+  workflows: .harness/README-workflows.md
+contracts:
+  task_capability_skill: .harness/contracts/task-capability-skill-contract.md
+  authority_orchestrator: .harness/contracts/authority-orchestrator-contract.md
+  method_pack: .harness/contracts/method-pack-contract.md
+mechanisms:
+  shared: .harness/mechanisms/shared.md
+  grill: .harness/mechanisms/grill.md
+  provenance: .harness/mechanisms/provenance.md
+  ideation: .harness/mechanisms/ideation.md
+  authorship_stance: .harness/mechanisms/authorship-stance.md
+  change_impact: .harness/mechanisms/change-impact.md
+continuity:
+  definition: .harness/continuity/definition.md
+  token_guidelines: .harness/continuity/token-guidelines.md
+  session_template: .harness/continuity/session-template.md
+  skills:
+    resume: .harness/skills/continuity/resume.md
+    session_checkpoint: .harness/skills/continuity/session-checkpoint.md
+agents:
+  claude_code: .harness/workflow/agent/claude-code.md
+  chatgpt: .harness/workflow/agent/chatgpt.md
+  gemini: .harness/workflow/agent/gemini.md
+guides:
+  definition: .harness/guides/definition.md
+  collaboration: .harness/guides/collaboration.md
+  general: .harness/guides/general.md
+  software_design: .harness/guides/software-design.md
+  git_history: .harness/guides/git-history.md
+  goals_and_decisions: .harness/guides/goals-and-decisions.md
+runtime:
+  definition: .harness/runtime/README.md
+  config: .harness/runtime/config.json
+  entrypoint: .harness/runtime/harness.py
+  kernel: .harness/runtime/kernel.py
+  project_model: .harness/runtime/project_model.py
+  collaboration_model: .harness/runtime/collaboration_model.py
+  checker: .harness/runtime/checker.py
+  tests: .harness/runtime/tests/test_harness.py
+semantic_regression:
+  definition: .harness/evals/behavior/README.md
+  config: .harness/evals/behavior/semantic-surface.json
+  corpus: .harness/evals/behavior/scenarios.json
+  evaluator: .harness/evals/behavior/run.py
+  tests: .harness/evals/behavior/tests/test_behavior.py
+lifecycle:
+  definition: .harness/lifecycle/definition.md
+  skills:
+    goal: .harness/skills/lifecycle/goal.md
+    branch_start: .harness/skills/lifecycle/branch-start.md
+    branch_land: .harness/skills/lifecycle/branch-land.md
+harness:
+  definition: .harness/harness/definition.md
+  limitations: .harness/harness-limitations.md
+  assurance: .harness/harness-assurance.md
+  invariants: .harness/harness/invariants.json
+  skills:
+    change: .harness/skills/harness/change.md
+capabilities:
+  brainstorm:
+    definition: .harness/capabilities/brainstorm.md
+    skills:
+      interview: .harness/skills/brainstorm/interview.md
+      analyze: .harness/skills/brainstorm/analyze.md
+  tech:
+    definition: .harness/capabilities/tech.md
+    skills:
+      decide: .harness/skills/tech/decide.md
+      architecture_rule: .harness/skills/tech/architecture-rule.md
+      repair: .harness/skills/tech/repair.md
+      check: .harness/skills/tech/check.md
+  domain:
+    definition: .harness/capabilities/domain.md
+    skills:
+      language: .harness/skills/domain/language.md
+      events: .harness/skills/domain/events.md
+      rules: .harness/skills/domain/rules.md
+      data: .harness/skills/domain/data.md
+      check: .harness/skills/domain/check.md
+  app:
+    definition: .harness/capabilities/app.md
+    skills:
+      story_map: .harness/skills/app/story-map.md
+      interaction: .harness/skills/app/interaction.md
+      surfaces: .harness/skills/app/surfaces.md
+      check: .harness/skills/app/check.md
+  style:
+    definition: .harness/capabilities/style.md
+    skills:
+      reference: .harness/skills/style/reference.md
+      visual: .harness/skills/style/visual.md
+      audio: .harness/skills/style/audio.md
+      preview: .harness/skills/style/preview.md
+      check: .harness/skills/style/check.md
+  build:
+    definition: .harness/capabilities/build.md
+    skills:
+      implement: .harness/skills/build/implement.md
+      proof: .harness/skills/build/proof.md
+      repair: .harness/skills/build/repair.md
+      check: .harness/skills/build/check.md
+  sanity:
+    definition: .harness/capabilities/sanity.md
+    skills:
+      run: .harness/skills/sanity/run.md
+      harness_check: .harness/skills/sanity/harness-check.md
+      spec_check: .harness/skills/sanity/spec-check.md
+      trace_check: .harness/skills/sanity/trace-check.md
+      repository_check: .harness/skills/sanity/repository-check.md
+  setup:
+    definition: .harness/capabilities/setup.md
+    skills:
+      dev: .harness/skills/setup/dev.md
+      app: .harness/skills/setup/app.md
+learning:
+  definition: .harness/learning/definition.md
+  skills:
+    dream: .harness/skills/learning/dream.md
+knowledge:
+  definition: .harness/knowledge/definition.md
+  skills:
+    lookup: .harness/skills/knowledge/lookup.md
+    capture: .harness/skills/knowledge/capture.md
+    check: .harness/skills/knowledge/check.md
+  entries:
+    node: .harness/knowledge/node.md
+    playwright: .harness/knowledge/playwright.md
+    sveltekit: .harness/knowledge/sveltekit.md
+    firebase: .harness/knowledge/firebase.md
+    github_pages: .harness/knowledge/github-pages.md
+    github_actions: .harness/knowledge/github-actions.md

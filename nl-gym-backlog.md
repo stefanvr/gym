@@ -164,5 +164,4 @@ Candidates deliberately left out, with why.
 - Sportcomplex Valkenhuizen — Arnhem-Noord — Beukenlaan 15 — a general sports
   complex, not a dedicated climbing gym; its outdoor climbing wall is no
   longer operating (Sportbedrijf Arnhem's current facilities page for it
-  doesn't list a climbing wall at all — see doc/implementation-tracking.md
-  Stage 2) — not a candidate entry.
+  doesn't list a climbing wall at all) — not a candidate entry.

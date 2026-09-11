@@ -1,15 +1,9 @@
-# Environment
+# Setup — Development Environment
 
-**Purpose.** How to actually run this project on a real machine, and which parts of that are
-non-negotiable versus merely how one person's setup happens to work.
-
-**What belongs here.** Runtimes and where they live, shells, identity/credential setup that
-affects commits, ports, paths, and any tooling behaviour that surprises.
-
-**What doesn't.** Technical *choices* — which runtime, which test framework, which architecture —
-belong in [tech-spec.md](tech-spec.md). This doc doesn't decide anything; it describes what's
-true. That's why it's separate: tech-spec changes when the project changes, this changes when a
-machine changes, and mixing the two makes both harder to trust.
+How to actually bring a machine to a development-ready state for this project, and which parts of
+that are non-negotiable versus merely how one person's setup happens to work. This doesn't decide
+anything — Tech choices (`doc/spec/tech/architecture.md`) belong to `tech.architecture`; this
+records the verified operational consequences of those choices on a real machine.
 
 **Write silent failures first.** A command that errors is self-correcting — you see it and fix it.
 A command that quietly does the *wrong thing* is not, and that's the class of problem this
@@ -17,20 +11,25 @@ document exists for.
 
 ---
 
-## Invariants
+## Prerequisites and versions
 
-What must be true regardless of whose machine it is. These stay true when someone else joins, and
-each one is a property a setup either satisfies or doesn't.
-
-- **Node 20** or compatible (pinned in `.nvmrc`). CI (`deploy.yml`) already uses `actions/setup-node@v4`
-  with `node-version: 20`; local dev must match it, not the OS package.
+- **Node 20** or compatible (pinned in `.nvmrc`). CI (`deploy.yml`) already uses
+  `actions/setup-node@v4` with `node-version: 20`; local dev must match it, not the OS package.
 - `git commit` output must actually be signed/attributable correctly — a shell that produces a
-  commit at all is not sufficient proof it did the right thing (see below).
-- No GitHub pull requests for this repo, ever — branch, then merge straight to the integration
-  branch (see [workflow.md](workflow.md)). This is a standing preference, not a technical
-  constraint, but it's invariant across machines the same way the others are.
+  commit at all is not sufficient proof it did the right thing (see Manual/privileged steps).
 
----
+## Development bootstrap / canonical commands
+
+```bash
+npm install
+npm run dev            # regenerate data/gyms.json, then serve on http://localhost:8080
+npm test                # unit tests (node --test)
+npm run test:e2e        # Playwright smoke tests, desktop + mobile (needs Node >=20)
+npm run gyms:generate    # just the regenerate step
+```
+
+Full command reference and what each one does lives in the root `README.md`; this document covers
+only what's specific to actually getting a working environment, not what the commands do.
 
 ## This machine
 
@@ -63,9 +62,9 @@ of loud.
 
 **Node lives in two places, on purpose.** The OS package (`apt`, Node 18.19.1) is the system
 default and is what a bare `node`/`npm` resolves to; it's past its own EOL and below the Node ≥20
-this project (and Playwright specifically) requires. Node 20 is installed via `nvm`
-(`~/.nvm`), scoped to this user, and does not touch or replace the apt package — nothing else on
-the machine depends on it. Because `.nvmrc` pins `20`, activate it explicitly per shell:
+this project (and Playwright specifically) requires. Node 20 is installed via `nvm` (`~/.nvm`),
+scoped to this user, and does not touch or replace the apt package — nothing else on the machine
+depends on it. Because `.nvmrc` pins `20`, activate it explicitly per shell:
 
 ```
 wsl.exe -d Ubuntu-24.04 -- bash -lc 'source ~/.nvm/nvm.sh && nvm use && cd /home/stefanraaphorst/gym && npm test'
@@ -93,17 +92,20 @@ multi-line variable assignments, apostrophes inside `bash -lc '...'` — breaks 
 output points somewhere unrelated (or produces no error at all and silently truncates). Write the
 script to a file with an editor/tool and execute that file instead.
 
----
+## Verification
+
+- `npm test` passing is the fast-layer readiness signal.
+- `npm run test:e2e` passing (needs Node ≥20, real Chromium) is the slow-layer readiness signal.
+- A `git commit` in this repo should show the private-account identity and a verified signature —
+  check with `git log --show-signature -1` if in doubt after a shell/environment change.
 
 ## When someone else joins
 
-The section above is tuned to one person's setup, and that's a deliberate trade: for a solo
-project the specifics *are* the value, and a generic version would lose exactly the part worth
-having.
+The "This machine" section above is tuned to one person's setup, and that's a deliberate trade:
+for a solo project the specifics *are* the value, and a generic version would lose exactly the
+part worth having.
 
 It does not survive contact with a contributor whose environment differs. When that happens,
-don't genericise it into vagueness — **promote whatever actually matters up into Invariants**, and
-let each person's setup satisfy those however it does. Add a second "This machine" section rather
-than merging them into a description that fits neither.
-
-The invariants were always the shared part. The rest was only ever one machine's answer to them.
+don't genericise it into vagueness — **promote whatever actually matters up into Prerequisites and
+versions**, and let each person's setup satisfy those however it does. Add a second "This machine"
+section rather than merging them into a description that fits neither.

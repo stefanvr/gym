@@ -1,7 +1,7 @@
 // playwright.config.js
-// doc/tech-spec.md's testing strategy: deliberately thin, desktop + mobile smoke coverage —
+// tech.architecture's testing strategy: deliberately thin, desktop + mobile smoke coverage —
 // reserved for CSS-media-query and viewport wiring the unit layer (test/) structurally can't see.
-// Requires Node >=20 (doc/environment.md).
+// Requires Node >=20 (doc/setup-dev-env.md).
 
 import { defineConfig, devices } from "@playwright/test";
 

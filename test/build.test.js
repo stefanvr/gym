@@ -162,6 +162,19 @@ describe("validateGym", () => {
     const errors = validateGym({ ...validData, website: "not a valid url" });
     assert.ok(errors.some((e) => e.includes("website")));
   });
+
+  test("rejects a scheme-less website (an easy real typo — bare domain, no https://)", () => {
+    const errors = validateGym({ ...validData, website: "climbingnetwork.nl" });
+    assert.ok(errors.some((e) => e.includes("website")));
+  });
+
+  test("accepts a well-formed website", () => {
+    assert.deepEqual(validateGym({ ...validData, website: "https://www.climbingnetwork.nl/" }), []);
+  });
+
+  test("omitting website entirely is not an error (it's optional)", () => {
+    assert.deepEqual(validateGym({ ...validData, website: undefined }), []);
+  });
 });
 
 describe("buildGymRecord", () => {

@@ -16,7 +16,7 @@ Every branch entering configured mainline requires explicit user authorization f
 As relevant:
 
 - current Goal and local `doc/goals/<branch>.md`
-- current specifications and Project decisions
+- current Project authority/decisions, including the repository-native Goal Spec when active
 - implementation/tests/evidence
 - configured mainline
 - current runtime approval/landing facts
@@ -30,7 +30,7 @@ A verified and published/finalized landing, or a guarded abandonment, with local
 
 Landing readiness, landing authorization semantics, approval invalidation, history-preparation boundary, landing message, and semantic authority to abandon a branch.
 
-Branch Land does not own Goal or Session content. Both are local Git-ignored recovery state and are removed automatically when the Goal lands or is abandoned.
+Branch Land does not own Goal, Goal-Spec, or Session content. Goal and Session are local recovery state; a repository-native Goal Spec is transient Project authority owned by Project Definition/shared reasoning. The runtime removes these local artifacts automatically when the Goal lands or is abandoned.
 
 ## Modes
 
@@ -39,7 +39,7 @@ Branch Land does not own Goal or Session content. Both are local Git-ignored rec
 Establish whether the current Goal branch is ready to seek landing authorization.
 
 1. Run Goal `check`.
-2. Run applicable specification/capability checks and Project verification.
+2. Run applicable Project-authority/capability checks and Project verification.
 3. Confirm the Goal edge is reached and no consequential unresolved decision remains.
 4. Confirm the branch contains only the current Goal.
 5. Confirm any already-recorded landing approval still matches the branch tree; if not, invalidate it.
@@ -70,7 +70,7 @@ Under **Cooperative Multi-user**:
 10. The integration authority invokes `land prepare`. It proves the current branch tree still equals the approved tree, confirms the accepted handoff remains live, and pins the exact mainline base plus ready commit.
 11. The integration authority invokes `land merge [--message <goal name>]`.
 
-For either model, the runtime rechecks approval/branch/mainline/remote exactness, builds the landing candidate off-mainline, updates mainline atomically, publishes the exact resulting mainline receipt to the configured remote, then removes the work branch, approval, transaction state, Goal file, and Session cache. A consumed cooperative handoff also exact-deletes its acceptance commit, handoff ref, and handed-off remote Goal branch.
+For either model, the runtime rechecks approval/branch/mainline/remote exactness, builds the landing candidate off-mainline, updates mainline atomically, publishes the exact resulting mainline receipt to the configured remote, then removes the work branch, approval, transaction state, Goal file, repository-native Goal Spec when present, and Session cache. A consumed cooperative handoff also exact-deletes its acceptance commit, handoff ref, and handed-off remote Goal branch.
 
 After `land prepare`, branch history must not change. If it does, abort the ready transaction and prepare again after re-establishing the relevant checks.
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Project-model runtime mechanics.
 
-Owns active Project-model selection and the Spec model's stable authority-scope
-topology. It may use kernel repository facts but does not own lifecycle mechanics.
+Owns active Project-model selection, repository-native transient Goal-Spec state,
+and the Spec model's stable authority-scope topology. It may use low-level
+repository facts but does not own universal lifecycle mechanics.
 """
 from __future__ import annotations
 
@@ -12,7 +13,7 @@ import re
 from pathlib import Path
 from typing import Any, Iterable
 
-from kernel import PROJECT_ROOT, fail
+from kernel import PROJECT_ROOT, fail, require_repo, current_branch, require_valid_branch_name
 
 SPEC_TOPOLOGY_SCHEMA_VERSION = 1
 SPEC_TOPOLOGY_MANIFEST = Path("doc/spec/topology.json")
@@ -30,6 +31,90 @@ def active_project_model(root: Path) -> str | None:
     return model if isinstance(model, str) and model else None
 
 
+
+
+REPOSITORY_NATIVE_MODEL = "repository-native"
+GOAL_SPEC_SUFFIX = ".spec.md"
+
+def goal_spec_document_path(branch: str) -> str:
+    """Return the branch-derived transient repository-native Goal Spec path."""
+    return f"doc/goals/{branch}{GOAL_SPEC_SUFFIX}"
+
+
+def goal_spec_document_file(repo: Path, branch: str) -> Path:
+    return repo / goal_spec_document_path(branch)
+
+
+def goal_authority_state(repo: Path, branch: str) -> dict[str, Any]:
+    """Report whether the active Project model has the Goal-local authority it requires."""
+    model = active_project_model(PROJECT_ROOT)
+    if model == "spec":
+        return {
+            "project_model": model,
+            "authority_kind": "stable-spec-scopes",
+            "required_goal_local_artifact": None,
+            "ready": True,
+        }
+    if model == REPOSITORY_NATIVE_MODEL:
+        path = goal_spec_document_file(repo, branch)
+        try:
+            text = path.read_text(encoding="utf-8")
+        except FileNotFoundError:
+            text = ""
+        except OSError as exc:
+            fail(f"cannot read repository-native Goal Spec {goal_spec_document_path(branch)}: {exc}")
+        return {
+            "project_model": model,
+            "authority_kind": "transient-goal-spec",
+            "goal_spec_path": goal_spec_document_path(branch),
+            "goal_spec_exists": path.is_file(),
+            "goal_spec_nonempty": bool(text.strip()),
+            "ready": bool(text.strip()),
+        }
+    fail(f"unsupported active Project model: {model!r}")
+
+
+def require_goal_authority(repo: Path, branch: str) -> dict[str, Any]:
+    state = goal_authority_state(repo, branch)
+    if not state.get("ready"):
+        fail(
+            "repository-native work requires a non-empty transient Goal Spec before approval/landing: "
+            f"{state.get('goal_spec_path')}"
+        )
+    return state
+
+
+def delete_goal_spec_document(repo: Path, branch: str) -> None:
+    """Remove transient repository-native Goal Spec state after durable Goal completion."""
+    path = goal_spec_document_file(repo, branch)
+    try:
+        path.unlink()
+    except FileNotFoundError:
+        return
+    except OSError as exc:
+        fail(f"cannot remove completed Goal Spec {path}: {exc}")
+    stop = repo / "doc" / "goals"
+    parent = path.parent
+    while parent != stop and parent != repo:
+        try:
+            parent.rmdir()
+        except OSError:
+            break
+        parent = parent.parent
+
+
+def cmd_project_status(args: argparse.Namespace) -> dict[str, Any]:
+    """Report active Project-model authority placement for the current/selected Goal branch."""
+    repo = require_repo()
+    branch = args.branch or current_branch(repo)
+    if not branch:
+        fail("project status requires a named branch")
+    branch = require_valid_branch_name(branch, "project --branch" if args.branch is not None else "current branch")
+    state = goal_authority_state(repo, branch)
+    result = {"result": "resolved", "branch": branch, **state}
+    if state["project_model"] == "spec":
+        result["topology_manifest"] = SPEC_TOPOLOGY_MANIFEST.as_posix()
+    return result
 
 def validate_spec_scope_path(value: Any) -> str | None:
     """Return a normalized safe project-relative Markdown path or None."""

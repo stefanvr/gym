@@ -2,6 +2,11 @@
 
 Resolves one bounded technology choice.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Choose a technology needed by the current or next goal.
@@ -25,17 +30,17 @@ Optional:
 
 ## Outputs
 
-One authoritative decision containing:
+One authoritative decision stating the durable result:
 
 - chosen technology
-- meaningful alternatives considered
-- what the chosen option beat
-- the argument where the closest alternative was close
-- constraints that materially drove the choice
+- constraints or boundaries that remain operative
+- only the minimal rationale or rejected alternative needed to interpret or apply the decision, or explicitly requested by the owner
+
+Candidate comparison, close-call analysis, proof narrative, and rejected options remain working/evidence material by default rather than stable Tech authority. Under `spec`, record the result according to `SPEC-WRITE-01`.
 
 ## Owns
 
-Only technology-choice decision portions of the affected Tech Spec scope: the chosen technology, decision constraints, meaningful alternatives, and rationale for that choice.
+Only technology-choice decision portions of the active Tech authority target: the chosen technology, durable decision constraints, and any rationale the authority genuinely needs or the owner explicitly asked to retain.
 
 Tech Decide does **not** own:
 
@@ -54,7 +59,7 @@ Tech Decide does **not** own:
 6. Where uncertainty is material, require the smallest genuine proof.
 7. Present options and recommendation.
 8. Let the owner make or approve the final technology choice.
-9. Record the resulting decision in the owning Tech scope.
+9. Compress the accepted result into the active Tech authority target; do not copy the comparison transcript into stable Spec authority.
 10. Run Tech Check.
 
 ## Proof rule
@@ -78,5 +83,5 @@ Technology choice is a meaningful decision boundary. The harness may recommend. 
 - authority placement follows stable Tech scope identity, not file convenience
 - proof targets real uncertainty
 - alternatives are meaningful, not decorative
-- recorded rationale reflects the actual decision
+- detailed decision reasoning may be transient; recorded authority preserves only the durable result and necessary context
 - deciding does not implement the dependent feature

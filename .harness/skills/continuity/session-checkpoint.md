@@ -14,7 +14,7 @@ As relevant:
 
 - current Goal and branch-derived Goal file
 - current repository/runtime facts
-- current specifications/decisions
+- current Project authority/decisions
 - transient manual-step/provider/context details not otherwise durable
 - existing `doc/session.md`
 
@@ -23,7 +23,7 @@ Do not duplicate:
 - the Goal outcome already present in `doc/goals/<branch>.md`
 - Git status/history/mainline facts
 - landing approval or runtime transaction state
-- full specifications
+- full Project-authority documents
 - completed task lists
 - Dream proposal state owned by Dream
 
@@ -61,7 +61,7 @@ No approval is required to maintain this temporary pointer. It must never encode
 
 - checkpoint only what cannot be reconstructed from Goal + Git + Project truth
 - `doc/session.md` is cache, never authority
-- do not copy full specifications, history, or task-progress logs
+- do not copy full Project-authority documents, history, or task-progress logs
 - do not duplicate the Goal file
 - Dream owns persisted Dream proposals
 - `doc/session.md` is Git-ignored local state and runtime finalization removes it after landing or abandonment

@@ -15,9 +15,13 @@ In particular:
 - Runtime-owned lifecycle mutation is mechanically serialized, including across linked Git worktrees. Which actor may initiate those mutations is selected by the active Collaboration model. Direct Git/ref/state mutation by another actor bypasses that lock and remains unsupported.
 - The Deterministic Runtime does not sandbox Git hooks, project scripts, build tools, tests, or other programs executed during development. Disposable worktrees isolate repository-local landing preparation but cannot prevent programs from producing external filesystem, network, credential, service, or other side effects.
 - Agent instructions and skills are semantic guidance interpreted by an LLM and therefore remain probabilistic. Deterministic guarantees apply only to repository facts and mechanical transitions explicitly enforced by the runtime.
+- Extension packages are additional semantic/execution capability, not a sandbox or trust grant. The runtime can resolve their entrypoints but does not inspect arbitrary extension code for safety or execute it automatically.
+- Discovery does not yet provide an automatically isolated disposable experiment workspace. Code-producing experiments use normal repository/Goal discipline unless the developer deliberately manages separate isolation outside the Harness.
 - The Harness does not replace repository-hosting access controls, protected branches, CI policy, secret management or scanning, code review controls, deployment authorization, or production infrastructure security.
 
 The cooperative multi-user model, when selected, remains trusted/cooperative. Local actor/role metadata and remote handoff acceptance records are coordination guardrails, not adversarial authorization. There is no distributed lock across independent clones; serialization depends on the explicit integration-authority operating contract. Cryptographic approval, ACL enforcement, and security isolation between mutually untrusted actors are outside the supported operating model.
+
+Harness v18 cooperative handoffs use a schema that records the active Project model and can carry a repository-native Goal Spec. Complete, release, or withdraw pre-v18 in-flight cooperative handoffs before upgrading; v18 does not promise backward compatibility for remote handoff objects created by older major versions.
 
 ## Repository and integration boundaries
 

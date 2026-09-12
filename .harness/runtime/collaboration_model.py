@@ -45,10 +45,17 @@ from kernel import (
     update_ref,
 )
 
-HANDOFF_SCHEMA_VERSION = 1
+HANDOFF_SCHEMA_VERSION = 2
 ACCEPTANCE_SCHEMA_VERSION = 1
 HANDOFF_STATE_SCHEMA_VERSION = 2
 COLLABORATION_STATE_SCHEMA_VERSION = 1
+COMPOSITION_SCHEMA_VERSION = 1
+SUPPORTED_COLLABORATION_MODELS = frozenset({"single-user", "cooperative-multi-user"})
+
+def _project_model():
+    """Load Project-model mechanics only at the collaboration integration seam."""
+    import project_model
+    return project_model
 
 def handoff_ref(branch: str) -> str:
     return f"refs/harness/handoff/{branch}"
@@ -87,6 +94,7 @@ def validate_handoff_metadata(branch: str, data: Any) -> dict[str, Any]:
         "handoff_base": str,
         "contributor_actor": str,
         "goal_sha256": str,
+        "project_model": str,
         "harness_release": str,
     }
     for key, expected in required.items():
@@ -97,22 +105,35 @@ def validate_handoff_metadata(branch: str, data: Any) -> dict[str, Any]:
             fail(f"invalid handoff metadata for {branch}: `{key}` is not a Git object id")
     if not re.fullmatch(r"[0-9a-f]{64}", data["goal_sha256"]):
         fail(f"invalid handoff metadata for {branch}: goal_sha256 is not SHA-256")
+    if data["project_model"] not in {"spec", "repository-native"}:
+        fail(f"invalid handoff metadata for {branch}: unsupported project_model {data['project_model']!r}")
+    goal_spec_sha = data.get("goal_spec_sha256")
+    if data["project_model"] == "repository-native":
+        if not isinstance(goal_spec_sha, str) or not re.fullmatch(r"[0-9a-f]{64}", goal_spec_sha):
+            fail(f"invalid handoff metadata for {branch}: repository-native handoff requires goal_spec_sha256")
+    elif goal_spec_sha is not None:
+        fail(f"invalid handoff metadata for {branch}: spec-mode handoff must not carry goal_spec_sha256")
     approval_actor = data.get("approval_actor")
     if approval_actor is not None and (not isinstance(approval_actor, str) or not approval_actor.strip()):
         fail(f"invalid handoff metadata for {branch}: approval_actor must be non-empty text when present")
     return data
 
 
-def create_handoff_commit(repo: Path, metadata: dict[str, Any], goal_text: str) -> str:
+def create_handoff_commit(
+    repo: Path, metadata: dict[str, Any], goal_text: str, goal_spec_text: str | None = None
+) -> str:
     branch = metadata["branch"]
     metadata_text = json.dumps(metadata, indent=2, sort_keys=True) + "\n"
     metadata_blob = git_input(["hash-object", "-w", "--stdin"], repo, metadata_text).stdout.strip()
     goal_blob = git_input(["hash-object", "-w", "--stdin"], repo, goal_text).stdout.strip()
-    tree_input = (
-        f"100644 blob {goal_blob}\tgoal.md\n"
-        f"100644 blob {metadata_blob}\thandoff.json\n"
-    )
-    handoff_tree = git_input(["mktree"], repo, tree_input).stdout.strip()
+    tree_rows = [
+        f"100644 blob {goal_blob}\tgoal.md\n",
+        f"100644 blob {metadata_blob}\thandoff.json\n",
+    ]
+    if goal_spec_text is not None:
+        goal_spec_blob = git_input(["hash-object", "-w", "--stdin"], repo, goal_spec_text).stdout.strip()
+        tree_rows.append(f"100644 blob {goal_spec_blob}\tgoal-spec.md\n")
+    handoff_tree = git_input(["mktree"], repo, "".join(tree_rows)).stdout.strip()
     parents = [metadata["ready_commit"]]
     if metadata["approval_source_commit"] != metadata["ready_commit"]:
         parents.append(metadata["approval_source_commit"])
@@ -123,7 +144,7 @@ def create_handoff_commit(repo: Path, metadata: dict[str, Any], goal_text: str) 
     return git(args, repo).stdout.strip()
 
 
-def read_handoff_commit(repo: Path, branch: str, commit: str) -> tuple[dict[str, Any], str]:
+def read_handoff_commit(repo: Path, branch: str, commit: str) -> tuple[dict[str, Any], str, str | None]:
     kind = git(["cat-file", "-t", commit], repo, check=False)
     if kind.returncode != 0 or kind.stdout.strip() != "commit":
         fail(f"invalid handoff object for {branch}: {commit} is not a commit")
@@ -139,12 +160,18 @@ def read_handoff_commit(repo: Path, branch: str, commit: str) -> tuple[dict[str,
     digest = hashlib.sha256(goal_text.encode("utf-8")).hexdigest()
     if digest != data["goal_sha256"]:
         fail(f"invalid handoff object for {branch}: Goal recovery text digest mismatch")
-    if not ref_exists(repo, branch_ref(branch)) and not ref_exists(repo, handoff_runtime_ref(branch, "remote-branch")):
-        # Object-level validation can still continue; branch binding is checked by callers.
-        pass
+    goal_spec_text = file_at(repo, commit, "goal-spec.md")
+    if data["project_model"] == "repository-native":
+        if goal_spec_text is None:
+            fail(f"invalid handoff object for {branch}: repository-native handoff is missing goal-spec.md")
+        digest = hashlib.sha256(goal_spec_text.encode("utf-8")).hexdigest()
+        if digest != data["goal_spec_sha256"]:
+            fail(f"invalid handoff object for {branch}: Goal Spec digest mismatch")
+    elif goal_spec_text is not None:
+        fail(f"invalid handoff object for {branch}: spec-mode handoff unexpectedly contains goal-spec.md")
     if tree(repo, data["approval_source_commit"]) != data["approved_tree"]:
         fail(f"invalid handoff object for {branch}: approval source tree does not match approved_tree")
-    return data, goal_text
+    return data, goal_text, goal_spec_text
 
 
 def create_acceptance_commit(repo: Path, branch: str, handoff_commit: str, integration_actor: str) -> str:
@@ -231,7 +258,7 @@ def fetch_remote_handoff(repo: Path, branch: str) -> dict[str, Any]:
         fail(f"published handoff moved during fetch for {branch}; retry from current remote state")
     acceptance = read_acceptance_commit(repo, branch, fetched_tip)
     handoff_commit = acceptance["handoff_commit"] if acceptance is not None else fetched_tip
-    data, goal_text = read_handoff_commit(repo, branch, handoff_commit)
+    data, goal_text, goal_spec_text = read_handoff_commit(repo, branch, handoff_commit)
     if data["ready_commit"] != fetched_branch:
         fail(f"published handoff ready commit does not match remote branch for {branch}")
     if tree(repo, fetched_branch) != data["approved_tree"]:
@@ -244,6 +271,7 @@ def fetch_remote_handoff(repo: Path, branch: str) -> dict[str, Any]:
         "acceptance": acceptance,
         "metadata": data,
         "goal_text": goal_text,
+        "goal_spec_text": goal_spec_text,
         "branch_commit": fetched_branch,
     }
 
@@ -302,6 +330,10 @@ def cmd_handoff_publish(args: argparse.Namespace) -> dict[str, Any]:
     if branch == mainline:
         fail("cannot publish configured mainline as a Goal handoff")
     goal_text = require_goal_document(repo, branch)
+    project_authority = _project_model().require_goal_authority(repo, branch)
+    goal_spec_text = None
+    if project_authority["project_model"] == "repository-native":
+        goal_spec_text = _project_model().goal_spec_document_file(repo, branch).read_text(encoding="utf-8")
     approval = approval_ref(branch)
     if not ref_exists(repo, approval):
         fail(f"handoff publish requires recorded approval: {approval}")
@@ -338,7 +370,7 @@ def cmd_handoff_publish(args: argparse.Namespace) -> dict[str, Any]:
             if read_acceptance_commit(repo, branch, fetched) is not None:
                 delete_handoff_runtime_refs(repo, branch)
                 fail(f"published handoff for {branch} has already been accepted by the integration authority")
-            old, _ = read_handoff_commit(repo, branch, fetched)
+            old, _, _ = read_handoff_commit(repo, branch, fetched)
             if old["ready_commit"] == ready and old["contributor_actor"] == actor["actor"]:
                 delete_handoff_runtime_refs(repo, branch)
                 return {
@@ -365,9 +397,12 @@ def cmd_handoff_publish(args: argparse.Namespace) -> dict[str, Any]:
         "contributor_actor": actor["actor"],
         "approval_actor": args.approved_by.strip() if isinstance(args.approved_by, str) and args.approved_by.strip() else None,
         "goal_sha256": hashlib.sha256(goal_text.encode("utf-8")).hexdigest(),
+        "project_model": project_authority["project_model"],
         "harness_release": harness_version(),
     }
-    handoff_commit = create_handoff_commit(repo, metadata, goal_text)
+    if goal_spec_text is not None:
+        metadata["goal_spec_sha256"] = hashlib.sha256(goal_spec_text.encode("utf-8")).hexdigest()
+    handoff_commit = create_handoff_commit(repo, metadata, goal_text, goal_spec_text)
     candidate_ref = handoff_runtime_ref(branch, "publish-candidate")
     update_ref(repo, candidate_ref, handoff_commit)
     # Publication is create-only: the empty-lease form requires each created ref to be
@@ -470,7 +505,14 @@ def cmd_handoff_accept(args: argparse.Namespace) -> dict[str, Any]:
     handoff = fetch_remote_handoff(repo, branch)
     fetched = handoff["handoff_commit"]
     metadata = handoff["metadata"]
+    active_project = _project_model().active_project_model(PROJECT_ROOT)
+    if active_project != metadata["project_model"]:
+        fail(
+            f"handoff Project model {metadata['project_model']!r} does not match integration workspace "
+            f"Project model {active_project!r}; align composition before acceptance"
+        )
     goal_text = handoff["goal_text"]
+    goal_spec_text = handoff.get("goal_spec_text")
     branch_oid = handoff["branch_commit"]
     live_acceptance = handoff["acceptance_commit"]
     acceptance_data = handoff["acceptance"]
@@ -508,6 +550,16 @@ def cmd_handoff_accept(args: argparse.Namespace) -> dict[str, Any]:
     goal_file = goal_document_file(repo, branch)
     if goal_file.exists() and goal_file.read_text(encoding="utf-8") != goal_text:
         fail(f"local Goal recovery state differs from published handoff: {goal_path}")
+    goal_spec_file = _project_model().goal_spec_document_file(repo, branch)
+    if metadata["project_model"] == "repository-native":
+        goal_spec_path = _project_model().goal_spec_document_path(branch)
+        ignore = git(["check-ignore", "--quiet", "--", goal_spec_path], repo, check=False)
+        if ignore.returncode != 0:
+            fail(f"cannot materialize transferred Goal Spec because it is not Git-ignored: {goal_spec_path}")
+        if goal_spec_text is None:
+            fail(f"published repository-native handoff has no Goal Spec: {goal_spec_path}")
+        if goal_spec_file.exists() and goal_spec_file.read_text(encoding="utf-8") != goal_spec_text:
+            fail(f"local Goal Spec differs from published handoff: {goal_spec_path}")
 
     if live_acceptance is None:
         # Acceptance is one compare-and-swap on the handoff ref: it replaces the exact
@@ -539,6 +591,9 @@ def cmd_handoff_accept(args: argparse.Namespace) -> dict[str, Any]:
     if not goal_file.exists():
         goal_file.parent.mkdir(parents=True, exist_ok=True)
         goal_file.write_text(goal_text, encoding="utf-8")
+    if metadata["project_model"] == "repository-native" and not goal_spec_file.exists():
+        goal_spec_file.parent.mkdir(parents=True, exist_ok=True)
+        goal_spec_file.write_text(goal_spec_text or "", encoding="utf-8")
     state = {
         "schema_version": HANDOFF_STATE_SCHEMA_VERSION,
         "branch": branch,
@@ -595,12 +650,19 @@ def cmd_handoff_release(args: argparse.Namespace) -> dict[str, Any]:
     local_approval = rev(repo, approval) if ref_exists(repo, approval) else None
     goal_file = goal_document_file(repo, branch)
     local_goal = goal_file.read_text(encoding="utf-8") if goal_file.exists() else None
+    goal_spec_file = _project_model().goal_spec_document_file(repo, branch)
+    local_goal_spec = goal_spec_file.read_text(encoding="utf-8") if goal_spec_file.exists() else None
     if local_branch is not None and local_branch != metadata["ready_commit"]:
         fail(f"cannot release accepted handoff because local branch {branch} moved from imported ready boundary")
     if local_approval is not None and local_approval != metadata["approval_source_commit"]:
         fail(f"cannot release accepted handoff because local approval boundary changed for {branch}")
     if local_goal is not None and hashlib.sha256(local_goal.encode("utf-8")).hexdigest() != metadata["goal_sha256"]:
         fail(f"cannot release accepted handoff because local Goal recovery state changed for {branch}")
+    if metadata["project_model"] == "repository-native":
+        if local_goal_spec is not None and hashlib.sha256(local_goal_spec.encode("utf-8")).hexdigest() != metadata["goal_spec_sha256"]:
+            fail(f"cannot release accepted handoff because local Goal Spec changed for {branch}")
+        if not release_started and local_goal_spec is None:
+            fail(f"cannot release accepted repository-native handoff because local Goal Spec is missing for {branch}")
     if not release_started and (local_branch is None or local_approval is None or local_goal is None):
         fail(f"cannot release accepted handoff because its local imported state is incomplete for {branch}")
 
@@ -626,6 +688,7 @@ def cmd_handoff_release(args: argparse.Namespace) -> dict[str, Any]:
         update_ref(repo, branch_ref(branch), None, metadata["ready_commit"])
     if goal_file.exists():
         delete_goal_document(repo, branch)
+    _project_model().delete_goal_spec_document(repo, branch)
     handoff_state_path(repo, branch).unlink(missing_ok=True)
     delete_handoff_runtime_refs(repo, branch)
     return {
@@ -639,15 +702,44 @@ def cmd_handoff_release(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def active_collaboration_model(root: Path) -> str:
-    """Return the selected Collaboration model; unreadable composition defaults mechanically to single-user."""
+    """Return the selected Collaboration model, failing closed on invalid composition.
+
+    Lifecycle semantics differ materially between single-user and cooperative operation.
+    An unreadable, malformed, missing, or unknown selection therefore cannot safely inherit
+    single-user behavior. Only models whose runtime semantics are implemented by this release
+    are accepted here.
+    """
     path = root / ".harness" / "composition" / "active.json"
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return "single-user"
-    selection = data.get("selection") if isinstance(data, dict) else None
-    model = selection.get("collaboration_model") if isinstance(selection, dict) else None
-    return model if isinstance(model, str) and model else "single-user"
+        raw = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        fail(f"invalid Harness composition collaboration model: cannot read {path}: {exc}")
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        fail(f"invalid Harness composition collaboration model: malformed JSON in {path}: {exc}")
+    if not isinstance(data, dict):
+        fail("invalid Harness composition collaboration model: active.json must contain a JSON object")
+    if data.get("schema_version") != COMPOSITION_SCHEMA_VERSION:
+        fail(
+            "invalid Harness composition collaboration model: "
+            f"unsupported schema_version {data.get('schema_version')!r}; expected {COMPOSITION_SCHEMA_VERSION}"
+        )
+    selection = data.get("selection")
+    if not isinstance(selection, dict):
+        fail("invalid Harness composition collaboration model: selection must be a JSON object")
+    model = selection.get("collaboration_model")
+    if not isinstance(model, str) or not model.strip():
+        fail("invalid Harness composition collaboration model: selection.collaboration_model must be a non-empty string")
+    if model != model.strip():
+        fail("invalid Harness composition collaboration model: selection.collaboration_model must not contain surrounding whitespace")
+    if model not in SUPPORTED_COLLABORATION_MODELS:
+        supported = ", ".join(sorted(SUPPORTED_COLLABORATION_MODELS))
+        fail(
+            "invalid Harness composition collaboration model: "
+            f"unsupported active model {model!r}; runtime-supported models are: {supported}"
+        )
+    return model
 
 
 def collaboration_state_path(repo: Path) -> Path:

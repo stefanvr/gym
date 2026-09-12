@@ -106,7 +106,9 @@ Establish the executable Goal before implementation:
 4. Identify meaningful intermediate validation boundaries, if any.
 5. Establish the exclusive Goal branch through Branch Start `create`.
 6. Derive `doc/goals/<branch>.md` from that branch and write the Goal outcome there.
-7. Verify the Goal file is ignored by Git and leave it local; implementation may then proceed.
+7. Verify the Goal file is ignored by Git and leave it local.
+8. If the active Project model is `repository-native`, route through Project Define to create `doc/goals/<branch>.spec.md` before consequential implementation begins; targeted Project Understand analysis may occur before or during this step. Under `spec`, route required definition work into the relevant stable Spec scopes.
+9. Implementation may proceed once the active Project authority is implementation-ready.
 
 ### `check`
 
@@ -141,22 +143,23 @@ Do not archive or move completed Goal files.
 - task-sized commits follow Git History even though tasks are normally transient
 - user interruption happens only for meaningful validation or consequential decisions
 - no unmade technology decision remains hidden inside the Goal
-- do not build or specify beyond the current Goal
+- do not build or define Project authority beyond the current Goal
+- repository-native work uses one transient branch-derived Goal Spec; spec-mode work uses stable Spec scopes
 - Goal documents are Git-ignored local recovery state; completed Goal documents are removed, never archived, and never committed or pushed as Project files (a cooperative handoff carries a copy of the Goal text only inside runtime coordination refs outside Project history, removed when the handoff is landed or withdrawn)
 
 ## Inputs
 
 Required: an owner request, raw task/correction/elaboration, or other candidate bounded outcome.
 
-As relevant: repository state, relevant specifications, and discovered information.
+As relevant: repository state, active Project authority, native documentation/constraints, and discovered information.
 
 ## Outputs
 
-A scrutinized bounded Goal, useful transient task decomposition, current completion/readiness conclusions, and exactly one branch-derived Goal document while the Goal is active.
+A scrutinized bounded Goal, useful transient task decomposition, current completion/readiness conclusions, and exactly one branch-derived Goal document while the Goal is active. Under `repository-native`, Project Define additionally owns one transient branch-derived Goal Spec while that Goal is active.
 
 ## Owns
 
-The current Goal intent and local `doc/goals/<branch>.md` for its active branch. Goal owns the document content; the Deterministic Runtime may mechanically remove that exact file only after successful landing/abandon finalization. Goal does not own specifications, implementation, Git history, or landing approval mechanics.
+The current Goal intent and local `doc/goals/<branch>.md` for its active branch. Goal owns the document content; the Deterministic Runtime may mechanically remove that exact file only after successful landing/abandon finalization. Goal does not own Project authority, implementation, Git history, or landing approval mechanics. Repository-native Goal Spec ownership belongs to Project Definition/shared Project reasoning under the active Project-model contract.
 
 ## Approval
 

@@ -8,7 +8,7 @@ As required by Harness Change, read the diagrams before concluding that none of 
 
 # Workflow
 
-The lifecycle runs under whatever `project_model` + `collaboration_model` `.harness/composition/active.json` selects (this project currently selects `spec` + `single-user`); active method packs assist authority work but do not change Project authority. Under `single-user` the owning workspace proceeds through landing directly; the diagram below shows the `cooperative-multi-user` handoff/integration boundary that applies only when that Collaboration model is selected instead.
+The lifecycle runs under whatever valid `project_model` + `collaboration_model` `.harness/composition/active.json` selects. The standalone distribution has no default operating selection: bootstrap must explicitly establish either `spec` or `repository-native`, plus either `single-user` or `cooperative-multi-user`. Active method packs assist authority work but do not change Project authority. The collaboration layer adds an immutable handoff/integration boundary rather than forking Goal or landing semantics.
 
 ## Cooperative multi-user handoff
 
@@ -44,7 +44,11 @@ owner request
 Goal scrutiny ──→ one bounded outcome + edge
     │
     ▼
-Git established? ── no ──→ Branch Start bootstrap → runtime repo bootstrap
+Git + composition established? ── no ──→ Branch Start bootstrap
+    │                                      ├─ first: choose main-shadow onboarding? (existing repos only)
+    │                                      ├─ choose `spec` or `repository-native`
+    │                                      ├─ choose Collaboration model
+    │                                      └─ runtime repo bootstrap (local configured-mainline baseline; no push)
     │ yes
     ▼
 Branch Start create
@@ -57,11 +61,13 @@ Goal writes local ignored recovery file
   doc/goals/<branch>.md
     │
     ▼
-resolve affected stable Spec scope(s)
+Project Define
     │
-    ▼
-load selected scopes + transitive dependencies
-  consider reverse dependents for Change Impact
+    ├─ `spec` → resolve affected stable Spec scope(s)
+    │            load dependencies; consider reverse dependents
+    │
+    └─ `repository-native` → inspect relevant repository evidence/native authority
+                             define transient doc/goals/<branch>.spec.md
     │
     ▼
 load only relevant guides/skills
@@ -111,7 +117,7 @@ runtime land merge
                                                                                  │
                                                                                  ▼
                                                               branch/approval/runtime state removed
-                                                              local Goal/Session state removed
+                                                              local Goal/Goal-Spec/Session state removed
 ```
 
 ### Goal is the only delivery layer
@@ -141,12 +147,12 @@ read intended outcome
       ↓
 runtime resume for exact Git/approval/transaction facts
       ↓
-inspect relevant specs + branch history/diff
+inspect relevant Project authority + branch history/diff
       ↓
 determine what remains
 ```
 
-The file contains outcome/meaningful constraints, not status, task logs, or approval. It is never committed, pushed, or archived. Successful runtime landing/abandonment removes it. Failed landing recovery leaves it intact.
+The Goal document contains outcome/meaningful constraints, not status, task logs, or approval. It is never committed, pushed, or archived. Under `repository-native`, `doc/goals/<branch>.spec.md` is a separate transient authority file and is likewise ignored; it records the accepted intended delta rather than lifecycle status. Successful runtime landing/abandonment removes both. Failed landing recovery leaves them intact.
 
 Before a landing boundary is prepared, the runtime requires live remote mainline to match local mainline when that remote ref exists and requires any existing remote Goal branch to match the local ready commit. The same alignment is rechecked before mainline integration.
 
@@ -164,7 +170,7 @@ landing transaction exists
 
 Old authority never silently extends to a changed mainline or changed Goal outcome.
 
-## Specification flow
+## Project definition flow
 
 ```text
 bounded Project concern
@@ -183,14 +189,14 @@ orchestrator orchestrator orchestrator orchestrator
 └─ owning    └─ owning    └─ owning    └─ owning skills
    skills       skills       skills       skills
         │            │            │            │
-        └──────── accepted conclusions become authority ────────┘
+        └──────── accepted conclusions target active Project authority ────────┘
                               ↓
                          owning checks
 ```
 
 Interview Me may support any authority when owner intent is missing. Event Storming feeds Domain; Story Mapping feeds App. Method working state never becomes authority by completion alone. Style Preview demonstrates Style decisions; its check is a sibling of Style Check, not a step inside it.
 
-## Specification check orchestration
+## Spec-model check orchestration
 
 ```text
 spec-check
@@ -201,7 +207,25 @@ spec-check
     └─ style-preview check
 ```
 
-Spec Check invokes each specification's own check rather than duplicating its scrutiny.
+When `spec` is active, Spec Check invokes each specification's own check rather than duplicating its scrutiny. Under `repository-native`, the relevant Domain/App/Style/Tech/Build checks validate the Goal Spec and named native constraints directly; no permanent Spec topology is required.
+
+## Discovery before Goal
+
+```text
+open question
+    │
+    ▼
+Discovery
+    ├─ inspect only relevant evidence
+    ├─ Brainstorm / methods / Grill
+    └─ explicit Extensions when useful
+    │
+    ├─ close ───────────────→ nothing retained
+    ├─ publish ─────────────→ existing Project owner/documentation
+    └─ promote ─────────────→ one bounded Goal
+```
+
+Discovery owns no archive and never becomes a backlog. Personal Notes are separate local capture and are only read on explicit owner request.
 
 # Actual work
 
@@ -264,7 +288,7 @@ App orchestrator
     ├─ Story Mapping when useful/active → working map only
     └─ narrow concern → direct owning skill
     ↓
-App Story Map (authoritative structure)
+accepted App structure
     ↓
 interaction
     ↓
@@ -335,10 +359,10 @@ classify
   │       │       │
   │       │       └─ existing code wrong → Build Repair
   │       └─ technical uncertainty → Build Proof → decision owner
-  └─ product behavior → owning spec exists?
+  └─ intended behavior → implementation authority is ready?
                          │
                          ├─ yes → Build Implement
-                         └─ no  → route to owning capability
+                         └─ no  → Project Define / owning reasoning capability
 ```
 
 ## Correction loop

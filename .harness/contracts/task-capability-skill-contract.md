@@ -298,10 +298,12 @@ Capabilities may include additional explanatory sections when they materially cl
 
 ## Support families
 
-Learning, Knowledge, Continuity, Lifecycle, and Harness are **support families**, not capabilities. They are deliberately shaped lighter than this contract requires, because none of them owns a product artifact — the boundary the capability contract exists to police.
+Discovery, Personal Notes, Learning, Knowledge, Continuity, Lifecycle, and Harness are **support families**, not capabilities. They are deliberately shaped lighter than this contract requires, because none of them owns a product artifact — the boundary the capability contract exists to police.
 
 Their definitions live at:
 
+- `.harness/discovery/definition.md`
+- `.harness/notes/definition.md`
 - `.harness/learning/definition.md`
 - `.harness/knowledge/definition.md`
 - `.harness/continuity/definition.md`
@@ -310,7 +312,7 @@ Their definitions live at:
 
 Each states only the boundaries that constrain something real for it, and none is held to the six capability boundaries.
 
-These five are the recorded departures from the capability contract. A family that owns a product artifact is a capability and follows the contract in full.
+These seven are the recorded departures from the capability contract. A family that owns a product artifact is a capability and follows the contract in full.
 
 A support family still declares its skills and its ownership boundary. Skills within one follow the skill contract unchanged: the lighter shape is the family's, never the skill's.
 

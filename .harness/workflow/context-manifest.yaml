@@ -9,23 +9,23 @@ always_state:
   repository_git: inspect
   goal_for_current_branch: derive doc/goals/<branch>.md
   dreams_if_present: doc/dreams/
-# Selection rule: the active Project model, Collaboration model, and method packs are
-# resolved only from active.json `selection` + `sources`. The model and method entries
-# below are an inventory of loadable definitions, not a selection; load only the ones
-# active.json selects.
+# Selection rule: Project model, Collaboration model, and method packs are resolved only
+# from active.json `selection` + `sources`. The standalone bootstrap state leaves the two
+# operating-model selections null; do not infer defaults from this inventory. The model
+# and method entries below are loadable definitions, not a selection; after bootstrap load
+# only the ones active.json selects.
 composition:
   definition: .harness/composition/definition.md
   active: .harness/composition/active.json
   classification: .harness/composition/classification.json
   project_models:
     spec: .harness/project-models/spec.md
+    repository-native: .harness/project-models/repository-native.md
   project_model_bindings:
     spec_topology: .harness/project-models/spec-topology.md
   collaboration_models:
     single-user: .harness/collaboration-models/single-user.md
     cooperative-multi-user: .harness/collaboration-models/cooperative-multi-user.md
-  roadmap: .harness/roadmap/v17.md
-  release_note: .harness/releases/17.md
 
 methods:
   interview_me: .harness/methods/interview-me.md
@@ -37,6 +37,7 @@ orientation:
   harness_extended_vocabulary: .harness/harness-extended-vocabulary.md
   workflows: .harness/README-workflows.md
 contracts:
+  project_authority_target: .harness/contracts/project-authority-target-contract.md
   task_capability_skill: .harness/contracts/task-capability-skill-contract.md
   authority_orchestrator: .harness/contracts/authority-orchestrator-contract.md
   method_pack: .harness/contracts/method-pack-contract.md
@@ -70,8 +71,10 @@ runtime:
   config: .harness/runtime/config.json
   entrypoint: .harness/runtime/harness.py
   kernel: .harness/runtime/kernel.py
+  composition: .harness/runtime/composition.py
   project_model: .harness/runtime/project_model.py
   collaboration_model: .harness/runtime/collaboration_model.py
+  extensions: .harness/runtime/extensions.py
   checker: .harness/runtime/checker.py
   tests: .harness/runtime/tests/test_harness.py
 semantic_regression:
@@ -80,6 +83,15 @@ semantic_regression:
   corpus: .harness/evals/behavior/scenarios.json
   evaluator: .harness/evals/behavior/run.py
   tests: .harness/evals/behavior/tests/test_behavior.py
+discovery:
+  definition: .harness/discovery/definition.md
+  skill: .harness/skills/discovery/discover.md
+notes:
+  definition: .harness/notes/definition.md
+  skill: .harness/skills/notes/personal.md
+extensions:
+  definition: .harness/extensions/definition.md
+
 lifecycle:
   definition: .harness/lifecycle/definition.md
   skills:
@@ -94,6 +106,12 @@ harness:
   skills:
     change: .harness/skills/harness/change.md
 capabilities:
+  project_definition:
+    definition: .harness/capabilities/project-definition.md
+    skills:
+      understand: .harness/skills/project/understand.md
+      define: .harness/skills/project/define.md
+      document: .harness/skills/project/document.md
   brainstorm:
     definition: .harness/capabilities/brainstorm.md
     skills:

@@ -39,9 +39,13 @@ Harness Change owns both vocabulary files as Harness authority. Project document
 | **Abandon** | Explicit lifecycle transition that discards a Goal branch without pretending it completed. |
 | **Landing approval** | Explicit authorization for one exact Goal-branch outcome to enter configured mainline, mechanically anchored at `refs/harness/landing-approval/<branch>`. |
 | **Brainstorm** | Non-authoritative exploration used to surface observations, possibilities, constraints, tensions, or questions before owned truth is settled. |
+| **Discovery** | Intentional, non-authoritative investigation before deciding whether there is Goal work or durable Project knowledge. Transient by default; it may close with nothing, publish through an existing owner, or promote one bounded outcome to Goal. |
+| **Extension** | A project- or developer-local skill package that extends available reasoning/execution capability without gaining Project or Harness authority. |
+| **Personal Note** | Developer-local Git-ignored idea/todo capture that is never auto-loaded, never Project authority, and never a backlog by implication. |
 | **Scrutiny** | Applying governing judgment to decide whether something is sufficiently understood and bounded to proceed. |
 | **Check** | Evidence-based comparison between intended and observed state. |
 | **Goal document** | Local Git-ignored `doc/goals/<branch>.md` containing only recoverable Goal outcome/meaningful constraints. It is not Project history. |
+| **Goal Spec** | Under `repository-native`, the branch-local Git-ignored `doc/goals/<branch>.spec.md` containing accepted Goal-specific Domain/App/Style/Tech/work definition for the intended delta. It is transient Project authority and is removed after landing or abandonment. |
 | **Authorship stance** | Collaboration posture for an activity: owner-led, harness-proposed, or already-settled. |
 | **Owner-led** | The owner carries the relevant intent; the Harness extracts, structures, and scrutinizes it. |
 | **Harness-proposed** | The Harness proposes where material is thin; the owner corrects or accepts where the decision is theirs. |

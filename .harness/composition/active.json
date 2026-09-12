@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "17",
+  "release": "18.3.2",
   "selection": {
     "project_model": "spec",
     "collaboration_model": "single-user",
@@ -11,7 +11,8 @@
   },
   "supported": {
     "project_models": [
-      "spec"
+      "spec",
+      "repository-native"
     ],
     "collaboration_models": [
       "single-user",
@@ -26,7 +27,8 @@
   },
   "sources": {
     "project_models": {
-      "spec": ".harness/project-models/spec.md"
+      "spec": ".harness/project-models/spec.md",
+      "repository-native": ".harness/project-models/repository-native.md"
     },
     "collaboration_models": {
       "single-user": ".harness/collaboration-models/single-user.md",

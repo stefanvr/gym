@@ -2,6 +2,11 @@
 
 Defines what domain concepts exist as data and which data is authored/reference material rather than runtime state.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Describe the minimum data structure required by current Domain rules and events.
@@ -33,7 +38,7 @@ May distinguish:
 
 May modify the data sections of:
 
-the affected Domain Spec scope(s) selected by Spec Topology
+the active Domain authority target
 
 ## Method
 

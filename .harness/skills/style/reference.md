@@ -2,6 +2,11 @@
 
 Establishes perceptual references for the senses relevant to the current goal.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Describe what the product's visual or audio character should be judged against.
@@ -28,7 +33,7 @@ Authoritative Style references, separated by sense where appropriate.
 
 May modify the reference portions of:
 
-the affected Style Spec scope(s) selected by Spec Topology
+the active Style authority target
 
 ## Authorship stance
 

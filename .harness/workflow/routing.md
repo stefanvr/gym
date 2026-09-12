@@ -6,9 +6,17 @@ Route broad Project concerns to their authority orchestrator when choosing one n
 
 | Concern | Owner |
 |---|---|
+| Open question before deciding whether there is Goal work or durable Project state | Discovery |
+| Personal local todo / idea capture, explicitly requested | Personal Note |
+| Additional project/local skill capability | Extensions definition + explicit Extension id |
+| Goal clarification / targeted repository understanding | Project Understand |
+| Turn a clear Goal into implementation-ready Project authority | Project Define |
+| Optional post-implementation documentation persistence | Project Document |
+| Active Project authority target / Goal-Spec placement | Selected Project model + Project Authority Target Contract |
 | Collaboration posture with the owner | Collaboration guide |
 | Harness composition dimensions / active model selection | Harness Composition |
-| Project authority topology / stable scope mapping / dependency graph | Selected Project model (Spec Topology in the active composition; entry ownership remains Domain/App/Style/Tech) |
+| Project authority placement | Selected Project model (`spec` stable scopes; `repository-native` transient Goal Spec) |
+| Spec stable scope mapping / dependency graph | Spec Topology when `spec` is active |
 | Lifecycle contributor model / lifecycle operator multiplicity | Selected Collaboration model (Cooperative Multi-user in the active composition) |
 | Broad/cross-authority design decomposition | Design method when active; otherwise normal Routing to affected authority orchestrators |
 | General owner-intent elicitation for an authority decision | Interview Me method when active; otherwise the owning authority handles the clarification |
@@ -18,10 +26,11 @@ Route broad Project concerns to their authority orchestrator when choosing one n
 | Broad App concern not yet safely decomposed | App orchestrator |
 | Broad Style concern not yet safely decomposed | Style orchestrator |
 | Broad Tech concern not yet safely decomposed | Tech orchestrator |
+| Discovery investigation / close / publish / Goal promotion | Discover |
 | Direct Brainstorm owner-intent exploration | Brainstorm Interview; when active, Interview Me is the reusable general elicitation method |
 | Draft exploration of supplied material | Brainstorm Analyze |
 | Current bounded outcome / explicit goal-start input handling / task decomposition / branch-derived Goal intent | Goal |
-| Project bootstrap / root README Harness onboarding / semantic decision to initialize or baseline an uncommitted repository | Branch Start `bootstrap` |
+| Project bootstrap / first-run operating-model choice / root README Harness onboarding / semantic decision to initialize or baseline an uncommitted repository | Branch Start `bootstrap` |
 | Repository discovery, configured mainline/bootstrap, branch creation mechanics | Deterministic Runtime invoked by Branch Start |
 | Exclusive Goal branch creation | Branch Start `create` |
 | Cooperative contributor handoff / integration role / blocked collaboration state | Active Cooperative Multi-user Collaboration model + Deterministic Runtime |
@@ -90,6 +99,9 @@ Skills and orchestrators name these by concept rather than by path.
 | Grill pressure-test | `.harness/mechanisms/grill.md` |
 | Goal scrutiny | `.harness/guides/goals-and-decisions.md` |
 | Goal lifecycle/recovery model | `.harness/lifecycle/definition.md` |
+| Discovery transient/promotion boundary | `.harness/discovery/definition.md` |
+| Personal local notes | `.harness/notes/definition.md` |
+| Skill Extension scopes/authority boundary | `.harness/extensions/definition.md` |
 | Persisted Dream proposal state | `.harness/learning/definition.md` |
 | Collaboration posture | `.harness/guides/collaboration.md` |
 | Guide role / universality / Project-departure boundary | `.harness/guides/definition.md` |
@@ -102,6 +114,8 @@ Skills and orchestrators name these by concept rather than by path.
 | Harness composition contract | `.harness/composition/definition.md` |
 | Active Harness composition | `.harness/composition/active.json` |
 | Spec Project model | `.harness/project-models/spec.md` |
+| Repository-native Project model | `.harness/project-models/repository-native.md` |
+| Shared Project authority target | `.harness/contracts/project-authority-target-contract.md` |
 | Spec stable-scope topology | `.harness/project-models/spec-topology.md` |
 | Single-user Collaboration model | `.harness/collaboration-models/single-user.md` |
 | Cooperative Multi-user Collaboration model | `.harness/collaboration-models/cooperative-multi-user.md` |

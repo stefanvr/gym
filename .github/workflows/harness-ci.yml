@@ -8,6 +8,7 @@ on:
       - "AGENTS.md"
       - "CLAUDE.md"
       - "GEMINI.md"
+      - "harness-update.py"
       - ".github/workflows/harness-ci.yml"
   push:
     paths:
@@ -16,6 +17,7 @@ on:
       - "AGENTS.md"
       - "CLAUDE.md"
       - "GEMINI.md"
+      - "harness-update.py"
       - ".github/workflows/harness-ci.yml"
   workflow_dispatch:
 
@@ -49,18 +51,20 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Compile runtime and evaluator
-        run: python -m compileall -q .harness/runtime .harness/evals/behavior/run.py
+        run: python -m compileall -q .harness/runtime .harness/evals/behavior/run.py .claude/hooks/compact-bash-output.py harness-update.py
       - name: Structural Harness check
         run: python .harness/runtime/harness.py check
       - name: Runtime regression suite
         run: python -m unittest discover -s .harness/runtime/tests -v
+      - name: Claude PreToolUse hook regression suite
+        run: python -m unittest discover -s .claude/hooks/tests -v
       - name: Behavioral evaluator regression suite
         run: python -m unittest discover -s .harness/evals/behavior/tests -v
       - name: Validate LLM behavior corpus
         run: python .harness/evals/behavior/run.py --validate-only
 
   release-gate:
-    name: Release gate
+    name: Harness gate
     if: ${{ always() }}
     needs: runtime
     runs-on: ubuntu-latest

@@ -10,7 +10,7 @@ When the Interview Me method is active, use it for reusable general owner-intent
 
 ## Owns
 
-`doc/brainstorm/` as **draft working material**, through the narrower ownership declared by its skills. Brainstorm artifacts never become current authority merely by existing and are not edited just to mirror later decisions.
+`doc/brainstorm/` only as **temporary local working material** when an investigation must survive context loss, through the narrower ownership declared by its skills. Brainstorm is conversational/transient by default; this path is Git-ignored and is never Project state. Brainstorm artifacts never become current authority merely by existing and are not edited just to mirror later decisions.
 
 First-class method packs use their own non-authoritative working paths and do not share this ownership.
 
@@ -35,6 +35,7 @@ Consumes owner/source material and may route discovered goals or decisions to Go
 ## Invariants
 
 - brainstorm output never becomes authority by implication
+- Brainstorm is transient by default; persisted working material is local/ignored and exists only when useful for temporary continuity
 - the Provenance mechanism applies to Brainstorm findings
 - owner intent is never invented
 - tensions and missing answers remain explicit rather than being silently resolved

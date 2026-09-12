@@ -39,7 +39,7 @@ A working map may contain:
 
 ## Authority interaction
 
-Story Mapping owns no App specification state.
+Story Mapping owns no App authority state.
 
 Accepted user activities/steps/details route through the App orchestrator to App Story Map. Interaction details route to App Interaction; surface/location conclusions route to App Surfaces. Domain rules, Style decisions, and Tech constraints remain owned elsewhere.
 

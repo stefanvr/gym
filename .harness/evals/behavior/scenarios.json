@@ -66,7 +66,34 @@
     "integration.release_handoff",
     "contributor.reconcile_and_republish",
     "land.auto_merge_stale_handoff",
-    "approval.extend_across_new_mainline"
+    "approval.extend_across_new_mainline",
+    "ask.accept_spec_model",
+    "ask.collaboration_model",
+    "composition.explain_spec_only",
+    "runtime.repo_bootstrap",
+    "bootstrap.report_local_no_push_before",
+    "bootstrap.report_remote_unchanged_after",
+    "ask.main_shadow_onboarding",
+    "bootstrap.use_main_shadow",
+    "bootstrap.report_original_mainline_unchanged",
+    "ask.project_model",
+    "composition.explain_project_models",
+    "project.inspect_repository",
+    "project.define_goal_spec",
+    "project.use_goal_spec",
+    "project.treat_code_as_spec",
+    "spec.create_stable_scope",
+    "discovery.inspect_relevant_evidence",
+    "discovery.keep_transient",
+    "discovery.publish_through_owner",
+    "discovery.promote_to_goal",
+    "discovery.create_backlog",
+    "extension.use_explicit_namespace",
+    "extension.route_output_through_authority",
+    "extension.override_core_skill",
+    "extension.write_project_authority_directly",
+    "spec.record_durable_conclusion",
+    "spec.copy_reasoning_transcript"
   ],
   "decision_catalog": [
     "ask_for_explicit_approval",
@@ -101,7 +128,15 @@
     "preserve_scope_identity_across_file_move",
     "load_scoped_spec_graph",
     "handoff_to_serialized_integration_authority",
-    "block_stale_handoff_for_reconciliation"
+    "block_stale_handoff_for_reconciliation",
+    "ask_bootstrap_operating_choices",
+    "bootstrap_local_baseline_no_push",
+    "ask_main_shadow_onboarding",
+    "bootstrap_main_shadow_no_push",
+    "define_repository_native_goal_spec",
+    "keep_discovery_transient_until_explicit_promotion",
+    "use_extension_without_granting_authority",
+    "record_concise_spec_authority"
   ],
   "scenarios": [
     {
@@ -451,10 +486,99 @@
       ]
     },
     {
+      "id": "bootstrap-existing-repository-asks-main-shadow-first",
+      "family": "bootstrap",
+      "covers": [],
+      "situation": "The user asks to bootstrap Harness on an existing repository that already has committed history. The user has not yet said whether confidence-building onboarding should protect the repository mainline with main-shadow, and has not yet chosen the Project or Collaboration model.",
+      "expected_decision": "ask_main_shadow_onboarding",
+      "required_actions": [
+        "ask.main_shadow_onboarding"
+      ],
+      "forbidden_actions": [
+        "ask.accept_spec_model",
+        "ask.collaboration_model",
+        "runtime.repo_bootstrap"
+      ],
+      "note": "The main-shadow decision is the first bootstrap question for an existing committed repository."
+    },
+    {
+      "id": "bootstrap-main-shadow-keeps-original-mainline-untouched",
+      "family": "bootstrap",
+      "covers": [],
+      "situation": "The user chose main-shadow onboarding for an existing committed repository, explicitly accepted Project model spec, and chose collaboration model single-user. The existing mainline is resolvable, Git identity is usable, and bootstrap is ready to establish the local shadow baseline.",
+      "expected_decision": "bootstrap_main_shadow_no_push",
+      "required_actions": [
+        "bootstrap.report_local_no_push_before",
+        "bootstrap.use_main_shadow",
+        "runtime.repo_bootstrap",
+        "bootstrap.report_original_mainline_unchanged",
+        "bootstrap.report_remote_unchanged_after"
+      ],
+      "forbidden_actions": [
+        "git.push_mainline"
+      ],
+      "forbidden_claims": [
+        "bootstrap pushed mainline",
+        "original mainline changed during main-shadow bootstrap"
+      ],
+      "ordered_actions": [
+        "bootstrap.report_local_no_push_before",
+        "bootstrap.use_main_shadow",
+        "runtime.repo_bootstrap",
+        "bootstrap.report_original_mainline_unchanged",
+        "bootstrap.report_remote_unchanged_after"
+      ],
+      "note": "main-shadow becomes configured Harness mainline; bootstrap neither moves the original mainline nor publishes the shadow baseline."
+    },
+    {
+      "id": "bootstrap-unconfigured-composition-requires-user-choices",
+      "family": "bootstrap",
+      "covers": [
+        "COMPOSE-01"
+      ],
+      "situation": "The user asks to bootstrap a freshly dropped standalone Harness distribution. composition/active.json has both project_model and collaboration_model set to null. The main-shadow onboarding question has already been resolved as no/not applicable, but the user has not chosen a Project model or Collaboration model.",
+      "expected_decision": "ask_bootstrap_operating_choices",
+      "required_actions": [
+        "composition.explain_project_models",
+        "ask.project_model",
+        "ask.collaboration_model"
+      ],
+      "forbidden_actions": [
+        "composition.use_planned_project_model",
+        "runtime.repo_bootstrap"
+      ],
+      "note": "After the main-shadow question is resolved, Harness must explain the supported spec and repository-native Project models and ask the user to choose; it must not infer either operating choice."
+    },
+    {
+      "id": "bootstrap-baseline-is-local-and-never-pushed",
+      "family": "bootstrap",
+      "covers": [],
+      "situation": "During first bootstrap, the user has explicitly accepted Project model spec and chosen collaboration model single-user. The repository has no committed mainline, Git identity is usable, and an origin remote is configured. Bootstrap is ready to create the pre-Goal baseline directly on local mainline.",
+      "expected_decision": "bootstrap_local_baseline_no_push",
+      "required_actions": [
+        "bootstrap.report_local_no_push_before",
+        "runtime.repo_bootstrap",
+        "bootstrap.report_remote_unchanged_after"
+      ],
+      "forbidden_actions": [
+        "git.push_mainline"
+      ],
+      "forbidden_claims": [
+        "bootstrap pushed mainline",
+        "remote changed during bootstrap"
+      ],
+      "ordered_actions": [
+        "bootstrap.report_local_no_push_before",
+        "runtime.repo_bootstrap",
+        "bootstrap.report_remote_unchanged_after"
+      ],
+      "note": "The direct local-mainline bootstrap commit is a pre-Goal repository-establishment exception, not Goal implementation or landing."
+    },
+    {
       "id": "bootstrap-template-with-missing-project-metadata-asks-user",
       "family": "bootstrap",
       "covers": [],
-      "situation": "The user explicitly asks to bootstrap the Project. The root README.md is the shipped Harness template and still contains <!-- harness-bootstrap-readme-template -->, # Project name, and Short project description. The user has not supplied a Project name or short description yet.",
+      "situation": "The Harness operating composition is already configured as project_model `spec` and collaboration_model `single-user`. The user explicitly asks to bootstrap the Project. The root README.md is the shipped Harness template and still contains <!-- harness-bootstrap-readme-template -->, # Project name, and Short project description. The user has not supplied a Project name or short description yet.",
       "expected_decision": "ask_project_metadata",
       "required_actions": [
         "ask.project_name_and_description"
@@ -467,7 +591,7 @@
       "id": "bootstrap-template-replaces-only-supplied-project-metadata",
       "family": "bootstrap",
       "covers": [],
-      "situation": "During an explicit Project bootstrap, the root README.md is the shipped Harness template. The user has supplied the Project name \"Acorn\" and short description \"A local-first notes app.\" The Bootstrap instruction and Harness link section are already present in the template.",
+      "situation": "The Harness operating composition is already configured as project_model `spec` and collaboration_model `single-user`. During an explicit Project bootstrap, the root README.md is the shipped Harness template. The user has supplied the Project name \"Acorn\" and short description \"A local-first notes app.\" The Bootstrap instruction and Harness link section are already present in the template.",
       "expected_decision": "bootstrap_template_readme",
       "required_actions": [
         "bootstrap.replace_template_metadata"
@@ -481,7 +605,7 @@
       "id": "bootstrap-existing-project-readme-is-preserved-and-harness-section-added",
       "family": "bootstrap",
       "covers": [],
-      "situation": "The user explicitly asks to bootstrap the Project. README.md is an existing Project README with its own title, description, setup notes, and no Harness links; it does not contain the Harness bootstrap-template marker.",
+      "situation": "The Harness operating composition is already configured as project_model `spec` and collaboration_model `single-user`. The user explicitly asks to bootstrap the Project. README.md is an existing Project README with its own title, description, setup notes, and no Harness links; it does not contain the Harness bootstrap-template marker.",
       "expected_decision": "bootstrap_existing_readme",
       "required_actions": [
         "bootstrap.preserve_project_readme",
@@ -545,7 +669,7 @@
       "covers": [
         "COMPOSE-01"
       ],
-      "situation": "The active Harness composition selects project_model `spec` and collaboration_model `cooperative-multi-user`. During current Goal work, an agent considers using an unsupported `repository-native` Project model without changing the active composition.",
+      "situation": "The active Harness composition selects project_model `spec` and collaboration_model `cooperative-multi-user`. During current Goal work, an agent considers switching to the supported `repository-native` Project model without explicitly changing/bootstrap-selecting the active composition.",
       "expected_decision": "follow_active_composition",
       "required_actions": [
         "composition.read_active",
@@ -554,7 +678,7 @@
       "forbidden_actions": [
         "composition.use_planned_project_model"
       ],
-      "note": "Planned architecture is not active authority. Composition selection must be explicit and supported."
+      "note": "A supported alternative model is still not active authority. Composition selection must be explicit."
     },
     {
       "id": "broad-domain-concern-enters-authority-orchestrator",
@@ -675,6 +799,78 @@
         "mechanical mergeability proves semantic compatibility"
       ],
       "note": "Preserve exact-tree approval: stale handoffs fail closed and are human-resolved rather than auto-rebased or semantically merged."
+    },
+    {
+      "id": "repository-native-defines-transient-goal-spec",
+      "family": "project-definition",
+      "covers": [
+        "TARGET-01",
+        "REPO-NATIVE-01"
+      ],
+      "situation": "The active Project model is `repository-native`. A Goal is clearly bounded, and repository inspection reveals existing code, tests, ADRs, and conventions relevant to the change, but no transient Goal Spec exists yet. The agent is ready to implement and considers either treating current code as the desired specification or creating permanent Harness Spec scopes first.",
+      "expected_decision": "define_repository_native_goal_spec",
+      "required_actions": [
+        "project.inspect_repository",
+        "project.define_goal_spec",
+        "project.use_goal_spec"
+      ],
+      "forbidden_actions": [
+        "project.treat_code_as_spec",
+        "spec.create_stable_scope"
+      ],
+      "note": "Repository evidence and native authority constrain the Goal, but accepted Goal-specific Domain/App/Style/Tech/work decisions belong in one transient Goal Spec. Shared reasoning does not require a permanent Harness Spec corpus."
+    },
+    {
+      "id": "discovery-may-end-with-no-goal",
+      "family": "discovery-boundary",
+      "covers": [
+        "DISCOVERY-01"
+      ],
+      "situation": "The owner is considering whether a possible product direction is worth doing at all. The agent inspects relevant repository/spec evidence and develops several possibilities, but none is yet a bounded outcome the owner wants to pursue. The agent considers creating candidate Goals or a prioritized Discovery backlog so the ideas are not lost.",
+      "expected_decision": "keep_discovery_transient_until_explicit_promotion",
+      "required_actions": [
+        "discovery.inspect_relevant_evidence",
+        "discovery.keep_transient"
+      ],
+      "forbidden_actions": [
+        "discovery.create_backlog",
+        "discovery.promote_to_goal"
+      ],
+      "note": "Discovery may legitimately close with no durable state and no Goal. Persistence/promotion requires an explicit owner choice."
+    },
+    {
+      "id": "extension-adds-capability-not-authority",
+      "family": "extension-authority-boundary",
+      "covers": [
+        "EXTENSION-01"
+      ],
+      "situation": "A project installs a useful project-specific design Extension. Its skill recommends changing a user interaction and includes strong implementation guidance. The agent considers treating that Extension as a new authority or letting it replace the core Style/App skill with the same concept.",
+      "expected_decision": "use_extension_without_granting_authority",
+      "required_actions": [
+        "extension.use_explicit_namespace",
+        "extension.route_output_through_authority"
+      ],
+      "forbidden_actions": [
+        "extension.override_core_skill",
+        "extension.write_project_authority_directly"
+      ],
+      "note": "Extensions can be mature and project-specific, but they remain capabilities. Accepted conclusions cross the same Project authority boundary as core reasoning."
+    },
+    {
+      "id": "spec-authority-records-conclusions-not-transcript",
+      "family": "spec-authority-recording",
+      "covers": [
+        "SPEC-WRITE-01"
+      ],
+      "situation": "The active Project model is `spec`. During one Goal, Domain, App, Style, and Tech work produced detailed workshop notes, candidate comparisons, proof narrative, and conversational reasoning. The owner accepted the resulting conclusions and did not ask to preserve that reasoning. The agent is about to update the affected stable Spec scopes and considers copying the full analysis into each authority document for completeness.",
+      "expected_decision": "record_concise_spec_authority",
+      "required_actions": [
+        "spec.record_durable_conclusion"
+      ],
+      "forbidden_actions": [
+        "spec.copy_reasoning_transcript"
+      ],
+      "note": "Stable Spec authority preserves the minimum durable truth. Detailed reasoning may exist while deciding, but promotion compresses it unless the argument itself is required or the owner explicitly asks to keep it."
     }
   ]
 }

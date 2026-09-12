@@ -2,6 +2,11 @@
 
 Defines what the user should hear and the values that establish that audio character.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Specify the auditory character required by the current goal.
@@ -44,7 +49,7 @@ Authoritative audio rules, values, exceptions, deliberate silence, and open deci
 
 May modify audio portions of:
 
-the affected Style Spec scope(s) selected by Spec Topology
+the active Style authority target
 
 ## Method
 

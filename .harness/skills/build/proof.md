@@ -68,7 +68,7 @@ Executable/operational evidence sufficient for the decision owner, plus routed f
 
 ## Owns
 
-Only proof-specific executable artifacts and transient evidence needed to exercise the named uncertainty. It does not own the Tech decision, product specifications, Setup instructions, or Knowledge entries created from its findings. It may record transient findings/notes in Build's shared `doc/scratchpad/`; closure of that directory is owned by Build Check `close`.
+Only proof-specific executable artifacts and transient evidence needed to exercise the named uncertainty. It does not own the Tech decision, Project authority, Setup instructions, or Knowledge entries created from its findings. It may record transient findings/notes in Build's shared `doc/scratchpad/`; closure of that directory is owned by Build Check `close`.
 
 ## Modes
 

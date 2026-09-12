@@ -42,7 +42,7 @@ These labels are modelling aids, not mandatory permanent Domain document section
 
 ## Authority interaction
 
-Event Storming owns no Domain specification state.
+Event Storming owns no Domain authority state.
 
 Accepted conclusions route to the Domain orchestrator, which promotes them through Domain Language, Domain Events, Domain Rules, and/or Domain Data as appropriate.
 

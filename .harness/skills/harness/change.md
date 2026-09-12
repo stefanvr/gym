@@ -60,6 +60,8 @@ It owns the repository-root agent entrypoints and the agent-side skill wrappers,
 
 Harness Change also maintains the **shipped** root `README.md` bootstrap marker/instruction and Harness link section as a distribution mirror of Branch Start bootstrap behavior. After bootstrap, Project name/description and any pre-existing Project README content are Project material; Harness Change does not own or rewrite them merely because the Harness section is present.
 
+Harness Change also owns the release updater (`harness-update.py`) and `.harness/update-manifest.json`. When a release adds, removes, or moves a Harness-owned distribution surface, the manifest must be reconciled in the same change so an in-place update replaces the new Harness surface without treating ordinary Project files as Harness-owned. Repository-specific config values and composition selection are carried into the new release; the updater must not preserve an old distribution file wholesale when the new release owns that file's schema or support metadata.
+
 ## Modes
 
 ### `repair`
@@ -86,10 +88,11 @@ Applying more than the owner approved is not a design change; it is a second one
 5. Read every diagram in `README-workflows.md` against the edit and update the ones it altered. Do not conclude from memory that none is affected.
 6. Update `.harness/workflow/routing.md` and `.harness/workflow/context-manifest.yaml` in the same change when the edit added, moved, or removed a document or concern.
 7. Add, remove, or retarget the matching agent-side skill wrapper in the same change when a skill document was added, removed, or moved.
-8. When constitutional invariants changed, update `.harness/harness/invariants.json` only as an index to their authoritative source, then add/update behavior scenarios so every required invariant remains covered. Do not copy the invariant prose into the registry.
-9. Treat `.harness/evals/behavior/semantic-surface.json` as a model-facing change-impact inventory, not as proof of what a constitutional evaluation saw. When the exact constitutional evaluator request sequence or behavior scenario suite changes, prior real-model evidence with a different evaluation-input or suite digest is stale. `harness.py check` verifies supplied evidence freshness; a current real-model run remains Assurance evidence when required.
-10. When `.harness/runtime/` modules, runtime configuration semantics, or runtime transaction behavior changed, run the executable runtime regression suite directly with `python3 .harness/runtime/tests/test_harness.py`. Do not treat structural `harness.py check` as behavioral evidence for runtime semantics.
-11. Run `python3 .harness/runtime/harness.py check`, the behavior evaluator tests/`--validate-only` when semantic-regression artifacts changed, and the semantic Sanity Harness Check. Report remaining findings or missing Assurance evidence rather than inheriting an old conclusion.
+8. When the shipped Harness file surface changes, reconcile `.harness/update-manifest.json` and the updater behavior so in-place upgrades replace every Harness-owned surface while preserving only repository-specific state.
+9. When constitutional invariants changed, update `.harness/harness/invariants.json` only as an index to their authoritative source, then add/update behavior scenarios so every required invariant remains covered. Do not copy the invariant prose into the registry.
+10. Treat `.harness/evals/behavior/semantic-surface.json` as a model-facing change-impact inventory, not as proof of what a constitutional evaluation saw. When the exact constitutional evaluator request sequence or behavior scenario suite changes, prior real-model evidence with a different evaluation-input or suite digest is stale. `harness.py check` verifies supplied evidence freshness; a current real-model run remains Assurance evidence when required.
+11. When `.harness/runtime/` modules, runtime configuration semantics, or runtime transaction behavior changed, run the executable runtime regression suite directly with `python3 .harness/runtime/tests/test_harness.py`. Do not treat structural `harness.py check` as behavioral evidence for runtime semantics.
+12. Run `python3 .harness/runtime/harness.py check`, the behavior evaluator tests/`--validate-only` when semantic-regression artifacts changed, and the semantic Sanity Harness Check. Report remaining findings or missing Assurance evidence rather than inheriting an old conclusion.
 
 ## Scrutiny
 

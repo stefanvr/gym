@@ -19,7 +19,7 @@ The Goal file is local Git-ignored operational state. Runtime transaction state 
 - Deterministic Runtime `resume`
 - current repository/Git state
 - local branch-derived `doc/goals/<branch>.md` when on a Goal branch
-- relevant Project specifications
+- relevant Project authority; under `repository-native`, include `doc/goals/<branch>.spec.md` when present
 - optional `doc/session.md` pointer/cache when it contains transient context that cannot be reconstructed
 - retained `doc/dreams/` proposal names/state when relevant
 
@@ -29,7 +29,7 @@ A minimal current-work reconstruction and the next owning skill/action.
 
 ## Owns
 
-Session reconstruction only. Resume does not create/modify Goal intent, specifications, approvals, Git history, or Project truth.
+Session reconstruction only. Resume does not create/modify Goal intent, Project authority, approvals, Git history, or Project truth.
 
 ## Modes
 
@@ -46,7 +46,7 @@ Session reconstruction only. Resume does not create/modify Goal intent, specific
    - unmerged landing transaction with live approval → load Branch Land and continue only from the mechanically valid phase;
    - approval missing/moved or mainline/base invalidated → Branch Land `recover`; do not infer authorization from transaction phase;
    - merged/published landing transaction → use runtime recovery/finalization path;
-6. Load only specifications/capabilities relevant to the recovered Goal.
+6. Load only Project authority/capabilities relevant to the recovered Goal; in repository-native mode, use runtime `project status` and the branch-derived Goal Spec state.
 7. Inspect `doc/dreams/` names/state only when relevant to current work/immediate follow-up.
 8. Read `doc/session.md` only if present and still useful; treat it as pointer/cache, never authority.
 9. Determine what remains from Goal intent + Git + repository truth, then continue through the owning skill.

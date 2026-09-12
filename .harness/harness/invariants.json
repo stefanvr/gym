@@ -26,6 +26,12 @@
       "behavior_required": true
     },
     {
+      "id": "SPEC-WRITE-01",
+      "category": "spec-authority-recording",
+      "source": ".harness/project-models/spec.md",
+      "behavior_required": true
+    },
+    {
       "id": "COLLAB-01",
       "category": "cooperative-collaboration",
       "source": ".harness/collaboration-models/cooperative-multi-user.md",
@@ -89,6 +95,30 @@
       "id": "SEM-01",
       "category": "semantic-regression",
       "source": ".harness/harness-assurance.md",
+      "behavior_required": true
+    },
+    {
+      "id": "TARGET-01",
+      "category": "project-authority-target",
+      "source": ".harness/contracts/project-authority-target-contract.md",
+      "behavior_required": true
+    },
+    {
+      "id": "REPO-NATIVE-01",
+      "category": "repository-native-project-model",
+      "source": ".harness/project-models/repository-native.md",
+      "behavior_required": true
+    },
+    {
+      "id": "DISCOVERY-01",
+      "category": "discovery-boundary",
+      "source": ".harness/discovery/definition.md",
+      "behavior_required": true
+    },
+    {
+      "id": "EXTENSION-01",
+      "category": "extension-authority-boundary",
+      "source": ".harness/extensions/definition.md",
       "behavior_required": true
     }
   ]

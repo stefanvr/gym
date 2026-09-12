@@ -2,6 +2,11 @@
 
 Records a project-specific architecture rule that constrains implementation.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Create an architecture rule only when the project needs an explicit technical constraint or deliberate departure from the general design guide.
@@ -21,7 +26,7 @@ Typical inputs:
 
 ## Outputs
 
-An authoritative architecture rule in one owning Tech scope.
+An authoritative, concise architecture rule in one owning Tech scope. Under `spec`, the recorded rule follows `SPEC-WRITE-01`; analysis of alternatives and justification stays outside stable authority unless needed to apply the rule or explicitly retained by the owner.
 
 Rules use stable local identifiers:
 
@@ -43,7 +48,7 @@ Example: `tech.architecture:A-004`.
 5. Check whether the general design guide already covers it.
 6. Reject the rule if it adds no project-specific constraint.
 7. Assign a new unused `A-n` inside the owning scope.
-8. Record the rule.
+8. Record the rule as the durable constraint, with only necessary boundary/exception context; do not serialize the analysis steps by default.
 9. Run Tech Check for that scope.
 
 Refusing an `A-n` is a valid result. When refused, explain why outside Tech authority.
@@ -63,7 +68,7 @@ A new architecture rule that materially constrains future implementation must be
 Complete when:
 
 - the rule expresses a real project-specific constraint
-- it rules out at least one meaningful alternative
+- it genuinely constrains at least one meaningful alternative, whether or not that alternative is named in the recorded Spec
 - it does not merely repeat the general design guide
 - its local identifier is unique inside the owning Tech scope
 - external citations use the canonical scoped form where needed

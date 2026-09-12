@@ -38,7 +38,7 @@ It may record:
 
 Design owns no Project truth.
 
-For the Spec Project model:
+For either supported Project model, reasoning remains authority-neutral until promoted. Under `spec`:
 
 - world concepts/rules/events/data → Domain
 - user activities/interactions/surfaces → App

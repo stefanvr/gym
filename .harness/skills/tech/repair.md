@@ -2,6 +2,11 @@
 
 Repairs non-decision truth or document integrity in authoritative Tech scope(s) without changing a technology choice, architecture-rule meaning, or stable scope identity.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Correct stale factual claims, ownership/header text, Markdown structure, or broken non-semantic references in affected Tech Spec scope(s) when Tech Check establishes that the intended decision itself has not changed.

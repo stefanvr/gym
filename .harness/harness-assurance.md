@@ -28,6 +28,8 @@ An assurance result is always qualified twice:
 
 A result for one operating profile is never inherited by another. Changing the selected Collaboration model changes the operating profile being assessed and, because active.json is part of the constitutional evaluator input, also makes earlier semantic evidence stale. `harness.py check` requires this document to define an operating profile for every supported Collaboration model, and `assure` reports which operating profile it assessed.
 
+The untouched standalone distribution has no selected Collaboration operating profile yet. In that explicit bootstrap state, `assure --profile ...` reports **UNKNOWN** with no operating-profile claim; bootstrap must select a supported Collaboration model before GREEN can be possible. A malformed or unsupported composition remains an error rather than an unconfigured Assurance state.
+
 ## Status model
 
 Use these statuses:

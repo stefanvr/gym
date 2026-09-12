@@ -2,6 +2,11 @@
 
 Defines the structural places where user interaction occurs.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Establish which user-facing surfaces exist and which interactions live on them.
@@ -47,7 +52,7 @@ May define:
 
 May modify structural surface portions of:
 
-the affected App Spec scope(s) selected by Spec Topology
+the active App authority target
 
 ## Method
 

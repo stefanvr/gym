@@ -6,7 +6,7 @@ The Harness is agent-independent under `.harness/`. Repository-root adapters (`C
 
 ## Shipped composition
 
-The active selection lives only in [`composition/active.json`](composition/active.json). This project selects `spec` + `single-user`, with Interview Me and Design enabled; `cooperative-multi-user`, Event Storming, and Story Mapping are shipped and supported but not currently active, and each Collaboration model has its own [Assurance operating profile](harness-assurance.md#supported-operating-profiles). Domain, App, Style, and Tech are authority orchestrators. The Spec model uses [explicit stable-scope topology](project-models/spec-topology.md); the single-user Collaboration model lets the one owning workspace proceed through landing directly. The runtime is split into kernel, Project-model, Collaboration-model, checker, and CLI modules. See [Harness Composition](composition/definition.md) and the non-authoritative [architecture map](roadmap/v17.md).
+Selection state lives only in [`composition/active.json`](composition/active.json). The standalone distribution deliberately ships with Project and Collaboration selections **unconfigured** so bootstrap cannot inherit the distribution author's preferences. Bootstrap first asks whether an existing committed repository should use `main-shadow` as an isolated Harness mainline for confidence-building; only then does it require an explicit Project-model choice—`spec` or `repository-native`—and an explicit choice between `single-user` and `cooperative-multi-user`. Interview Me, Event Storming, Story Mapping, and Design remain enabled method packs. Each supported Collaboration model has its own [Assurance operating profile](harness-assurance.md#supported-operating-profiles). Domain, App, Style, and Tech are shared Project-reasoning orchestrators: the selected Project model determines whether accepted conclusions live in durable Spec scopes or the current transient Goal Spec. The runtime is split into a low-level support layer, lifecycle kernel, composition/Project/Collaboration modules, focused checker rule modules, and a thin CLI façade. See [Harness Composition](composition/definition.md) and the runtime ownership notes in [runtime/README.md](runtime/README.md).
 
 ## Mental model: three layers + Dream
 
@@ -14,15 +14,18 @@ Use this as a map, not as another authority.
 
 The constitutional split is: **Harness owns how work is governed and universal judgment; Project owns contextual Project truth.**
 
-### 1. Spec — decide what should be true
+### 1. Project definition — decide what should be true
 
 - **Goal** bounds the one current delivery outcome.
-- **Brainstorm** is a non-authoritative exploration surface for supplied material and draft owner-intent work.
-- **Domain**, **App**, **Style**, and **Tech** are the Spec Project model's authority-owning orchestrators.
+- **Discovery** is the transient pre-Goal space for investigating whether there is useful work or knowledge at all. It may use Brainstorm, methods, Grill, and Extensions and may legitimately end with nothing.
+- **Brainstorm** is a non-authoritative reasoning surface used inside Discovery or Goal work; its working files are local/transient by default.
+- **Extensions** add project/local skills without adding authority; their conclusions still cross normal Project ownership boundaries.
+- **Personal Notes** are local-only capture and are never auto-loaded into work context.
+- **Domain**, **App**, **Style**, and **Tech** are shared Project-reasoning orchestrators; the Project model selects their authority target.
 - **Methods** such as Interview Me, Event Storming, Story Mapping, and Design provide reusable discovery/coordination techniques without becoming Project authority.
 - **Grill** pressure-tests consequential candidates before they become authority.
 
-The active Goal outcome is recoverable from the current branch plus local Git-ignored `doc/goals/<branch>.md`. That file is operational context, not Project history.
+The active Goal outcome is recoverable from the current branch plus local Git-ignored `doc/goals/<branch>.md`. Under `repository-native`, the branch also has a transient `doc/goals/<branch>.spec.md` containing the accepted Goal-specific Project definition. Neither file is Project history.
 
 ### 2. Verify — prove what is true
 
@@ -67,16 +70,34 @@ The Harness lifecycle uses Goal as its single delivery unit. Release, milestone,
 ```text
 drop Harness into Project root
         ↓
-configure a reachable Git remote for eventual landing
-        ↓
 ask the agent to bootstrap the Project
+        ↓
+existing committed repo? choose whether to use main-shadow as Harness mainline
+        ↓
+choose Project model + Collaboration model
+        ↓
+create/confirm local configured-mainline bootstrap baseline (no remote push)
+        ↓
+configure a reachable Git remote before eventual landing
         ↓
 python .harness/runtime/harness.py check
 ```
 
+## Update an existing Harness
+
+Once `harness-update.py` is present at the Project root, updating is one command:
+
+```text
+python3 harness-update.py /path/to/harness-v18.4.0.zip
+```
+
+The updater replaces only Harness-owned surfaces. It leaves Project files such as `README.md`, application code, and Project documentation alone; keeps existing `.gitignore` content while adding any new Harness ignore rules; carries repository mechanics from `.harness/runtime/config.json` into the new config schema; carries only the active `selection` from `.harness/composition/active.json` into the new distribution metadata; and preserves project/local Extensions plus retained Assurance evidence. It then runs the new Harness deterministic check and rolls back the replacement if that check fails.
+
+For an older installation that predates the updater, copy `harness-update.py` from the new release into the Project root once, then run the same command. Future releases replace the updater along with the rest of the Harness.
+
 **Landing is deliberately remote-required.** The remote named by `.harness/runtime/config.json` (default `origin`) must be configured and reachable when landing is prepared/completed. A Goal is not considered landed until the exact resulting mainline receipt is published there; local-only work may proceed before that boundary, but the normal landing lifecycle cannot complete without the configured remote.
 
-Bootstrap prepares root README orientation and establishes configured Git mainline when needed. `check` deterministically answers **“is the Harness internally coherent?”**
+Bootstrap prepares root README orientation, records the explicit operating composition, and establishes configured Git mainline when needed. For existing repositories, optional `main-shadow` onboarding creates/uses a local `main-shadow` branch from the existing repository mainline, records `main-shadow` as Harness configured mainline on that branch, and leaves the original mainline untouched. Bootstrap does **not** push its baseline commit; the agent must tell the user before and after the baseline that the remote remains unchanged. `check` deterministically answers **“is the Harness internally coherent?”** and accepts the untouched distribution's explicit unconfigured bootstrap state.
 
 **Semantic model evidence is deliberately not shipped as a generic baseline.** Evidence is valid only for the exact provider/model/profile, exact constitutional evaluator input digest, and current scenario-suite digest. Generate evidence with the model/profile you intend to claim after installing or changing the Harness. Until current matching evidence exists, `assure --profile ...` returning `UNKNOWN` is the intended design, not a packaging defect.
 
@@ -93,7 +114,7 @@ Harness CI remains separate from Project CI.
 ```text
 Goal
  ↓
-Specification flow and/or Build flow
+Project Define (stable Spec scopes or transient Goal Spec) and/or Build flow
  ↓
 Verify
  ↓

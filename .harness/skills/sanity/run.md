@@ -18,7 +18,7 @@ Required:
 
 As applicable:
 
-- relevant specifications, implementation, tests, setup documents, and knowledge entries required by the checks that actually run
+- relevant Project authority, implementation, tests, setup documents, and knowledge entries required by the checks that actually run
 
 ## Outputs
 

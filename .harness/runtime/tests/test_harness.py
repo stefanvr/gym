@@ -54,8 +54,44 @@ def invoke_harness(root: Path, *args, check=True, config_path: Path | None = Non
 
 def copy_runtime_sources(destination: Path) -> None:
     destination.mkdir(parents=True, exist_ok=True)
-    for name in ("harness.py", "kernel.py", "project_model.py", "collaboration_model.py", "checker.py"):
+    for name in ("harness.py", "runtime_support.py", "kernel.py", "composition.py", "project_model.py", "collaboration_model.py", "extensions.py", "checker_manifest.py", "checker_semantic.py", "checker_architecture.py", "checker.py", "VERSION"):
         shutil.copy2(SOURCE_RUNTIME / name, destination / name)
+
+
+def invoke_harness_cli(root: Path, *args, check=True):
+    """Invoke the copied Harness entrypoint as an external process."""
+    return run([sys.executable, str(root / ".harness" / "runtime" / "harness.py"), *args], root, check=check)
+
+
+def write_test_composition(
+    root: Path,
+    *,
+    project_model: str | None = "spec",
+    collaboration_model: str | None = "single-user",
+) -> Path:
+    composition = root / ".harness" / "composition"
+    composition.mkdir(parents=True, exist_ok=True)
+    path = composition / "active.json"
+    path.write_text(json.dumps({
+        "schema_version": 1,
+        "release": HARNESS.harness_version(),
+        "selection": {
+            "project_model": project_model,
+            "collaboration_model": collaboration_model,
+            "method_packs": [],
+        },
+        "supported": {
+            "project_models": ["spec"],
+            "collaboration_models": ["single-user", "cooperative-multi-user"],
+            "method_packs": [],
+        },
+        "sources": {
+            "project_models": {},
+            "collaboration_models": {},
+            "method_packs": {},
+        },
+    }, indent=2) + "\n", encoding="utf-8")
+    return path
 
 
 class RepoFixture:
@@ -73,7 +109,18 @@ class RepoFixture:
             "bootstrap_mainline": mainline,
             "remote": "origin",
         }), encoding="utf-8")
-        (self.root / ".gitignore").write_text("doc/goals/\ndoc/session.md\n", encoding="utf-8")
+        composition = self.root / ".harness" / "composition"
+        composition.mkdir(parents=True, exist_ok=True)
+        (composition / "active.json").write_text(json.dumps({
+            "schema_version": 1,
+            "release": HARNESS.harness_version(),
+            "selection": {
+                "project_model": "spec",
+                "collaboration_model": "single-user",
+                "method_packs": [],
+            },
+        }, indent=2) + "\n", encoding="utf-8")
+        (self.root / ".gitignore").write_text("doc/goals/\ndoc/session.md\n__pycache__/\n", encoding="utf-8")
         run(["git", "init", "-b", mainline], self.root)
         run(["git", "config", "user.name", "Harness Test"], self.root)
         run(["git", "config", "user.email", "harness@example.test"], self.root)
@@ -134,6 +181,27 @@ class HarnessRuntimeIntegrationTests(unittest.TestCase):
         prepared = self.fx.h("land", "prepare")
         return approval, prepared
 
+    def test_extension_list_and_resolve_project_package(self):
+        ext = self.fx.root / ".harness" / "extensions" / "project" / "design-lab"
+        ext.mkdir(parents=True, exist_ok=True)
+        (ext / "SKILL.md").write_text("# Design Lab\n", encoding="utf-8")
+        listed = self.fx.h("extension", "list")
+        self.assertEqual(listed["count"], 1)
+        self.assertEqual(listed["extensions"][0]["id"], "design-lab")
+        resolved = self.fx.h("extension", "resolve", "--id", "design-lab")
+        self.assertEqual(resolved["extension"]["scope"], "project")
+
+    def test_extension_collision_requires_explicit_scope(self):
+        for scope in ("project", "local"):
+            ext = self.fx.root / ".harness" / "extensions" / scope / "design-lab"
+            ext.mkdir(parents=True, exist_ok=True)
+            (ext / "SKILL.md").write_text("# Design Lab\n", encoding="utf-8")
+        ambiguous = self.fx.h("extension", "resolve", "--id", "design-lab", check=False)
+        self.assertEqual(ambiguous.returncode, 2)
+        self.assertIn("exists in both project and local scopes", ambiguous.stderr)
+        resolved = self.fx.h("extension", "resolve", "--id", "design-lab", "--scope", "local")
+        self.assertEqual(resolved["extension"]["scope"], "local")
+
     def test_branch_start_rejects_cli_unsafe_name_and_base(self):
         bad_name = self.fx.h("branch", "start", "--name=-f", check=False)
         self.assertEqual(bad_name.returncode, 2)
@@ -180,6 +248,58 @@ class HarnessRuntimeIntegrationTests(unittest.TestCase):
         cp = self.fx.h("approval", "record", check=False)
         self.assertEqual(cp.returncode, 2)
         self.assertIn("active Goal document is required", cp.stderr)
+
+    def test_repository_native_requires_goal_spec_for_approval_and_cleans_it_after_landing(self):
+        active_path = self.fx.root / ".harness" / "composition" / "active.json"
+        active = json.loads(active_path.read_text(encoding="utf-8"))
+        active["selection"]["project_model"] = "repository-native"
+        active_path.write_text(json.dumps(active, indent=2) + "\n", encoding="utf-8")
+        self.fx.git("add", ".harness/composition/active.json")
+        self.fx.git("commit", "-m", "test: select repository-native")
+        self.fx.git("push", "origin", self.fx.mainline)
+
+        branch = "feature/repository-native"
+        self.fx.h("branch", "start", "--name", branch)
+        self.fx.write("app.txt", "repository native work\n")
+        self.fx.commit("implement repository-native goal")
+
+        missing = self.fx.h("approval", "record", check=False)
+        self.assertEqual(missing.returncode, 2)
+        self.assertIn("requires a non-empty transient Goal Spec", missing.stderr)
+
+        goal_spec = self.fx.root / HARNESS.goal_spec_document_path(branch)
+        goal_spec.parent.mkdir(parents=True, exist_ok=True)
+        goal_spec.write_text("# Goal Spec\n\n## Outcome\nRepository-native behavior is defined.\n", encoding="utf-8")
+        status = self.fx.h("project", "status")
+        self.assertEqual(status["project_model"], "repository-native")
+        self.assertTrue(status["ready"])
+        self.assertEqual(status["goal_spec_path"], f"doc/goals/{branch}.spec.md")
+
+        self.fx.h("approval", "record")
+        self.fx.h("land", "prepare")
+        landed = self.fx.h("land", "merge")
+        self.assertEqual(landed["result"], "landed")
+        self.assertFalse(goal_spec.exists())
+        self.assertFalse(self.fx.goal_path(branch).exists())
+
+    def test_resume_reports_repository_native_goal_spec_state(self):
+        active_path = self.fx.root / ".harness" / "composition" / "active.json"
+        active = json.loads(active_path.read_text(encoding="utf-8"))
+        active["selection"]["project_model"] = "repository-native"
+        active_path.write_text(json.dumps(active, indent=2) + "\n", encoding="utf-8")
+        self.fx.git("add", ".harness/composition/active.json")
+        self.fx.git("commit", "-m", "test: select repository-native")
+        self.fx.git("push", "origin", self.fx.mainline)
+        branch = "feature/recover-native"
+        self.fx.h("branch", "start", "--name", branch)
+        self.fx.ensure_goal(branch)
+        goal_spec = self.fx.root / HARNESS.goal_spec_document_path(branch)
+        goal_spec.parent.mkdir(parents=True, exist_ok=True)
+        goal_spec.write_text("# Goal Spec\n\nready\n", encoding="utf-8")
+        resume = self.fx.h("resume")
+        self.assertEqual(resume["project_model"], "repository-native")
+        self.assertTrue(resume["project_authority"]["ready"])
+        self.assertEqual(resume["project_authority"]["goal_spec_path"], f"doc/goals/{branch}.spec.md")
 
     def test_approval_cannot_move_without_explicit_drop(self):
         self.fx.h("branch", "start", "--name", "feature/approval")
@@ -692,9 +812,7 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             (root / ".harness" / "composition").mkdir(parents=True)
-            (root / ".harness" / "composition" / "active.json").write_text(json.dumps({
-                "selection": {"project_model": "spec"}
-            }), encoding="utf-8")
+            write_test_composition(root)
             for rel in (
                 "doc/spec/domain/identity.md",
                 "doc/spec/domain/billing.md",
@@ -732,9 +850,7 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             (root / ".harness" / "composition").mkdir(parents=True)
-            (root / ".harness" / "composition" / "active.json").write_text(json.dumps({
-                "selection": {"project_model": "spec"}
-            }), encoding="utf-8")
+            write_test_composition(root)
             topology = root / "doc/spec/topology.json"
             topology.parent.mkdir(parents=True, exist_ok=True)
             topology.write_text(json.dumps({
@@ -830,13 +946,13 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
             collaboration_models = root / ".harness" / "collaboration-models"
             for directory in (composition, runtime, project_models, collaboration_models):
                 directory.mkdir(parents=True, exist_ok=True)
-            (runtime / "VERSION").write_text("17\n", encoding="utf-8")
+            (runtime / "VERSION").write_text(HARNESS.harness_version() + "\n", encoding="utf-8")
             (project_models / "spec.md").write_text("# Spec\n", encoding="utf-8")
             (collaboration_models / "single-user.md").write_text("# Single\n", encoding="utf-8")
             (composition / "active.json").write_text(json.dumps({
                 "schema_version": 1,
-                "release": "17",
-                "selection": {"project_model": "repository-native", "collaboration_model": "single-user", "method_packs": []},
+                "release": HARNESS.harness_version(),
+                "selection": {"project_model": "future-model", "collaboration_model": "single-user", "method_packs": []},
                 "supported": {"project_models": ["spec"], "collaboration_models": ["single-user"], "method_packs": []},
                 "sources": {
                     "project_models": {"spec": ".harness/project-models/spec.md"},
@@ -860,7 +976,7 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
                 "dynamic_rules": [],
             }), encoding="utf-8")
             findings = HARNESS.composition_findings(root)
-            self.assertTrue(any("not supported" in finding and "repository-native" in finding for finding in findings))
+            self.assertTrue(any("not supported" in finding and "future-model" in finding for finding in findings))
 
     def test_composition_reports_unclassified_shipped_artifact(self):
         project_root = SOURCE_RUNTIME.parents[1]
@@ -898,8 +1014,13 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
             run(["git", "init", "-b", "main"], root)
             run(["git", "config", "user.name", "Harness Test"], root)
             run(["git", "config", "user.email", "harness@example.test"], root)
+            write_test_composition(root, project_model=None, collaboration_model=None)
             (root / "secret.env").write_text("SECRET=value\n", encoding="utf-8")
-            result = invoke_harness(root, "repo", "bootstrap", "--message", "baseline", config_path=SOURCE_RUNTIME / "config.json")
+            result = invoke_harness(
+                root, "repo", "bootstrap", "--project-model", "spec",
+                "--collaboration-model", "single-user", "--message", "baseline",
+                config_path=SOURCE_RUNTIME / "config.json",
+            )
             self.assertEqual(result["result"], "baseline created")
             self.assertEqual(run(["git", "ls-tree", "-r", "--name-only", "HEAD"], root).stdout.strip(), "")
             self.assertIn("?? secret.env", run(["git", "status", "--porcelain"], root).stdout)
@@ -910,15 +1031,275 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
             run(["git", "init", "-b", "main"], root)
             run(["git", "config", "user.name", "Harness Test"], root)
             run(["git", "config", "user.email", "harness@example.test"], root)
+            write_test_composition(root, project_model=None, collaboration_model=None)
             (root / "seed.txt").write_text("seed\n", encoding="utf-8")
             (root / "secret.env").write_text("SECRET=value\n", encoding="utf-8")
             invoke_harness(
-                root, "repo", "bootstrap", "--seed-path", "seed.txt", "--message", "baseline",
+                root, "repo", "bootstrap", "--project-model", "spec",
+                "--collaboration-model", "single-user", "--seed-path", "seed.txt", "--message", "baseline",
                 config_path=SOURCE_RUNTIME / "config.json",
             )
             tracked = run(["git", "ls-tree", "-r", "--name-only", "HEAD"], root).stdout.splitlines()
             self.assertEqual(tracked, ["seed.txt"])
             self.assertIn("?? secret.env", run(["git", "status", "--porcelain"], root).stdout)
+
+    def test_bootstrap_requires_explicit_composition_choices_before_git_mutation(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            write_test_composition(root, project_model=None, collaboration_model=None)
+
+            missing_project = invoke_harness(
+                root, "repo", "bootstrap", "--collaboration-model", "single-user",
+                check=False, config_path=SOURCE_RUNTIME / "config.json",
+            )
+            self.assertEqual(missing_project.returncode, 2)
+            self.assertIn("explicit Project-model decision", missing_project.stderr)
+            self.assertFalse((root / ".git").exists())
+
+            unsupported_project = invoke_harness(
+                root, "repo", "bootstrap", "--project-model", "future-model",
+                "--collaboration-model", "single-user", check=False,
+                config_path=SOURCE_RUNTIME / "config.json",
+            )
+            self.assertEqual(unsupported_project.returncode, 2)
+            self.assertIn("future-model", unsupported_project.stderr)
+            self.assertFalse((root / ".git").exists())
+
+            missing_collaboration = invoke_harness(
+                root, "repo", "bootstrap", "--project-model", "spec",
+                check=False, config_path=SOURCE_RUNTIME / "config.json",
+            )
+            self.assertEqual(missing_collaboration.returncode, 2)
+            self.assertIn("explicit Collaboration-model decision", missing_collaboration.stderr)
+            self.assertFalse((root / ".git").exists())
+
+    def test_bootstrap_accepts_repository_native_project_model(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / "repository-native"
+            root.mkdir()
+            write_test_composition(root, project_model=None, collaboration_model=None)
+            run(["git", "init", "-b", "main"], root)
+            run(["git", "config", "user.name", "Harness Test"], root)
+            run(["git", "config", "user.email", "harness@example.test"], root)
+            result = invoke_harness(
+                root, "repo", "bootstrap", "--project-model", "repository-native",
+                "--collaboration-model", "single-user", "--message", "baseline",
+                config_path=SOURCE_RUNTIME / "config.json",
+            )
+            self.assertEqual(result["composition"]["project_model"], "repository-native")
+            active = json.loads((root / ".harness" / "composition" / "active.json").read_text(encoding="utf-8"))
+            self.assertEqual(active["selection"]["project_model"], "repository-native")
+
+    def test_bootstrap_persists_choices_and_never_pushes_baseline(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / "project"
+            remote = Path(td) / "origin.git"
+            root.mkdir()
+            write_test_composition(root, project_model=None, collaboration_model=None)
+            run(["git", "init", "-b", "main"], root)
+            run(["git", "config", "user.name", "Harness Test"], root)
+            run(["git", "config", "user.email", "harness@example.test"], root)
+            run(["git", "init", "--bare", str(remote)], root)
+            run(["git", "remote", "add", "origin", str(remote)], root)
+            (root / "seed.txt").write_text("seed\n", encoding="utf-8")
+
+            result = invoke_harness(
+                root, "repo", "bootstrap", "--project-model", "spec",
+                "--collaboration-model", "cooperative-multi-user",
+                "--all-seed-files", "--message", "baseline",
+                config_path=SOURCE_RUNTIME / "config.json",
+            )
+
+            self.assertEqual(result["result"], "baseline created")
+            self.assertTrue(result["baseline_commit_created"])
+            self.assertEqual(result["baseline_scope"], "local mainline")
+            self.assertEqual(result["remote_publication"], "not attempted by bootstrap")
+            self.assertFalse(result["remote_changed_by_bootstrap"])
+            self.assertEqual(result["composition"]["project_model"], "spec")
+            self.assertEqual(result["composition"]["collaboration_model"], "cooperative-multi-user")
+            active = json.loads((root / ".harness/composition/active.json").read_text(encoding="utf-8"))
+            self.assertEqual(active["selection"]["project_model"], "spec")
+            self.assertEqual(active["selection"]["collaboration_model"], "cooperative-multi-user")
+            remote_main = run(
+                ["git", "--git-dir", str(remote), "show-ref", "--verify", "--quiet", "refs/heads/main"],
+                root, check=False,
+            )
+            self.assertNotEqual(remote_main.returncode, 0)
+
+    def test_main_shadow_onboards_existing_repository_without_moving_original_mainline(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / "existing-project"
+            root.mkdir()
+            run(["git", "init", "-b", "main"], root)
+            run(["git", "config", "user.name", "Harness Test"], root)
+            run(["git", "config", "user.email", "harness@example.test"], root)
+            (root / "existing.txt").write_text("existing project\n", encoding="utf-8")
+            run(["git", "add", "existing.txt"], root)
+            run(["git", "commit", "-m", "existing baseline"], root)
+            original_main = run(["git", "rev-parse", "main"], root).stdout.strip()
+
+            runtime = root / ".harness" / "runtime"
+            copy_runtime_sources(runtime)
+            shutil.copy2(SOURCE_RUNTIME / "config.json", runtime / "config.json")
+            write_test_composition(root, project_model=None, collaboration_model=None)
+
+            result = invoke_harness(
+                root, "repo", "bootstrap", "--main-shadow",
+                "--project-model", "spec", "--collaboration-model", "single-user",
+                "--all-seed-files", "--message", "chore: establish main-shadow onboarding baseline",
+            )
+
+            self.assertEqual(result["result"], "main-shadow established")
+            self.assertTrue(result["main_shadow"])
+            self.assertEqual(result["mainline"], "main-shadow")
+            self.assertEqual(result["shadow_source_mainline"], "main")
+            self.assertEqual(result["shadow_source_head"], original_main)
+            self.assertTrue(result["main_shadow_created"])
+            self.assertTrue(result["baseline_commit_created"])
+            self.assertEqual(result["baseline_scope"], "local main-shadow")
+            self.assertEqual(result["remote_publication"], "not attempted by bootstrap")
+            self.assertFalse(result["remote_changed_by_bootstrap"])
+
+            self.assertEqual(run(["git", "branch", "--show-current"], root).stdout.strip(), "main-shadow")
+            self.assertEqual(run(["git", "rev-parse", "main"], root).stdout.strip(), original_main)
+            self.assertEqual(run(["git", "rev-parse", "main-shadow^"], root).stdout.strip(), original_main)
+
+            config = json.loads((runtime / "config.json").read_text(encoding="utf-8"))
+            self.assertEqual(config["mainline"], "main-shadow")
+            self.assertEqual(config["bootstrap_mainline"], "main-shadow")
+            status = invoke_harness(root, "repo", "status")
+            self.assertTrue(status["main_shadow"])
+            self.assertEqual(status["mainline"], "main-shadow")
+
+            branch = invoke_harness(root, "branch", "start", "--name", "feature/shadow-proof")
+            self.assertEqual(branch["base"], "main-shadow")
+            self.assertEqual(run(["git", "rev-parse", "main"], root).stdout.strip(), original_main)
+
+    def test_main_shadow_landing_publishes_shadow_and_never_moves_original_main(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / "shadow-landing"
+            remote = Path(td) / "origin.git"
+            root.mkdir()
+            run(["git", "init", "-b", "main"], root)
+            run(["git", "config", "user.name", "Harness Test"], root)
+            run(["git", "config", "user.email", "harness@example.test"], root)
+            (root / "existing.txt").write_text("existing project\n", encoding="utf-8")
+            run(["git", "add", "existing.txt"], root)
+            run(["git", "commit", "-m", "existing baseline"], root)
+            original_main = run(["git", "rev-parse", "main"], root).stdout.strip()
+            run(["git", "init", "--bare", str(remote)], root)
+            run(["git", "remote", "add", "origin", str(remote)], root)
+            run(["git", "push", "-u", "origin", "main"], root)
+
+            runtime = root / ".harness" / "runtime"
+            copy_runtime_sources(runtime)
+            shutil.copy2(SOURCE_RUNTIME / "config.json", runtime / "config.json")
+            write_test_composition(root, project_model=None, collaboration_model=None)
+            (root / ".gitignore").write_text("doc/goals/\ndoc/session.md\n__pycache__/\n", encoding="utf-8")
+            invoke_harness(
+                root, "repo", "bootstrap", "--main-shadow",
+                "--project-model", "spec", "--collaboration-model", "single-user",
+                "--all-seed-files", "--message", "chore: establish main-shadow onboarding baseline",
+            )
+
+            invoke_harness(root, "branch", "start", "--name", "feature/shadow-land")
+            goal = root / "doc" / "goals" / "feature" / "shadow-land.md"
+            goal.parent.mkdir(parents=True, exist_ok=True)
+            goal.write_text("# Goal\n\nProve shadow landing.\n", encoding="utf-8")
+            (root / "work.txt").write_text("shadow work\n", encoding="utf-8")
+            run(["git", "add", "-A"], root)
+            run(["git", "commit", "-m", "prove shadow landing"], root)
+            invoke_harness(root, "approval", "record")
+            invoke_harness(root, "land", "prepare")
+            landed = invoke_harness(root, "land", "merge")
+
+            self.assertIn(landed["result"], {"landed", "recovered"})
+            self.assertEqual(run(["git", "rev-parse", "main"], root).stdout.strip(), original_main)
+            remote_main = run(
+                ["git", "--git-dir", str(remote), "rev-parse", "refs/heads/main"], root
+            ).stdout.strip()
+            remote_shadow = run(
+                ["git", "--git-dir", str(remote), "rev-parse", "refs/heads/main-shadow"], root
+            ).stdout.strip()
+            local_shadow = run(["git", "rev-parse", "main-shadow"], root).stdout.strip()
+            self.assertEqual(remote_main, original_main)
+            self.assertEqual(remote_shadow, local_shadow)
+            self.assertNotEqual(remote_shadow, remote_main)
+
+    def test_main_shadow_refuses_divergent_existing_shadow_before_composition_mutation(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / "conflicting-shadow"
+            root.mkdir()
+            run(["git", "init", "-b", "main"], root)
+            run(["git", "config", "user.name", "Harness Test"], root)
+            run(["git", "config", "user.email", "harness@example.test"], root)
+            run(["git", "commit", "--allow-empty", "-m", "main baseline"], root)
+            original_main = run(["git", "rev-parse", "main"], root).stdout.strip()
+            run(["git", "switch", "-c", "main-shadow"], root)
+            (root / "shadow-only.txt").write_text("occupied\n", encoding="utf-8")
+            run(["git", "add", "shadow-only.txt"], root)
+            run(["git", "commit", "-m", "existing shadow work"], root)
+            existing_shadow = run(["git", "rev-parse", "main-shadow"], root).stdout.strip()
+            run(["git", "switch", "main"], root)
+
+            runtime = root / ".harness" / "runtime"
+            copy_runtime_sources(runtime)
+            shutil.copy2(SOURCE_RUNTIME / "config.json", runtime / "config.json")
+            composition_path = write_test_composition(root, project_model=None, collaboration_model=None)
+
+            cp = invoke_harness(
+                root, "repo", "bootstrap", "--main-shadow",
+                "--project-model", "spec", "--collaboration-model", "single-user",
+                "--all-seed-files", check=False,
+            )
+            self.assertEqual(cp.returncode, 2)
+            self.assertIn("main-shadow already exists at a different commit", cp.stderr)
+            active = json.loads(composition_path.read_text(encoding="utf-8"))
+            self.assertIsNone(active["selection"]["project_model"])
+            self.assertIsNone(active["selection"]["collaboration_model"])
+            self.assertEqual(run(["git", "rev-parse", "main"], root).stdout.strip(), original_main)
+            self.assertEqual(run(["git", "rev-parse", "main-shadow"], root).stdout.strip(), existing_shadow)
+            self.assertEqual(run(["git", "branch", "--show-current"], root).stdout.strip(), "main")
+
+    def test_main_shadow_refuses_fresh_repository_before_composition_or_git_mutation(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / "fresh-project"
+            runtime = root / ".harness" / "runtime"
+            copy_runtime_sources(runtime)
+            shutil.copy2(SOURCE_RUNTIME / "config.json", runtime / "config.json")
+            composition_path = write_test_composition(root, project_model=None, collaboration_model=None)
+
+            cp = invoke_harness(
+                root, "repo", "bootstrap", "--main-shadow",
+                "--project-model", "spec", "--collaboration-model", "single-user",
+                "--all-seed-files", check=False,
+            )
+            self.assertEqual(cp.returncode, 2)
+            self.assertIn("only available for an existing repository", cp.stderr)
+            self.assertFalse((root / ".git").exists())
+            active = json.loads(composition_path.read_text(encoding="utf-8"))
+            self.assertIsNone(active["selection"]["project_model"])
+            self.assertIsNone(active["selection"]["collaboration_model"])
+
+    def test_unconfigured_composition_blocks_normal_lifecycle_commands(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            write_test_composition(root, project_model=None, collaboration_model=None)
+            run(["git", "init", "-b", "main"], root)
+            run(["git", "config", "user.name", "Harness Test"], root)
+            run(["git", "config", "user.email", "harness@example.test"], root)
+            run(["git", "commit", "--allow-empty", "-m", "existing"], root)
+
+            cp = invoke_harness(
+                root, "branch", "start", "--name", "feature/blocked",
+                check=False, config_path=SOURCE_RUNTIME / "config.json",
+            )
+            self.assertEqual(cp.returncode, 2)
+            self.assertIn("Harness composition is unconfigured", cp.stderr)
+            self.assertNotEqual(
+                run(["git", "show-ref", "--verify", "--quiet", "refs/heads/feature/blocked"], root, check=False).returncode,
+                0,
+            )
 
     def test_auto_mainline_refuses_multiple_common_local_candidates_without_remote_default(self):
         with tempfile.TemporaryDirectory() as td:
@@ -961,11 +1342,13 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
             run(["git", "init", "-b", "main"], root)
             run(["git", "config", "user.name", "Harness Test"], root)
             run(["git", "config", "user.email", "harness@example.test"], root)
+            write_test_composition(root, project_model=None, collaboration_model=None)
             (root / "pre_staged_secret.txt").write_text("SECRET=value\n", encoding="utf-8")
             run(["git", "add", "pre_staged_secret.txt"], root)
 
             cp = invoke_harness(
-                root, "repo", "bootstrap", "--message", "baseline",
+                root, "repo", "bootstrap", "--project-model", "spec",
+                "--collaboration-model", "single-user", "--message", "baseline",
                 check=False, config_path=SOURCE_RUNTIME / "config.json",
             )
             self.assertEqual(cp.returncode, 2)
@@ -974,7 +1357,8 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
             self.assertNotEqual(run(["git", "rev-parse", "--verify", "HEAD"], root, check=False).returncode, 0)
 
             cp_seed = invoke_harness(
-                root, "repo", "bootstrap", "--seed-path", "pre_staged_secret.txt", "--message", "baseline",
+                root, "repo", "bootstrap", "--project-model", "spec",
+                "--collaboration-model", "single-user", "--seed-path", "pre_staged_secret.txt", "--message", "baseline",
                 check=False, config_path=SOURCE_RUNTIME / "config.json",
             )
             self.assertEqual(cp_seed.returncode, 2)
@@ -987,17 +1371,22 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
             run(["git", "init", "-b", "main"], root)
             run(["git", "config", "user.name", "Harness Test"], root)
             run(["git", "config", "user.email", "harness@example.test"], root)
+            write_test_composition(root, project_model=None, collaboration_model=None)
             (root / "already-staged.txt").write_text("staged\n", encoding="utf-8")
             (root / "also-seed.txt").write_text("seed\n", encoding="utf-8")
             run(["git", "add", "already-staged.txt"], root)
 
             result = invoke_harness(
-                root, "repo", "bootstrap", "--all-seed-files", "--message", "baseline",
+                root, "repo", "bootstrap", "--project-model", "spec",
+                "--collaboration-model", "single-user", "--all-seed-files", "--message", "baseline",
                 config_path=SOURCE_RUNTIME / "config.json",
             )
             self.assertEqual(result["result"], "baseline created")
             tracked = run(["git", "ls-tree", "-r", "--name-only", "HEAD"], root).stdout.splitlines()
-            self.assertEqual(sorted(tracked), ["already-staged.txt", "also-seed.txt"])
+            self.assertEqual(
+                sorted(tracked),
+                [".harness/composition/active.json", "already-staged.txt", "also-seed.txt"],
+            )
 
     def test_unexpected_runtime_failure_is_normalized_to_json(self):
         with tempfile.TemporaryDirectory() as td:
@@ -1227,18 +1616,67 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
         }
         previous_check = HARNESS.checker.cmd_check
         previous_verify = HARNESS.checker.run_assurance_verification
+        previous_collaboration = HARNESS.checker.active_collaboration_model
         try:
             HARNESS.checker.cmd_check = lambda args: current_check
             HARNESS.checker.run_assurance_verification = lambda root: [{
                 "name": "tests", "status": "pass", "returncode": 0, "stdout_tail": "", "stderr_tail": ""
             }]
+            HARNESS.checker.active_collaboration_model = lambda root: "single-user"
             green = HARNESS.cmd_assure(type("Args", (), {"profile": "openai/gpt/test"})())
             unknown = HARNESS.cmd_assure(type("Args", (), {"profile": "anthropic/claude/test"})())
         finally:
             HARNESS.checker.cmd_check = previous_check
             HARNESS.checker.run_assurance_verification = previous_verify
+            HARNESS.checker.active_collaboration_model = previous_collaboration
         self.assertEqual(green["result"], "GREEN")
         self.assertEqual(unknown["result"], "UNKNOWN")
+
+    def test_assure_is_unknown_while_standalone_composition_is_unconfigured(self):
+        check = {
+            "result": "no change",
+            "finding_count": 0,
+            "maturity_dimensions": {},
+            "semantic_regression": {
+                "assurance_scope": "constitutional",
+                "evaluation_input_digest": "c" * 64,
+                "semantic_surface_digest": "a" * 64,
+                "suite_digest": "b" * 64,
+                "evidence": {
+                    "status": "absent",
+                    "current_profiles": {},
+                    "stale_profiles": {},
+                },
+            },
+        }
+        previous_check = HARNESS.checker.cmd_check
+        previous_verify = HARNESS.checker.run_assurance_verification
+        previous_root = HARNESS.PROJECT_ROOT
+        previous_config = HARNESS.CONFIG_PATH
+        try:
+            with tempfile.TemporaryDirectory() as td:
+                root = Path(td)
+                write_test_composition(
+                    root,
+                    project_model=None,
+                    collaboration_model=None,
+                )
+                HARNESS.set_runtime_context(
+                    root,
+                    root / ".harness" / "runtime" / "config.json",
+                )
+                HARNESS.checker.cmd_check = lambda args: check
+                HARNESS.checker.run_assurance_verification = lambda root: [{
+                    "name": "tests", "status": "pass", "returncode": 0, "stdout_tail": "", "stderr_tail": ""
+                }]
+                result = HARNESS.cmd_assure(type("Args", (), {"profile": "openai/gpt/test"})())
+        finally:
+            HARNESS.checker.cmd_check = previous_check
+            HARNESS.checker.run_assurance_verification = previous_verify
+            HARNESS.set_runtime_context(previous_root, previous_config)
+        self.assertEqual(result["result"], "UNKNOWN")
+        self.assertIsNone(result["operating_profile"]["collaboration_model"])
+        self.assertIn("explicitly unconfigured", result["reason"])
 
     def test_assure_is_unknown_for_stale_named_profile(self):
         stale_check = {
@@ -1259,15 +1697,18 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
         }
         previous_check = HARNESS.checker.cmd_check
         previous_verify = HARNESS.checker.run_assurance_verification
+        previous_collaboration = HARNESS.checker.active_collaboration_model
         try:
             HARNESS.checker.cmd_check = lambda args: stale_check
             HARNESS.checker.run_assurance_verification = lambda root: [{
                 "name": "tests", "status": "pass", "returncode": 0, "stdout_tail": "", "stderr_tail": ""
             }]
+            HARNESS.checker.active_collaboration_model = lambda root: "single-user"
             result = HARNESS.cmd_assure(type("Args", (), {"profile": "openai/gpt/test"})())
         finally:
             HARNESS.checker.cmd_check = previous_check
             HARNESS.checker.run_assurance_verification = previous_verify
+            HARNESS.checker.active_collaboration_model = previous_collaboration
         self.assertEqual(result["result"], "UNKNOWN")
         self.assertIn("stale", result["reason"])
 
@@ -1409,7 +1850,7 @@ class HarnessRuntimeConfigAndCheckTests(unittest.TestCase):
 
 
 
-class HarnessRelease17CheckTests(unittest.TestCase):
+class HarnessRelease180CheckTests(unittest.TestCase):
     def copy_release(self, td: str) -> Path:
         root = Path(td) / "copy"
         shutil.copytree(SOURCE_RUNTIME.parents[1], root, ignore=shutil.ignore_patterns("__pycache__"))
@@ -1448,6 +1889,7 @@ class HarnessRelease17CheckTests(unittest.TestCase):
             root = self.copy_release(td)
             active_path = root / ".harness" / "composition" / "active.json"
             active = json.loads(active_path.read_text(encoding="utf-8"))
+            active["selection"]["project_model"] = "spec"
             active["selection"]["collaboration_model"] = "single-user"
             active_path.write_text(json.dumps(active, indent=2) + "\n", encoding="utf-8")
             self.assertEqual(HARNESS.composition_findings(root), [])
@@ -1478,16 +1920,111 @@ class HarnessRelease17CheckTests(unittest.TestCase):
             root = self.copy_release(td)
             workflow = root / ".github" / "workflows" / "harness-ci.yml"
             workflow.write_text(workflow.read_text(encoding="utf-8").replace('      - ".claude/**"\n', ""), encoding="utf-8")
-            findings = HARNESS.release_evidence_findings(root)
+            findings = HARNESS.distribution_evidence_findings(root)
             self.assertTrue(any('.claude/**' in finding for finding in findings))
 
-    def test_release_note_is_derived_from_version(self):
+    def test_standalone_distribution_rejects_release_history_directories(self):
         with tempfile.TemporaryDirectory() as td:
             root = self.copy_release(td)
-            version = (root / ".harness" / "runtime" / "VERSION").read_text(encoding="utf-8").strip()
-            (root / ".harness" / "releases" / f"{version}.md").unlink()
-            findings = HARNESS.release_evidence_findings(root)
-            self.assertTrue(any(f"releases/{version}.md" in finding for finding in findings))
+            releases = root / ".harness" / "releases"
+            releases.mkdir(parents=True)
+            (releases / f"{HARNESS.harness_version()}.md").write_text("historical release note\n", encoding="utf-8")
+            findings = HARNESS.distribution_evidence_findings(root)
+            self.assertTrue(any("release-history directory" in finding for finding in findings))
+
+
+class HarnessInvalidCompositionCliTests(unittest.TestCase):
+    def assert_invalid_composition_error(self, cp: subprocess.CompletedProcess[str]) -> None:
+        self.assertEqual(cp.returncode, 2, f"stdout={cp.stdout}\nstderr={cp.stderr}")
+        error = json.loads(cp.stderr)
+        self.assertIn("invalid Harness composition", error["error"])
+        self.assertNotIn("Traceback", cp.stderr)
+
+    def test_cli_rejects_missing_malformed_and_unknown_collaboration_selection(self):
+        fx = RepoFixture()
+        try:
+            active_path = fx.root / ".harness" / "composition" / "active.json"
+            cases = {
+                "missing-file": None,
+                "malformed-json": "{not-json\n",
+                "missing-selection": json.dumps({
+                    "schema_version": 1, "release": HARNESS.harness_version(),
+                }) + "\n",
+                "missing-model": json.dumps({
+                    "schema_version": 1, "release": HARNESS.harness_version(),
+                    "selection": {"project_model": "spec"},
+                }) + "\n",
+                "unknown-model": json.dumps({
+                    "schema_version": 1, "release": HARNESS.harness_version(),
+                    "selection": {"project_model": "spec", "collaboration_model": "typo-model"},
+                }) + "\n",
+            }
+            for name, content in cases.items():
+                with self.subTest(case=name):
+                    if content is None:
+                        active_path.unlink(missing_ok=True)
+                    else:
+                        active_path.parent.mkdir(parents=True, exist_ok=True)
+                        active_path.write_text(content, encoding="utf-8")
+                    cp = invoke_harness_cli(fx.root, "collaboration", "status", check=False)
+                    self.assert_invalid_composition_error(cp)
+        finally:
+            fx.close()
+
+    def test_cli_unknown_model_cannot_inherit_single_user_lifecycle_semantics(self):
+        # Each command gets a fresh repository whose invalid model is committed, so
+        # the command would otherwise be able to proceed under the old fail-open path.
+        cases = ("approval-drop", "land-assess", "land-prepare", "abandon-discard")
+        for case in cases:
+            with self.subTest(command=case):
+                fx = RepoFixture()
+                try:
+                    branch = f"feature/{case}"
+                    fx.h("branch", "start", "--name", branch)
+                    fx.write("work.txt", case + "\n")
+                    fx.commit(f"test: work for {case}")
+
+                    if case != "abandon-discard":
+                        # Establish the approval while composition is valid, then corrupt the
+                        # selection to prove later lifecycle commands cannot inherit single-user semantics.
+                        fx.h("approval", "record")
+
+                    active_path = fx.root / ".harness" / "composition" / "active.json"
+                    active = json.loads(active_path.read_text(encoding="utf-8"))
+                    active["selection"]["collaboration_model"] = "typo-model"
+                    active_path.write_text(json.dumps(active, indent=2) + "\n", encoding="utf-8")
+                    fx.git("add", ".harness/composition/active.json")
+                    fx.git("commit", "-m", f"test: invalid composition for {case}")
+
+                    before_head = fx.git("rev-parse", "HEAD").stdout.strip()
+                    before_mainline = fx.git("rev-parse", fx.mainline).stdout.strip()
+                    approval_ref_name = HARNESS.approval_ref(branch)
+                    approval_before = fx.git("show-ref", "--verify", "--quiet", approval_ref_name, check=False).returncode == 0
+
+                    if case == "approval-drop":
+                        cp = invoke_harness_cli(fx.root, "approval", "drop", "--branch", branch, check=False)
+                    elif case == "land-assess":
+                        cp = invoke_harness_cli(fx.root, "land", "assess", "--branch", branch, check=False)
+                    elif case == "land-prepare":
+                        cp = invoke_harness_cli(fx.root, "land", "prepare", "--branch", branch, check=False)
+                    else:
+                        cp = invoke_harness_cli(
+                            fx.root, "abandon", "discard", "--target", branch, "--mode", "explicit", check=False
+                        )
+
+                    self.assert_invalid_composition_error(cp)
+                    self.assertEqual(fx.git("rev-parse", "HEAD").stdout.strip(), before_head)
+                    self.assertEqual(fx.git("rev-parse", fx.mainline).stdout.strip(), before_mainline)
+                    self.assertEqual(
+                        fx.git("show-ref", "--verify", "--quiet", f"refs/heads/{branch}", check=False).returncode,
+                        0,
+                    )
+                    approval_after = fx.git("show-ref", "--verify", "--quiet", approval_ref_name, check=False).returncode == 0
+                    self.assertEqual(approval_after, approval_before)
+                    if case == "land-prepare":
+                        self.assertFalse(HARNESS.land_state_path(fx.root, branch).exists())
+                finally:
+                    fx.close()
 
 
 class HarnessRuntimeHardeningTests(unittest.TestCase):
@@ -1496,6 +2033,7 @@ class HarnessRuntimeHardeningTests(unittest.TestCase):
             runtime = Path(td) / ".harness" / "runtime"
             runtime.mkdir(parents=True)
             copy_runtime_sources(runtime)
+            (runtime / "VERSION").unlink()
             cp = run([sys.executable, str(runtime / "harness.py"), "repo", "status"], Path(td), check=False)
             self.assertEqual(cp.returncode, 2, cp.stderr)
             error = json.loads(cp.stderr)
@@ -1509,6 +2047,18 @@ class HarnessRuntimeHardeningTests(unittest.TestCase):
                 timeout_seconds=0.05,
             )
         self.assertIn("command timed out", str(ctx.exception))
+
+    def test_runtime_input_preserves_lf_bytes(self):
+        cp = HARNESS.run(
+            [
+                sys.executable,
+                "-c",
+                "import sys; print(sys.stdin.buffer.read().hex())",
+            ],
+            timeout_seconds=2,
+            input_text="a\nb\n",
+        )
+        self.assertEqual(cp.stdout.strip(), "610a620a")
 
     def test_runtime_subprocess_environment_is_noninteractive(self):
         cp = HARNESS.run(
@@ -1604,7 +2154,7 @@ class HarnessCooperativeMultiUserTests(unittest.TestCase):
         self.clones: list[tempfile.TemporaryDirectory] = []
         active = {
             "schema_version": 1,
-            "release": "17",
+            "release": HARNESS.harness_version(),
             "selection": {
                 "project_model": "spec",
                 "collaboration_model": "cooperative-multi-user",
@@ -1645,6 +2195,44 @@ class HarnessCooperativeMultiUserTests(unittest.TestCase):
         run(["git", "commit", "-m", f"work: {branch}"], root)
         invoke_harness(root, "approval", "record")
         return invoke_harness(root, "handoff", "publish", "--approved-by", approved_by)
+
+    def test_repository_native_handoff_transfers_goal_spec_to_integration_authority(self):
+        active_path = self.fx.root / ".harness" / "composition" / "active.json"
+        active = json.loads(active_path.read_text(encoding="utf-8"))
+        active["selection"]["project_model"] = "repository-native"
+        active_path.write_text(json.dumps(active, indent=2) + "\n", encoding="utf-8")
+        self.fx.git("add", ".harness/composition/active.json")
+        self.fx.git("commit", "-m", "test: select repository-native")
+        self.fx.git("push", "origin", self.fx.mainline)
+
+        branch = "feature/native-handoff"
+        self.fx.h("branch", "start", "--name", branch)
+        goal = self.fx.root / "doc" / "goals" / f"{branch}.md"
+        goal.parent.mkdir(parents=True, exist_ok=True)
+        goal.write_text("# Goal\n\nShip native handoff behavior.\n", encoding="utf-8")
+        goal_spec = self.fx.root / HARNESS.goal_spec_document_path(branch)
+        goal_spec.write_text(
+            "# Goal Spec\n\n## Outcome\nShip the repository-native handoff behavior.\n",
+            encoding="utf-8",
+        )
+        self.fx.write("native-handoff.txt", "implemented\n")
+        self.fx.commit("work: repository-native handoff")
+        self.fx.h("approval", "record")
+        published = self.fx.h("handoff", "publish", "--approved-by", "owner")
+        self.assertEqual(published["result"], "published")
+
+        integration = self.clone_workspace("integrator", "integration-authority")
+        accepted = invoke_harness(integration, "handoff", "accept", "--branch", branch)
+        self.assertEqual(accepted["result"], "accepted")
+        transferred = integration / HARNESS.goal_spec_document_path(branch)
+        self.assertEqual(transferred.read_text(encoding="utf-8"), goal_spec.read_text(encoding="utf-8"))
+        project_status = invoke_harness(integration, "project", "status", "--branch", branch)
+        self.assertTrue(project_status["ready"])
+
+        invoke_harness(integration, "land", "prepare", "--branch", branch)
+        landed = invoke_harness(integration, "land", "merge", "--branch", branch)
+        self.assertEqual(landed["result"], "landed")
+        self.assertFalse(transferred.exists())
 
     def test_contributor_cannot_land_and_integration_authority_can_consume_handoff(self):
         published = self.publish_goal(self.fx.root, "feature/alice", "alice.txt", "alice outcome")

@@ -2,6 +2,11 @@
 
 Defines the explicit rules of the world being modelled.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Record domain behavior that must remain true independent of screen, interaction, or implementation.
@@ -34,7 +39,7 @@ Example: `domain.billing:R-017`.
 
 ## Owns
 
-May modify only the rule section(s) of the affected Domain Spec scope(s) selected by Spec Topology.
+May modify only the rule section(s) of the active Domain authority target.
 
 Domain Rules does not move a rule into another stable scope merely because a different file location seems convenient. Re-scoping authority is a deliberate topology/authority migration.
 

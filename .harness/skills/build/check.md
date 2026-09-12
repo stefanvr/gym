@@ -54,7 +54,7 @@ Required:
 
 - current repository state
 - the implementation or proof being checked
-- its owning goal/specification or bounded proof question; if product behavior has no owner, route through Build Implement/owning capability rather than treating Build Check as orphan-discovery
+- its owning Goal + active Project authority or bounded proof question; if product behavior has no owner, route through Project Define/owning capability rather than treating Build Check as orphan-discovery
 
 As relevant:
 
@@ -68,9 +68,9 @@ Either `no change` / `passes` or evidence-backed implementation findings. It may
 
 ## Owns
 
-No durable product or specification state. Build Check may create transient mutation/evidence state while checking, but must restore it.
+No durable product-authority state. Build Check may create transient mutation/evidence state while checking, but must restore it.
 
-Build Check uniquely owns closure/deletion of Build's shared temporary `doc/scratchpad/`; it may delete that directory only after all findings in it are resolved or routed. It does not own the implementation/specification fixes those findings require.
+Build Check uniquely owns closure/deletion of Build's shared temporary `doc/scratchpad/`; it may delete that directory only after all findings in it are resolved or routed. It does not own the implementation/Project-authority fixes those findings require.
 
 ## Modes
 

@@ -68,7 +68,7 @@ Findings whose correction leaves the Harness's operating decisions unchanged rou
 - concern ownership is established before same-subject precedence
 - authority orchestration coordinates without creating another Project truth owner
 - method output remains non-authoritative until promoted by the owning Project authority
-- stable Spec scope identity is independent of physical path and topology metadata does not become a fifth Project authority
+- when `spec` is active, stable Spec scope identity is independent of physical path and topology metadata does not become a fifth Project authority; `repository-native` does not require a Spec topology
 - changed authority triggers Change Impact before affected dependent completion
 - one term has one meaning, is defined in exactly one of the two owned vocabulary files, and one rule has one authority
 - constitutional invariant coverage is complete and machine-checkable

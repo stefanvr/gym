@@ -2,6 +2,11 @@
 
 Verifies that authoritative Tech scope(s) still describe the project and relevant external reality truthfully.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Check every authoritative claim in the selected `tech.*` scope(s) against current evidence.
@@ -59,6 +64,10 @@ Spec/code/test citation resolution belongs to Sanity Trace Check.
 ### 6. Dependencies
 
 Cross-scope technical assumptions needed to interpret this scope should be represented explicitly in Spec Topology. Undeclared structural coupling is a finding or a Change Impact signal.
+
+### 7. Spec authority is conclusion-shaped
+
+Under `spec`, apply `SPEC-WRITE-01`: stable Tech scopes should state the chosen stack/tooling/architecture facts and durable constraints. Decision comparison, proof narrative, rejected candidates, false starts, and conversational rationale are findings when they survive only as history rather than information needed to apply the authority or explicitly requested for retention. Prefer compact bullets/tables where they are equally clear.
 
 ## Owns
 

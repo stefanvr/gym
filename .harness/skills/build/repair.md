@@ -31,7 +31,7 @@ Required:
 - authoritative expected behavior
 - current repository state
 
-As relevant: existing tests, owning specification, and original task/commit context.
+As relevant: existing tests, active Project authority, and original task/commit context.
 
 ## Outputs
 
@@ -58,5 +58,5 @@ Complete when implementation matches its authority and the failure is covered by
 ## Invariants
 
 - Repair does not invent desired behavior.
-- Specification silence is not authority.
+- Silence in Spec scopes, a Goal Spec, or named native authority is not permission for Repair to invent behavior.
 - Requirement changes are not disguised as repairs.

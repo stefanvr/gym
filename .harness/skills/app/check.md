@@ -2,6 +2,11 @@
 
 Scrutinizes authoritative App scope(s) for internal completeness and coherence.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Check whether Story Map, Interaction, and Surfaces form one coherent user-facing application model in the selected App scope(s).
@@ -42,6 +47,10 @@ For every relevant interaction establish:
 ### 5. Dependencies are explicit
 
 When an App scope relies on Domain/Style/Tech authority outside itself, that dependency must be represented by the Spec topology rather than only by physical proximity or an implicit reference.
+
+### 6. Spec authority is conclusion-shaped
+
+Under `spec`, apply `SPEC-WRITE-01`: stable App scopes should state the durable activity, interaction, and surface decisions, not retain the design conversation, alternatives considered, or method narrative once those no longer affect the application model. Prefer compact representation where it is equally clear.
 
 ## Outputs
 

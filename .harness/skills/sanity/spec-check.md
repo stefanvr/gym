@@ -1,5 +1,7 @@
 # Sanity Specification Check
 
+**Applicability:** `spec` Project model only. Under `repository-native`, use Sanity Run plus the relevant Domain/App/Style/Tech/Build checks against the Goal Spec and named native constraints; do not manufacture stable Spec scopes.
+
 Checks whether authoritative Spec scopes describe one coherent product.
 
 ## Define
@@ -31,6 +33,7 @@ Do not duplicate their internal scrutiny.
 9. Declared `depends_on` edges cover dependencies required to interpret affected scopes; physical co-location is not a substitute.
 10. Reverse dependents identified by Spec Topology are considered by Change Impact; unchanged dependents may be discharged with evidence rather than edited mechanically.
 11. Spec topology is explicit; missing `doc/spec/topology.json` is unconfigured rather than inferred from file names.
+12. Stable Domain, App, Style, and Tech scopes follow `SPEC-WRITE-01`: they preserve durable conclusions rather than decision/workshop/conversation transcripts, with rationale retained only when it is itself needed or explicitly requested.
 
 ## Inputs
 

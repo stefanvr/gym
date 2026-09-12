@@ -2,6 +2,11 @@
 
 Establishes the words used consistently by the domain, specification, code, and tests.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Name domain concepts precisely enough that later rules, events, data, code, and tests can refer to the same thing.
@@ -25,7 +30,7 @@ Authoritative domain terms and their meanings.
 
 May modify the language section of:
 
-the affected Domain Spec scope(s) selected by Spec Topology
+the active Domain authority target
 
 ## Authorship stance
 

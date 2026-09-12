@@ -10,3 +10,16 @@ doc/session.md
 # Playwright artifacts
 test-results/
 playwright-report/
+
+# Python bytecode/cache artifacts
+.harness/**/__pycache__/
+*.py[cod]
+# Harness local Goal recovery state (never Project history)
+# Harness local Session recovery cache (never Project history)
+# Harness transient discovery/brainstorm working material
+# (Discovery itself owns no archive; Brainstorm may use this only as temporary working state.)
+doc/brainstorm/
+# Developer-local personal notes; never Project history
+doc/notes.md
+# Developer-local skill extensions; project extensions live in .harness/extensions/project/
+.harness/extensions/local/

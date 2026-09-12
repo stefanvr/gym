@@ -1,6 +1,6 @@
 # Build Implement
 
-Implements product functionality already owned by the current goal and specifications.
+Implements product functionality already owned by the current Goal and active Project authority.
 
 ## Define
 
@@ -11,7 +11,7 @@ Write or change product code so the system exhibits behavior that has already be
 Identify:
 
 - the current goal
-- the specification that owns the behavior
+- the active Project authority that owns the behavior (`spec` scopes or the repository-native Goal Spec plus named native constraints)
 - relevant Tech constraints
 - relevant Software Design rules
 
@@ -32,7 +32,7 @@ If behavior has no owner, route the gap rather than defining it in code.
 Required:
 
 - current goal/task
-- authoritative specification owning the behavior
+- active Project authority owning the behavior
 - current repository state
 
 As relevant:
@@ -47,7 +47,7 @@ Task-sized implementation code and the tests/evidence needed to prove the owned 
 
 ## Owns
 
-Implementation and test files required by the current task. It does not own Domain/App/Style/Tech specifications, setup documents, or Goal state. It may record transient findings/notes in Build's shared `doc/scratchpad/`; closure of that directory is owned by Build Check `close`.
+Implementation and test files required by the current task. It does not own Domain/App/Style/Tech authority, repository-native Goal Specs, setup documents, or Goal state. It may record transient findings/notes in Build's shared `doc/scratchpad/`; closure of that directory is owned by Build Check `close`.
 
 ## Modes
 
@@ -63,13 +63,13 @@ Complete when:
 
 - intended behavior exists
 - relevant tests prove it
-- implementation conforms to owning specifications
+- implementation conforms to active Project authority
 - design and Tech constraints hold
 - no product decision was made accidentally in code
 - Build Check passes
 
 ## Invariants
 
-- no specification-by-implementation
+- no specification-by-implementation / no hidden Goal-Spec authoring in code
 - no ahead-of-goal behavior
 - implementation follows authority rather than filling its silence

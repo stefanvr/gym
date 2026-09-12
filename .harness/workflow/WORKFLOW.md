@@ -7,29 +7,31 @@ Project truth, lifecycle rules, routing, and approval semantics live outside age
 ## Session start
 
 1. On a new or cleared session, follow Session Resume; it owns context reconstruction and uses the Deterministic Runtime as the Git/ref/transaction fact source.
-2. Read the active Harness Composition — resolve the selected models and method packs only from `.harness/composition/active.json` — then Routing; identify current repository/runtime state, and when on a non-mainline branch derive/read `doc/goals/<branch>.md` if present.
+2. Read Harness Composition from `.harness/composition/active.json`, then Routing. If both operating selections are explicitly unconfigured, do not invent active models: only the bootstrap path may obtain and persist those user decisions. Otherwise resolve selected models and method packs only from `active.json`. Identify current repository/runtime state, and when on a non-mainline branch derive/read `doc/goals/<branch>.md` if present. If `repository-native` is active, also derive/read `doc/goals/<branch>.spec.md` when present.
 3. Use `context-manifest.yaml` to load only context required by the current work and active composition.
 
 Adapters must not maintain their own restart or Git-transaction checklist.
 
 ## Always
 
-1. Establish one bounded Goal before implementation. An explicit Project-bootstrap request routes to Branch Start `bootstrap`; missing Git metadata causes the same bootstrap path before Goal work begins.
+1. Establish one bounded Goal before implementation. An explicit Project-bootstrap request routes to Branch Start `bootstrap`; missing Git metadata or an explicitly unconfigured Harness composition causes the same bootstrap path before Goal work begins. Bootstrap first decides whether an existing committed repository should use the `main-shadow` confidence-building boundary; if selected, `main-shadow` becomes configured mainline while the repository's original mainline remains untouched. Bootstrap configuration and the pre-Goal local configured-mainline baseline are not Goal implementation.
 2. One Goal owns one exclusive work branch and one landing unit.
 3. Persist the active Goal outcome locally at Git-ignored `doc/goals/<branch>.md`; do not serialize task/progress/status state that can be reconstructed from Goal intent + Git + repository truth.
-4. Load only guides, active Project-model authority, skills, setup, and knowledge relevant to the current Goal. Do not activate planned/inactive models merely because their design notes exist.
-5. Route Project concerns to their owning authority. When a concern is broad but clearly inside one authority, enter its authority orchestrator before prematurely selecting a narrow skill. Active methods may assist discovery/design but never become authority; accepted conclusions are promoted through the owning authority skill.
-6. Keep implementation, specifications, tests, and repository state synchronized. When authoritative meaning changes, apply Change Impact: identify materially affected dependent conclusions, route them to their existing owners, and re-establish relevant checks before completion or approval.
-7. Leave repeatable evidence for completion claims.
-8. Use task-sized commits and Git History for correction folding, requirement-change visibility, and work-branch ownership. Tasks are execution decomposition, not persisted lifecycle state by default.
-9. If a Goal branch has no durable outcome, route to Branch Land `abandon` rather than manufacturing integration history.
-10. Every Goal branch entering configured mainline requires explicit exact user landing authorization owned by Branch Land.
-11. Repository mainline, bootstrap-mainline, fixed landing mechanics, approval-ref mechanics, exact transaction anchors, guarded integration, guarded branch deletion, and restart reconstruction are computed/executed by the Deterministic Runtime. `.harness/runtime/harness.py` is the CLI entrypoint; mechanics remain owned by their runtime modules rather than workflow prose.
-12. When reusable cross-work experience is recognized, route it to Dream while evidence is fresh. Persisted Dream proposals are non-authoritative Learning state and are not generic landing cleanup.
+4. Load only guides, active Project-model authority, skills, setup, and knowledge relevant to the current Goal. Do not activate inactive models merely because their definitions are shipped.
+5. After the Goal is clear, make Project authority implementation-ready before consequential implementation. Under `spec`, resolve required meaning into stable Spec scopes. Under `repository-native`, perform targeted repository understanding as needed and integrate accepted conclusions into one transient `doc/goals/<branch>.spec.md`.
+6. When the owner is still deciding whether there is work at all, use Discovery: inspect only relevant evidence, use fitting Brainstorm/methods/Extensions, and remain transient unless the owner explicitly publishes a finding or promotes a bounded outcome to Goal. Personal Notes are consulted only on explicit request and never steer work by mere existence.
+7. Route Project concerns to their owning authority/reasoning capability. When a concern is broad but clearly inside one authority, enter its orchestrator before prematurely selecting a narrow skill. Active methods and installed Extensions may assist discovery/design but never become authority; accepted conclusions are promoted through the owning authority skill into the active Project authority target. Extensions add capability, not authority, and never silently override core skills.
+8. Keep implementation, active Project authority, tests, and repository state synchronized. When authoritative meaning changes, apply Change Impact: identify materially affected dependent conclusions, route them to their existing owners, and re-establish relevant checks before completion or approval.
+9. Leave repeatable evidence for completion claims.
+10. Use task-sized commits and Git History for correction folding, requirement-change visibility, and work-branch ownership. Tasks are execution decomposition, not persisted lifecycle state by default.
+11. If a Goal branch has no durable outcome, route to Branch Land `abandon` rather than manufacturing integration history.
+12. Every Goal branch entering configured mainline requires explicit exact user landing authorization owned by Branch Land.
+13. Repository mainline, bootstrap-mainline, fixed landing mechanics, approval-ref mechanics, exact transaction anchors, guarded integration, guarded branch deletion, and restart reconstruction are computed/executed by the Deterministic Runtime. `.harness/runtime/harness.py` is the CLI entrypoint; mechanics remain owned by their runtime modules rather than workflow prose.
+14. When reusable cross-work experience is recognized, route it to Dream while evidence is fresh. Persisted Dream proposals are non-authoritative Learning state and are not generic landing cleanup.
 
 ## Composition
 
-`.harness/composition/definition.md` owns the composition contract and `.harness/composition/active.json` declares the active selections. Composition determines which Project and Collaboration models and optional method packs are available; it never overrides the authority inside those models or kernel lifecycle rules. Only active method packs are first-class named Harness methods for current work.
+`.harness/composition/definition.md` owns the composition contract and `.harness/composition/active.json` owns selection state. The standalone distribution may begin explicitly unconfigured; Branch Start bootstrap obtains the user's operating choices before normal lifecycle work. Once configured, Composition determines which Project and Collaboration models and optional method packs are active; it never overrides the authority inside those models or kernel lifecycle rules. Only active method packs are first-class named Harness methods for current work.
 
 ## Authority
 
@@ -57,11 +59,14 @@ Workflow, Composition, contracts, the two owned vocabulary authorities, mechanis
 
 ```text
 owner request
-→ explicit Project bootstrap? Branch Start bootstrap → prepare root README / establish committed mainline
+→ explicit Project bootstrap? Branch Start bootstrap → decide main-shadow onboarding first → prepare root README / establish committed configured mainline
 → Goal create: scrutinize one bounded outcome and choose one Goal branch
 → Branch Start create → runtime branch start
 → Goal writes local Git-ignored branch-derived doc/goals/<branch>.md
-→ execute coherent task-sized specification / implementation / verification commits
+→ Project Define: inspect repository as needed and make active Project authority implementation-ready
+   ↳ spec: update relevant stable Spec scopes
+   ↳ repository-native: write local Git-ignored doc/goals/<branch>.spec.md
+→ implement / verify in coherent task-sized commits
 → owning checks and any intentionally meaningful intermediate user validation
 → no durable outcome? Branch Land abandon → one guarded runtime discard
 → otherwise Goal complete
@@ -72,7 +77,7 @@ owner request
 → runtime land prepare confirms live remote alignment and pins the current approved-tree-equivalent branch commit plus exact mainline base
 → runtime land merge revalidates approval + branch + mainline + remote alignment, builds candidate off-mainline, and atomically integrates
 → runtime publishes the exact mainline receipt to configured remote before destructive finalization
-→ successful finalization removes branch, approval, landing transaction, Goal recovery file, and Session cache
+→ successful finalization removes branch, approval, landing transaction, Goal recovery file, repository-native Goal Spec when present, and Session cache
 ```
 
 Only branches land. A Goal describes the outcome carried by that branch; tasks are execution decomposition.
@@ -97,4 +102,4 @@ Use the shared [Change Impact](../mechanisms/change-impact.md) mechanism wheneve
 
 ## Context rule
 
-Persist authority. Persist only irreducible operational intent. Cache pointers. Load context by need. Compute mechanical repository facts instead of caching them in prose/session state.
+Persist durable authority according to the selected Project model. Repository-native Goal Specs are intentionally transient authority. Persist only irreducible operational intent. Cache pointers. Load context by need. Compute mechanical repository facts instead of caching them in prose/session state.

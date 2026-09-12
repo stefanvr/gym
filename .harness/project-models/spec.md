@@ -1,6 +1,6 @@
 # Spec Project Model
 
-Defines the `spec` Project model. Whether it is active is decided only by `.harness/composition/active.json`.
+Defines the `spec` Project model. Whether it is active is decided only by `.harness/composition/active.json`. Harness v18 also supports the sibling `repository-native` model; selecting one never silently reinterprets authority owned by the other.
 
 The model locates Project authority in explicit specifications owned by Domain, App, Style, and Tech. Those capabilities are authority orchestrators; their narrow skills edit the concern-specific truth they own.
 
@@ -31,9 +31,26 @@ The model lets the Harness:
 
 The Project model does not own Goal/branch lifecycle, approval, landing, universal Guides, Harness Assurance, or deterministic Git mechanics.
 
+## Authority recording discipline
+
+**[SPEC-WRITE-01]** Stable Spec scopes record **durable conclusions, not the reasoning transcript that produced them**. Domain, App, Style, and Tech use the same recording discipline.
+
+When accepted working conclusions are promoted into a Spec scope:
+
+- state the fact, rule, value, or chosen option first
+- prefer compact bullets, tables, or short clauses when they express the authority clearly
+- retain constraints that still govern implementation or are needed to interpret the conclusion
+- do not preserve brainstorm history, conversational reasoning, candidate comparisons, proof narrative, false starts, or provenance by default
+- retain rationale or a rejected alternative only when the owner explicitly asks to keep it, or when that reason is itself needed to interpret or apply the authoritative constraint; normally one concise clause is enough
+- do not manufacture standard rationale sections such as `Alternatives considered`, `Why`, `What this rules out`, `Departure`, or `Revisit if` when the durable authority does not need them
+
+Reasoning before promotion may be as detailed as the decision requires. Evidence and working material may retain that analysis where their own owner requires it. Promotion into stable Spec authority compresses the result to the minimum durable truth.
+
+Conciseness must not erase meaning. A compact statement may still include an exception, boundary, dependency, or reason when that information is itself required to apply the authority correctly. History the owner explicitly asked to retain remains. When a touched scope contains transcript-like material with no durable function and no explicit retention requirement, the owning authority should compress it without changing meaning.
+
 ## Authority orchestrators
 
-The Spec model supplies Domain, App, Style, and Tech. Each follows the [Authority Orchestrator Contract](../contracts/authority-orchestrator-contract.md).
+The Spec model binds shared Domain, App, Style, and Tech reasoning to stable Spec scopes. Each follows the [Authority Orchestrator Contract](../contracts/authority-orchestrator-contract.md) and [Project Authority Target Contract](../contracts/project-authority-target-contract.md).
 
 A broad concern enters its owning capability. The orchestrator identifies affected stable scopes, loads required dependencies, and selects useful active methods/narrow skills. Accepted conclusions become authority only through the existing authority-editing skills.
 

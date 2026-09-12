@@ -2,6 +2,11 @@
 
 Defines the minimum user activity required by the current goal.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Describe what a user does in the product as:
@@ -30,7 +35,7 @@ An authoritative user story map.
 
 May modify the story-map portion of:
 
-the affected App Spec scope(s) selected by Spec Topology
+the active App authority target
 
 ## Method
 

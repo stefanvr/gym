@@ -26,6 +26,9 @@
     ".harness/continuity/*.md",
     ".harness/composition/*",
     ".harness/project-models/*.md",
-    ".harness/collaboration-models/*.md"
+    ".harness/collaboration-models/*.md",
+    ".harness/discovery/*.md",
+    ".harness/notes/*.md",
+    ".harness/extensions/*.md"
   ]
 }

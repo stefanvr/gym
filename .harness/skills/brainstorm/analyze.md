@@ -67,11 +67,11 @@ Analysis commonly produces `Observed`, `Inferred`, `Suggested`, and `Open` findi
 
 ## Owns
 
-May create brainstorm analysis material only under:
+By default owns no file and returns findings conversationally. When temporary working material must survive context loss, may create brainstorm analysis material only under:
 
 `doc/brainstorm/analysis/<session>.md`
 
-Analysis artifacts remain draft. Brainstorm Interview artifacts remain Interview-owned.
+That path is Git-ignored and remains temporary draft state. Analysis artifacts remain draft. Brainstorm Interview artifacts remain Interview-owned.
 
 Does not modify authoritative:
 

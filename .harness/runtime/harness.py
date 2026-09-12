@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Harness deterministic runtime command-line entry point.
 
-Runtime ownership is split across kernel, Project-model, Collaboration-model,
+Runtime ownership is split across kernel, composition, Project-model, Collaboration-model,
 and checker modules. This file only wires commands and preserves a convenient
 import surface for runtime tests/tooling.
 """
@@ -16,23 +16,28 @@ RUNTIME_ROOT = Path(__file__).resolve().parent
 if str(RUNTIME_ROOT) not in sys.path:
     sys.path.insert(0, str(RUNTIME_ROOT))
 
+import runtime_support as runtime_support
 import kernel as kernel
+import composition as composition
 import project_model as project_model
 import collaboration_model as collaboration_model
 import checker as checker
+import extensions as extensions
 
 # Re-export runtime symbols for tests and embedding tools that use the CLI module as a facade.
 from kernel import *
+from composition import *
 from project_model import *
 from collaboration_model import *
 from checker import *
+from extensions import *
 
 
 def set_runtime_context(project_root: Path, config_path: Path | None = None) -> None:
     """Point every runtime module at one repository (primarily for tests/embedding)."""
     root = Path(project_root).resolve()
     config = Path(config_path).resolve() if config_path is not None else root / ".harness" / "runtime" / "config.json"
-    for module in (kernel, project_model, collaboration_model, checker):
+    for module in (runtime_support, kernel, composition, project_model, collaboration_model, checker, extensions):
         module.PROJECT_ROOT = root
         module.CONFIG_PATH = config
     globals()["PROJECT_ROOT"] = root
@@ -52,6 +57,19 @@ def build_parser() -> argparse.ArgumentParser:
     p.set_defaults(func=cmd_repo_status)
     p = repo_sub.add_parser("bootstrap")
     p.add_argument("--message", default="chore: establish repository baseline")
+    p.add_argument(
+        "--project-model",
+        help="explicit Project model for an unconfigured install: `spec` or `repository-native`",
+    )
+    p.add_argument(
+        "--collaboration-model",
+        help="explicit Collaboration model for an unconfigured install: `single-user` or `cooperative-multi-user`",
+    )
+    p.add_argument(
+        "--main-shadow",
+        action="store_true",
+        help="onboard an existing committed repository by creating/using `main-shadow` as Harness configured mainline while leaving the repository's original mainline untouched",
+    )
     seed = p.add_mutually_exclusive_group()
     seed.add_argument("--all-seed-files", action="store_true", help="explicitly stage all non-ignored seed files with `git add -A`")
     seed.add_argument("--seed-path", action="append", default=[], help="stage only this seed path; repeat for multiple paths")
@@ -126,6 +144,21 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--delete-remote", action="store_true")
     p.set_defaults(func=cmd_abandon_discard)
 
+    project = sub.add_parser("project", help="active Project-model authority inspection")
+    project_sub = project.add_subparsers(dest="project_command", required=True)
+    p = project_sub.add_parser("status", help="report authority placement for the current Goal branch")
+    p.add_argument("--branch")
+    p.set_defaults(func=cmd_project_status)
+
+    extension = sub.add_parser("extension", help="list/resolve installed Harness skill Extensions")
+    extension_sub = extension.add_subparsers(dest="extension_command", required=True)
+    p = extension_sub.add_parser("list", help="list project and local Extension packages")
+    p.set_defaults(func=cmd_extension_list)
+    p = extension_sub.add_parser("resolve", help="resolve one Extension entrypoint without executing it")
+    p.add_argument("--id", required=True)
+    p.add_argument("--scope", choices=["project", "local"])
+    p.set_defaults(func=cmd_extension_resolve)
+
     spec = sub.add_parser("spec", help="Spec Project-model topology inspection")
     spec_sub = spec.add_subparsers(dest="spec_command", required=True)
     p = spec_sub.add_parser("topology", help="validate and report the active Spec scope topology")
@@ -147,9 +180,27 @@ def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     try:
+        exempt_from_operating_composition = (
+            args.command in {"check", "assure", "extension"}
+            or (args.command == "repo" and getattr(args, "repo_command", None) in {"status", "bootstrap"})
+        )
+        if not exempt_from_operating_composition:
+            composition.require_operating_composition(PROJECT_ROOT)
+
         if command_mutates_lifecycle(args):
             with lifecycle_mutation_lock(args):
+                composition_result = None
+                if args.command == "repo" and getattr(args, "repo_command", None) == "bootstrap":
+                    if getattr(args, "main_shadow", False):
+                        preflight_main_shadow_bootstrap(args)
+                    composition_result = composition.configure_bootstrap_composition(
+                        PROJECT_ROOT,
+                        project_model=getattr(args, "project_model", None),
+                        collaboration_model=getattr(args, "collaboration_model", None),
+                    )
                 data = args.func(args)
+                if composition_result is not None:
+                    data["composition"] = composition_result
         else:
             data = args.func(args)
         print_result(data)

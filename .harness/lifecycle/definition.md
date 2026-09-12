@@ -28,7 +28,7 @@ Each skill declares its own narrow ownership; this definition does not restate i
 
 ## Does not own
 
-- specifications, implementation, tests, and setup documents
+- Project authority (stable Spec scopes or repository-native Goal Specs/native authority), implementation, tests, and setup documents
 - harness authority
 - what any goal is worth, beyond applying Goals and Decisions to it
 - release/milestone/epic grouping outside the current Goal
@@ -37,7 +37,7 @@ Each skill declares its own narrow ownership; this definition does not restate i
 ## Skills
 
 - **Goal** — one bounded outcome, its edge, useful execution-task decomposition, meaningful intermediate validation boundaries, and the branch-derived Goal document
-- **Branch Start** — `bootstrap` prepares root README Harness orientation, initializes Git at the project root when missing, and creates the one-time pre-Goal baseline commit when no commits exist; `create` establishes the exclusive Git boundary for one Goal
+- **Branch Start** — `bootstrap` first decides whether an existing committed repository should use `main-shadow` for isolated confidence-building onboarding, prepares root README Harness orientation, initializes Git at the project root when missing, and creates the one-time pre-Goal configured-mainline baseline when needed; `create` establishes the exclusive Git boundary for one Goal
 - **Branch Land** — landing readiness, history preparation, temporary-state cleanup coordination, configured-strategy landing, and semantically authorized abandonment; exact Git/ref/transaction mechanics are delegated to the Deterministic Runtime
 
 ## Goal state
@@ -45,11 +45,12 @@ Each skill declares its own narrow ownership; this definition does not restate i
 Every active Goal is represented by:
 
 1. its exclusive work branch;
-2. one branch-derived local Goal document at `doc/goals/<branch>.md`.
+2. one branch-derived local Goal document at `doc/goals/<branch>.md`;
+3. when `repository-native` is active, one branch-derived local Goal Spec at `doc/goals/<branch>.spec.md` before consequential implementation/approval.
 
 The branch identifies the delivery unit. The Goal document records what outcome needs to be true and only the meaningful constraints/decisions needed to understand that outcome. It is local Harness operational state and is intentionally ignored by Git.
 
-The Goal document is not a task log, progress tracker, session transcript, serialized state machine, or implementation journal.
+The Goal document is not a task log, progress tracker, session transcript, serialized state machine, or implementation journal. The repository-native Goal Spec is separate: it is transient Project authority for the intended delta, not lifecycle status.
 
 For branch `feature/api-keys`, the Goal path is:
 
@@ -76,7 +77,7 @@ To recover an active Goal:
 1. identify the current work branch;
 2. derive and read `doc/goals/<branch>.md`;
 3. inspect current Git status and branch history relative to configured mainline;
-4. load only relevant specifications/Project context;
+4. load only relevant active Project authority/context; under `repository-native`, derive `doc/goals/<branch>.spec.md` and read it when present;
 5. determine what remains to satisfy the Goal;
 6. inspect runtime landing transaction state only when such a transaction exists.
 
@@ -91,7 +92,7 @@ Persist only state that cannot be safely and cheaply reconstructed. Landing appr
 - Git and retained Project artifacts are the durable history; Goal documents are temporary recovery state
 - every branch entering configured mainline has explicit landing authorization for its exact approved outcome
 - withdrawing/moving approval invalidates ordinary unmerged landing transaction authority; Session Resume never continues such a transaction from phase alone
-- the branch-derived Goal document is local/ignored, never enters Git history, and is removed only after the Goal branch durably lands or is abandoned
+- branch-derived Goal and repository-native Goal-Spec documents are local/ignored, never enter Git history, and are removed only after the Goal branch durably lands or is abandoned
 - persisted `doc/dreams/` proposals are not branch-local temporary documents and are never removed by Lifecycle merely because a branch lands
 - work branches follow Git History **Work branch ownership**; shared work branches are not a supported lifecycle state
 - cooperative multi-user work uses independent Goal branches plus one serialized integration authority; contributors do not independently land mainline

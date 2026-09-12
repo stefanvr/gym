@@ -52,9 +52,11 @@ May additionally identify:
 
 ## Owns
 
-May create:
+By default owns no file. When temporary working material must survive context loss, may create:
 
 `doc/brainstorm/<session>.md`
+
+That path is Git-ignored and is not Project state.
 
 Does not modify:
 

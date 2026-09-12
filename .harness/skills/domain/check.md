@@ -2,6 +2,11 @@
 
 Scrutinizes authoritative Domain scope(s) before implementation relies on them.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Check that Domain language, events, rules, and data form one coherent desired state inside the selected scope(s), then surface dependency-boundary concerns for graph checking.
@@ -67,6 +72,10 @@ Spec/code/test citation resolution belongs to Sanity Trace Check.
 ### 8. Scope boundary
 
 Question duplicated meaning across selected Domain scopes and undeclared dependencies discovered during scrutiny. Moving or splitting authority is not a local cleanup; route it as a topology/authority change.
+
+### 9. Spec authority is conclusion-shaped
+
+Under `spec`, apply `SPEC-WRITE-01`: stable Domain scopes should state the durable terms, rules, flows, and data needed by the product, not preserve workshop narrative, conversational reasoning, candidate analysis, or provenance that no longer affects meaning. Prefer compact representation where it is equally clear.
 
 ## Outputs
 

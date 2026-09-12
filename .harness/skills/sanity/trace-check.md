@@ -1,5 +1,7 @@
 # Sanity Trace Check
 
+**Applicability:** `spec` Project model only, when stable scoped identifiers are deliberately in use. Under `repository-native`, trace implementation/tests to the Goal Spec and named native authority through the relevant owning checks rather than inventing Harness Spec identifiers.
+
 Checks that authoritative scoped specification identifiers, implementation, and tests remain traceable in both directions.
 
 ## Define

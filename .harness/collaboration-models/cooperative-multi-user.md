@@ -122,4 +122,4 @@ Successful landing consumes and atomically exact-deletes the accepted handoff re
 
 This Collaboration model knows only Goal/lifecycle/repository boundaries. It must not depend on Domain/App/Style/Tech, Spec scope topology, or any other Project-model-specific representation.
 
-When repository-native is implemented, the same handoff and serialized-integration contract should apply without redesigning lifecycle semantics.
+The same handoff and serialized-integration contract applies to both Project models. A `repository-native` handoff carries the approved transient Goal Spec alongside the Goal text because both are local/ignored in the contributor workspace; acceptance materializes that exact Goal Spec in the integration workspace and release/landing cleans it with the ordinary local Goal state. The handoff records the Project model and Goal-Spec digest so an integration workspace cannot silently consume the Goal under a different authority model.

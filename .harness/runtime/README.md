@@ -16,13 +16,18 @@ The supported trust, lifecycle-concurrency, sandboxing, and security boundaries 
 
 ## Module ownership
 
-- `harness.py` — CLI parsing/dispatch and normalized output/errors only
-- `kernel.py` — process/Git facts plus repository, approval, landing, abandonment, and recovery mechanics
+- `harness.py` — CLI parsing/dispatch, runtime-context wiring, and normalized output/errors only
+- `runtime_support.py` — bounded process execution, Git/repository facts, lifecycle locks, configured-mainline resolution, and persisted transaction primitives
+- `kernel.py` — lifecycle orchestration plus approval, landing, abandonment, and recovery policy
+- `composition.py` — explicit bootstrap composition configuration and the operating-composition guard
 - `project_model.py` — active Project-model lookup and Spec topology mechanics
 - `collaboration_model.py` — active Collaboration-model lookup, actor state, and cooperative handoff mechanics
-- `checker.py` — structural validation, semantic-evidence validation, `check`, and `assure`
+- `checker_manifest.py` — static manifest, documentation, routing, and contract checks
+- `checker_semantic.py` — constitutional coverage and semantic-evidence checks
+- `checker_architecture.py` — runtime ownership, standalone-distribution integrity, and composition checks
+- `checker.py` — thin `check` / `assure` aggregation façade
 
-The kernel may consult Collaboration-model state only through its explicit landing integration seam. It does not implement handoff commands. Project-model and Collaboration-model modules use kernel repository primitives but do not own generic landing semantics. `check` validates this ownership split.
+The kernel may consult Collaboration-model state only through its explicit landing integration seam. It does not implement handoff commands. Project-model and Collaboration-model modules use kernel repository primitives but do not own generic landing semantics. Checker rule modules are intentionally separated by concern so a targeted validation change does not require loading the full checker. `check` validates this ownership split.
 
 ## Runtime requirements
 
@@ -62,10 +67,16 @@ This is Harness policy rather than repository configuration.
 ### Repository and branch
 
 - `repo status`
-- `repo bootstrap [--seed-path <path> ... | --all-seed-files]`
+- `repo bootstrap [--main-shadow] [--project-model spec|repository-native] [--collaboration-model single-user|cooperative-multi-user] [--seed-path <path> ... | --all-seed-files]`
 - `branch start --name <branch> [--base <branch>]`
 
-Bootstrap defaults to an empty baseline. Pre-staged content is refused unless whole-tree seed staging is explicitly selected.
+The standalone distribution begins with Project/Collaboration selections explicitly unconfigured. On that first bootstrap, one explicit `--project-model spec|repository-native` choice and one explicit `--collaboration-model` choice are required before Git initialization or baseline mutation. Once composition is already configured, repeating the flags is optional and conflicting values are refused rather than silently changing the operating model. `spec` persists Project authority in stable Harness Spec scopes; `repository-native` preserves the repository's native durable structure and uses a branch-local transient Goal Spec for the intended delta.
+
+`--main-shadow` is an opt-in onboarding mode for an **existing repository with committed history**. Before composition is persisted or Git is mutated, the runtime verifies that the existing repository mainline can be resolved, Git identity is usable, the index has no staged changes unless `--all-seed-files` was explicitly selected, and any pre-existing `main-shadow` ref is exactly at the source-mainline tip. It then creates/reuses `main-shadow`, switches to it, rewrites `.harness/runtime/config.json` on that branch so both `mainline` and `bootstrap_mainline` are `main-shadow`, and commits the resulting onboarding baseline. The original repository mainline ref is not moved or rewritten. A divergent existing `main-shadow` is refused rather than repurposed.
+
+After shadow onboarding, all normal lifecycle mechanics resolve `main-shadow` as configured mainline: Goal branches start from it and landing publishes to the configured remote's `main-shadow` ref. This isolates confidence-building Harness adoption from the repository's original mainline. Promotion or reconciliation from `main-shadow` back to that original mainline is intentionally outside bootstrap and is never automatic.
+
+Bootstrap defaults to an empty baseline for a new/unborn repository. Pre-staged content is refused unless whole-tree seed staging is explicitly selected. A newly created bootstrap baseline is a **local-mainline-only** repository-establishment commit: `repo bootstrap` never pushes configured mainline and reports `remote_publication: "not attempted by bootstrap"` plus `remote_changed_by_bootstrap: false`. Shadow onboarding uses the same no-publication boundary and reports `baseline_scope: "local main-shadow"` plus `main_shadow: true`. Publishing that baseline, if desired, is a separate explicit action outside bootstrap.
 
 ### Landing approval
 
@@ -89,6 +100,12 @@ An existing approval ref cannot be moved in place. If authority changes, drop it
 
 Dropping approval first preflights every dependent landing transaction. A `ready` transaction is removed. An `integrating` transaction is also removed when configured mainline still equals its prepared base, because the candidate has not crossed the irreversible mainline boundary. If mainline already equals that candidate, or the transaction is `merged`/`published`, receipt/recovery state is preserved so deterministic recovery can finish. If an integrating transaction finds mainline at neither the prepared base nor candidate, withdrawal fails before the approval ref is changed.
 
+
+### Composition and Collaboration-model selection safety
+
+The standalone package's exact bootstrap state is both `selection.project_model` and `selection.collaboration_model` set to `null`. That explicit state is allowed for distribution validation and `repo status`/`repo bootstrap`, but normal lifecycle commands are blocked until bootstrap records `spec` plus one supported Collaboration model. Missing/unreadable composition, malformed JSON, partial selection, unsupported models, and unknown Collaboration models are fail-closed runtime errors; none is treated as the explicit unconfigured bootstrap state.
+
+The active Collaboration model is resolved from `.harness/composition/active.json`. The runtime never substitutes `single-user` semantics for an invalid or unknown selection. This distribution implements Collaboration semantics only for `single-user` and `cooperative-multi-user`.
 
 ### Cooperative multi-user handoff
 
@@ -185,6 +202,16 @@ Landing transaction metadata lives under the local Git common directory and `ref
 
 Active landing transactions use an exact runtime transaction schema. Unsupported transaction-state schemas are rejected rather than interpreted or migrated implicitly.
 
+## Project authority status
+
+For either Project model, inspect the active branch's Project-authority readiness with:
+
+```text
+python3 .harness/runtime/harness.py project status [--branch <branch>]
+```
+
+Under `spec`, this reports stable-Spec authority. Under `repository-native`, it reports whether the derived `doc/goals/<branch>.spec.md` exists and is non-empty. Approval and landing fail closed when repository-native Goal authority is missing.
+
 ## Spec topology inspection
 
 When the active Project model is `spec`, read-only Project-model commands expose the modular authority topology without folding Project grade into Harness Assurance:
@@ -202,7 +229,7 @@ These commands inspect managed Project structure. `harness.py check` intentional
 
 ## Harness structural check
 
-`check` deterministically validates mechanically decidable Harness invariants, including runtime module ownership, composition/classification integrity, the Spec-topology contract, authoritative skill contract shape, wrapper mapping, agent entrypoints, context-manifest integrity, Guide registration, Routing uniqueness, constitutional invariant coverage, semantic-evidence freshness wiring, Markdown links, runtime configuration, and release verification machinery.
+`check` deterministically validates mechanically decidable Harness invariants, including runtime module ownership, composition/classification integrity, the Spec-topology contract, authoritative skill contract shape, wrapper mapping, agent entrypoints, context-manifest integrity, Guide registration, Routing uniqueness, constitutional invariant coverage, semantic-evidence freshness wiring, Markdown links, runtime configuration, and standalone distribution verification machinery.
 
 Semantic sanity remains the responsibility of Sanity Harness Check; executable `check` is evidence for that skill rather than a replacement for judgment.
 
@@ -235,3 +262,15 @@ It reports GREEN only when those conditions hold. Missing/stale profile evidence
 - lifecycle mutations are serialized by advisory locks
 - external commands are noninteractive and bounded
 - repository topology is single-root
+
+
+## Extension inspection
+
+The runtime can inspect Extension package identity without executing extension content:
+
+```text
+python .harness/runtime/harness.py extension list
+python .harness/runtime/harness.py extension resolve --id <id> [--scope project|local]
+```
+
+Project Extensions live under `.harness/extensions/project/<id>/SKILL.md`; local Extensions live under the Git-ignored `.harness/extensions/local/<id>/SKILL.md`. Resolution never grants authority or execution trust and never silently selects between a project/local id collision.

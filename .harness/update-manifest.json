@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "replace": [
+    ".harness",
+    ".claude",
+    ".github/workflows/harness-ci.yml",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    "HARNESS-FEATURES.md",
+    "harness-update.py"
+  ],
+  "merge_line_files": [
+    ".gitignore"
+  ],
+  "preserve_json": {
+    ".harness/runtime/config.json": [
+      "mainline",
+      "bootstrap_mainline",
+      "remote"
+    ],
+    ".harness/composition/active.json": [
+      "selection"
+    ]
+  },
+  "preserve_trees": [
+    ".harness/extensions/project",
+    ".harness/extensions/local",
+    ".harness/evals/behavior/evidence"
+  ],
+  "preserve_files": [
+    ".claude/settings.local.json"
+  ]
+}

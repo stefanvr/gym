@@ -2,6 +2,11 @@
 
 Scrutinizes authoritative Style scope(s) for truth and product implementation-source consistency.
 
+## Authority target
+
+Follow the [Project Authority Target Contract](../../contracts/project-authority-target-contract.md). Under `spec`, edit/check the affected stable Spec scope(s). Under `repository-native`, edit/check the corresponding section of the current transient Goal Spec and relevant named native constraints. Any scope-ID, Spec Topology, reverse-dependency, or scoped identifier requirement below is `spec`-only unless the repository already uses an equivalent native identifier deliberately.
+
+
 ## Define
 
 Check that the selected Style scope(s) accurately describe the desired visual/audio state and that Style-owned decisions are represented consistently in implementation.
@@ -46,6 +51,10 @@ For the current goal, ask whether visual, audio, and feel/feedback behavior matt
 ### 5. Scope dependencies are explicit
 
 Style references to App/Domain triggers or other Style foundations must resolve through selected scope authority and explicit topology dependencies where cross-scope interpretation is required.
+
+### 6. Spec authority is conclusion-shaped
+
+Under `spec`, apply `SPEC-WRITE-01`: stable Style scopes should state the durable reference, perceptual rule, value, exception, or deliberate silence, not preserve exploratory critique, option history, or owner-conversation narrative unless the owner explicitly wants it retained. Prefer compact representation where it is equally clear.
 
 ## Outputs
 

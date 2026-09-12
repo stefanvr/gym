@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "release": "17",
-  "purpose": "Current-state architectural inventory for the standalone Harness 17 distribution: modular runtime ownership, explicit model boundaries, reduced startup context, and profile-qualified Assurance.",
+  "release": "18.3.2",
+  "purpose": "Current-state architectural inventory for the standalone Harness distribution: explicit bootstrap composition, modular runtime ownership, reduced startup context, and profile-qualified Assurance.",
   "entries": [
     {
       "path": ".harness/README-vocabulary.md",
@@ -17,8 +17,9 @@
       "kind": "orientation",
       "authority": "Harness kernel",
       "couplings": [
+        "collaboration/cooperative-multi-user",
         "project-model/spec",
-        "collaboration/cooperative-multi-user"
+        "project-model/repository-native"
       ]
     },
     {
@@ -27,15 +28,19 @@
       "kind": "orientation",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
       "path": ".harness/capabilities/app.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "capability",
-      "authority": "Spec/App",
-      "couplings": []
+      "authority": "Project reasoning/App",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/capabilities/brainstorm.md",
@@ -50,15 +55,29 @@
       "kind": "capability",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
       "path": ".harness/capabilities/domain.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "capability",
-      "authority": "Spec/Domain",
-      "couplings": []
+      "authority": "Project reasoning/Domain",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
+    },
+    {
+      "path": ".harness/capabilities/project-definition.md",
+      "layer": "project-reasoning",
+      "kind": "capability",
+      "authority": "Project reasoning",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/capabilities/sanity.md",
@@ -66,7 +85,8 @@
       "kind": "capability",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
@@ -75,22 +95,29 @@
       "kind": "capability",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
       "path": ".harness/capabilities/style.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "capability",
-      "authority": "Spec/Style",
-      "couplings": []
+      "authority": "Project reasoning/Style",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/capabilities/tech.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "capability",
-      "authority": "Spec/Tech",
-      "couplings": []
+      "authority": "Project reasoning/Tech",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/collaboration-models/cooperative-multi-user.md",
@@ -156,7 +183,7 @@
       "kind": "contract",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-reasoning"
       ]
     },
     {
@@ -167,10 +194,27 @@
       "couplings": []
     },
     {
+      "path": ".harness/contracts/project-authority-target-contract.md",
+      "layer": "project-reasoning",
+      "kind": "contract",
+      "authority": "Project reasoning",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
+    },
+    {
       "path": ".harness/contracts/task-capability-skill-contract.md",
       "layer": "kernel",
       "kind": "contract",
       "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/discovery/definition.md",
+      "layer": "exploration",
+      "kind": "support-family",
+      "authority": "Discovery",
       "couplings": []
     },
     {
@@ -213,6 +257,20 @@
       "path": ".harness/evals/behavior/tests/test_behavior.py",
       "layer": "kernel",
       "kind": "test",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/extensions/definition.md",
+      "layer": "kernel",
+      "kind": "extension-contract",
+      "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/extensions/project/.gitkeep",
+      "layer": "kernel",
+      "kind": "extension-placeholder",
       "authority": "Harness kernel",
       "couplings": []
     },
@@ -408,7 +466,9 @@
       "layer": "method",
       "kind": "method-pack",
       "authority": "Design method (non-authoritative)",
-      "couplings": []
+      "couplings": [
+        "project-reasoning"
+      ]
     },
     {
       "path": ".harness/methods/event-storming.md",
@@ -416,7 +476,7 @@
       "kind": "method-pack",
       "authority": "Event Storming method (non-authoritative)",
       "couplings": [
-        "project-model/spec"
+        "project-reasoning"
       ]
     },
     {
@@ -424,7 +484,9 @@
       "layer": "method",
       "kind": "method-pack",
       "authority": "Interview Me method (non-authoritative)",
-      "couplings": []
+      "couplings": [
+        "project-reasoning"
+      ]
     },
     {
       "path": ".harness/methods/story-mapping.md",
@@ -432,7 +494,23 @@
       "kind": "method-pack",
       "authority": "Story Mapping method (non-authoritative)",
       "couplings": [
-        "project-model/spec"
+        "project-reasoning"
+      ]
+    },
+    {
+      "path": ".harness/notes/definition.md",
+      "layer": "exploration",
+      "kind": "support-family",
+      "authority": "Personal Notes",
+      "couplings": []
+    },
+    {
+      "path": ".harness/project-models/repository-native.md",
+      "layer": "project-model/repository-native",
+      "kind": "project-model",
+      "authority": "Repository-native Project model",
+      "couplings": [
+        "project-reasoning"
       ]
     },
     {
@@ -450,27 +528,14 @@
       "couplings": []
     },
     {
-      "path": ".harness/releases/17.md",
-      "layer": "kernel",
-      "kind": "release-note",
-      "authority": "Harness kernel",
-      "couplings": []
-    },
-    {
-      "path": ".harness/roadmap/v17.md",
-      "layer": "kernel",
-      "kind": "development-map",
-      "authority": "Harness kernel",
-      "couplings": []
-    },
-    {
       "path": ".harness/runtime/README.md",
       "layer": "kernel",
       "kind": "runtime-support",
       "authority": "Harness kernel",
       "couplings": [
+        "collaboration/cooperative-multi-user",
         "project-model/spec",
-        "collaboration/cooperative-multi-user"
+        "project-model/repository-native"
       ]
     },
     {
@@ -492,6 +557,30 @@
       ]
     },
     {
+      "path": ".harness/runtime/checker_architecture.py",
+      "layer": "kernel",
+      "kind": "checker-rules",
+      "authority": "Harness checker",
+      "couplings": [],
+      "owner": "Harness runtime"
+    },
+    {
+      "path": ".harness/runtime/checker_manifest.py",
+      "layer": "kernel",
+      "kind": "checker-rules",
+      "authority": "Harness checker",
+      "couplings": [],
+      "owner": "Harness runtime"
+    },
+    {
+      "path": ".harness/runtime/checker_semantic.py",
+      "layer": "kernel",
+      "kind": "checker-rules",
+      "authority": "Harness checker",
+      "couplings": [],
+      "owner": "Harness runtime"
+    },
+    {
       "path": ".harness/runtime/collaboration_model.py",
       "layer": "collaboration/cooperative-multi-user",
       "kind": "runtime-module",
@@ -501,10 +590,28 @@
       ]
     },
     {
+      "path": ".harness/runtime/composition.py",
+      "layer": "kernel",
+      "kind": "runtime-composition",
+      "authority": "Harness Composition",
+      "couplings": [
+        "project-model/spec",
+        "collaboration/single-user",
+        "collaboration/cooperative-multi-user"
+      ]
+    },
+    {
       "path": ".harness/runtime/config.json",
       "layer": "kernel",
       "kind": "runtime-support",
       "authority": "Harness kernel",
+      "couplings": []
+    },
+    {
+      "path": ".harness/runtime/extensions.py",
+      "layer": "kernel",
+      "kind": "runtime",
+      "authority": "Deterministic Runtime",
       "couplings": []
     },
     {
@@ -525,10 +632,21 @@
     },
     {
       "path": ".harness/runtime/project_model.py",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "runtime-module",
-      "authority": "Spec Project model",
-      "couplings": []
+      "authority": "Project-model runtime",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
+    },
+    {
+      "path": ".harness/runtime/runtime_support.py",
+      "layer": "kernel",
+      "kind": "runtime-support",
+      "authority": "Harness kernel",
+      "couplings": [],
+      "owner": "Harness runtime"
     },
     {
       "path": ".harness/runtime/tests/test_harness.py",
@@ -536,36 +654,56 @@
       "kind": "test",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
-      "path": ".harness/skills/app/check.md",
-      "layer": "project-model/spec",
-      "kind": "skill",
-      "authority": "Spec/App",
+      "path": ".harness/runtime/tests/test_update.py",
+      "layer": "kernel",
+      "kind": "runtime-test",
+      "authority": "Harness runtime",
       "couplings": []
+    },
+    {
+      "path": ".harness/skills/app/check.md",
+      "layer": "project-reasoning",
+      "kind": "skill",
+      "authority": "Project reasoning/App",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/app/interaction.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/App",
-      "couplings": []
+      "authority": "Project reasoning/App",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/app/story-map.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/App",
-      "couplings": []
+      "authority": "Project reasoning/App",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/app/surfaces.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/App",
-      "couplings": []
+      "authority": "Project reasoning/App",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/brainstorm/analyze.md",
@@ -587,7 +725,8 @@
       "kind": "skill",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
@@ -596,7 +735,8 @@
       "kind": "skill",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
@@ -605,7 +745,8 @@
       "kind": "skill",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
@@ -614,7 +755,8 @@
       "kind": "skill",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
@@ -634,39 +776,61 @@
       "couplings": []
     },
     {
-      "path": ".harness/skills/domain/check.md",
-      "layer": "project-model/spec",
+      "path": ".harness/skills/discovery/discover.md",
+      "layer": "exploration",
       "kind": "skill",
-      "authority": "Spec/Domain",
+      "authority": "Discovery",
       "couplings": []
+    },
+    {
+      "path": ".harness/skills/domain/check.md",
+      "layer": "project-reasoning",
+      "kind": "skill",
+      "authority": "Project reasoning/Domain",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/domain/data.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Domain",
-      "couplings": []
+      "authority": "Project reasoning/Domain",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/domain/events.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Domain",
-      "couplings": []
+      "authority": "Project reasoning/Domain",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/domain/language.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Domain",
-      "couplings": []
+      "authority": "Project reasoning/Domain",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/domain/rules.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Domain",
-      "couplings": []
+      "authority": "Project reasoning/Domain",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/harness/change.md",
@@ -731,6 +895,40 @@
       ]
     },
     {
+      "path": ".harness/skills/notes/personal.md",
+      "layer": "exploration",
+      "kind": "skill",
+      "authority": "Personal Notes",
+      "couplings": []
+    },
+    {
+      "path": ".harness/skills/project/define.md",
+      "layer": "project-reasoning",
+      "kind": "skill",
+      "authority": "Project reasoning",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
+    },
+    {
+      "path": ".harness/skills/project/document.md",
+      "layer": "project-reasoning",
+      "kind": "skill",
+      "authority": "Project reasoning",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
+    },
+    {
+      "path": ".harness/skills/project/understand.md",
+      "layer": "project-reasoning",
+      "kind": "skill",
+      "authority": "Project reasoning",
+      "couplings": []
+    },
+    {
       "path": ".harness/skills/sanity/harness-check.md",
       "layer": "kernel",
       "kind": "skill",
@@ -743,7 +941,8 @@
       "kind": "skill",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
@@ -752,7 +951,8 @@
       "kind": "skill",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
@@ -775,7 +975,8 @@
       "kind": "skill",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
@@ -784,70 +985,105 @@
       "kind": "skill",
       "authority": "Harness kernel",
       "couplings": [
-        "project-model/spec"
+        "project-model/spec",
+        "project-model/repository-native"
       ]
     },
     {
       "path": ".harness/skills/style/audio.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Style",
-      "couplings": []
+      "authority": "Project reasoning/Style",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/style/check.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Style",
-      "couplings": []
+      "authority": "Project reasoning/Style",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/style/preview.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Style",
-      "couplings": []
+      "authority": "Project reasoning/Style",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/style/reference.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Style",
-      "couplings": []
+      "authority": "Project reasoning/Style",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/style/visual.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Style",
-      "couplings": []
+      "authority": "Project reasoning/Style",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/tech/architecture-rule.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Tech",
-      "couplings": []
+      "authority": "Project reasoning/Tech",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/tech/check.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Tech",
-      "couplings": []
+      "authority": "Project reasoning/Tech",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/tech/decide.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Tech",
-      "couplings": []
+      "authority": "Project reasoning/Tech",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
     },
     {
       "path": ".harness/skills/tech/repair.md",
-      "layer": "project-model/spec",
+      "layer": "project-reasoning",
       "kind": "skill",
-      "authority": "Spec/Tech",
+      "authority": "Project reasoning/Tech",
+      "couplings": [
+        "project-model/spec",
+        "project-model/repository-native"
+      ]
+    },
+    {
+      "path": ".harness/update-manifest.json",
+      "layer": "kernel",
+      "kind": "update-manifest",
+      "authority": "Harness Change",
       "couplings": []
     },
     {
@@ -856,8 +1092,9 @@
       "kind": "workflow",
       "authority": "Harness kernel",
       "couplings": [
+        "collaboration/single-user",
         "project-model/spec",
-        "collaboration/single-user"
+        "project-model/repository-native"
       ]
     },
     {
@@ -887,8 +1124,9 @@
       "kind": "workflow",
       "authority": "Harness kernel",
       "couplings": [
+        "collaboration/cooperative-multi-user",
         "project-model/spec",
-        "collaboration/cooperative-multi-user"
+        "project-model/repository-native"
       ]
     },
     {
@@ -897,8 +1135,9 @@
       "kind": "workflow",
       "authority": "Harness kernel",
       "couplings": [
+        "collaboration/cooperative-multi-user",
         "project-model/spec",
-        "collaboration/cooperative-multi-user"
+        "project-model/repository-native"
       ]
     }
   ],
@@ -908,6 +1147,18 @@
       "layer": "kernel",
       "kind": "assurance-evidence",
       "authority": "Harness Assurance"
+    },
+    {
+      "glob": ".harness/extensions/local/**/*",
+      "layer": "exploration",
+      "kind": "local-extension",
+      "authority": "Extensions"
+    },
+    {
+      "glob": ".harness/extensions/project/**/*",
+      "layer": "exploration",
+      "kind": "project-extension",
+      "authority": "Extensions"
     },
     {
       "glob": ".harness/knowledge/*.md",
